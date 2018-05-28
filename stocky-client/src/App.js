@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import socketIOClient from 'socket.io-client';
+
+const socket = socketIOClient('http://localhost:4001');
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      color: 'white',
+    };
+  }
+
+  componentDidMount() {    
+    socket.on('change color', col => {
+      document.body.style.backgroundColor = col;
+    });
+  }
+
+  setColor(color) {
+    this.setState({ color });
+  }
+
+  changeColor(color) {
+    socket.emit('change color', color);      
+  }
+ 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div style={{ textAlign: "center" }}>
+        <button onClick={() => this.changeColor(this.state.color)}>Change Color</button>
+
+        <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
+        <button id="red" onClick={() => this.setColor('red')}>Red</button>
       </div>
     );
   }
