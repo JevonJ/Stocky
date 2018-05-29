@@ -3,21 +3,15 @@ import { connect } from 'react-redux';
 import { Button, Fade, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import './Welcome.css';
 
+import Background from '../../images/welcome.jpeg';
+import * as actions from '../../actions';
+
 class Welcome extends Component {
   constructor() {
     super();
     this.state = {
-      color: 'white',
       popoverOpen: false,
     };
-  }
-
-  setColor(color) {
-    this.setState({ color });
-  }
-
-  changeColor(color) {
-    this.props.socket.emit('change color', color);
   }
 
   togglePopover() {
@@ -27,9 +21,10 @@ class Welcome extends Component {
   }
 
   render() {
+    const { setPlayer, players } = this.props;
     return (
       <Fade in tag="div" timeout={500}>
-        <div className="d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
+        <div className="d-flex w-100 h-100 p-3 mx-auto flex-column text-center main-container">
           <header className="masthead mb-auto">
             <div className="inner">
               <h3 className="masthead-brand">Stocky v0.1</h3>
@@ -47,9 +42,6 @@ class Welcome extends Component {
               <Button outline color="primary" size="lg">Join Game</Button>
               <Button outline color="primary" size="lg">Host Game</Button>
             </p>
-            <button onClick={() => this.changeColor(this.state.color)}>Change Color</button>
-            <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
-            <button id="red" onClick={() => this.setColor('red')}>Red</button>
           </main>
 
           <footer className="mastfoot mt-auto">
@@ -84,8 +76,10 @@ class Welcome extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log('redux state:', state);
-};
+const mapStateToProps = state => (
+  {
+    players: state.players,
+  }
+);
 
-export default connect(mapStateToProps)(Welcome);
+export default connect(mapStateToProps, actions)(Welcome);
