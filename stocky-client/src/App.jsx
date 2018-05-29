@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import listeners from './listeners';
-import Welcome from './components/login/Welcome';
+import Main from './components/login/Main';
 
 class App extends Component {
   componentWillMount() {
@@ -13,7 +14,9 @@ class App extends Component {
 
   render() {
     return (
-      <Welcome socket={this.socket} />
+      <Router>
+        <Main socket={this.socket} />
+      </Router>
     );
   }
 }
