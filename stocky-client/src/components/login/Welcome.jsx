@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Button, Fade, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import './Welcome.css';
 
+import * as actions from '../../actions';
+
 class Welcome extends Component {
   constructor() {
     super();
@@ -27,9 +29,10 @@ class Welcome extends Component {
   }
 
   render() {
+    const { setPlayer, players } = this.props;
     return (
       <Fade in tag="div" timeout={500}>
-        <div className="d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
+        <div style={{ backgroundColor: players }} className="d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
           <header className="masthead mb-auto">
             <div className="inner">
               <h3 className="masthead-brand">Stocky v0.1</h3>
@@ -84,8 +87,10 @@ class Welcome extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log('redux state:', state);
-};
+const mapStateToProps = state => (
+  {
+    players: state.players,
+  }
+);
 
-export default connect(mapStateToProps)(Welcome);
+export default connect(mapStateToProps, actions)(Welcome);
