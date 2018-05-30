@@ -2,9 +2,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
