@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
+
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Button, Fade, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import './Welcome.css';
+import logo from './logo1.png'; 
 
-class Welcome extends Component {
-  constructor() {
-    super();
-    this.state = {    
-      color: 'white',
-      popoverOpen: false,
+class GameList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+	 color: 'green',
+      dropdownOpen: false
     };
+  }
+
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
   }
 
   setColor(color) {
@@ -20,6 +32,7 @@ class Welcome extends Component {
     this.props.socket.emit('change color', color);
   }
 
+  
   togglePopover() {
   console.log(this.state.color);
     this.setState({
@@ -28,11 +41,16 @@ class Welcome extends Component {
     });
   }
 
+ 
+  
+
   render() {
     return (
       <Fade in tag="div" timeout={500}>
-        <div style={{backgroundColor:this.state.color}} className="d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
-          <header className="masthead mb-auto">
+	 
+	  <div style={{backgroundImage:'url(' + logo + ')'}} className="d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
+           
+		  <header className="masthead mb-auto">
             <div className="inner">
               <h3 className="masthead-brand">Stocky v0.1{this.state.color}</h3>
               <nav className="nav nav-masthead justify-content-center">
@@ -43,15 +61,27 @@ class Welcome extends Component {
           </header>
 
           <main role="main" className="inner cover">
-            <h1 className="cover-heading">Welcome to Stocky</h1>
-            <p className="lead">Would you like to join or host a game ?</p>
+            <h1 className="cover-heading">Game List</h1>
+            <p className="lead">Which game would you like to play ?</p>
             <p className="lead">
-              <Button outline color="primary" size="lg">Join Game</Button>
-              <Button outline color="primary" size="lg">Host Game</Button>
+              <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle caret>
+          Select Game
+        </DropdownToggle>
+        <DropdownMenu>
+          
+          <DropdownItem>Stocky</DropdownItem>
+          <DropdownItem>Brilliant Stocker</DropdownItem>
+          <DropdownItem>G Stock Market</DropdownItem>
+          
+        </DropdownMenu>
+      </ButtonDropdown>
             </p>
-            <button onClick={() => this.changeColor(this.state.color)}>Change Color</button>
-            <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
-            <button id="red" onClick={() => this.setColor('red')}>Red</button>
+			 <p className="lead">
+              <Button outline color="primary" size="lg" id="Popover1" onClick={() => this.togglePopover()}>Join Game</Button>
+             
+            </p>
+            
           </main>
 
           <footer className="mastfoot mt-auto">
@@ -77,6 +107,8 @@ class Welcome extends Component {
                     </ul>
                   </PopoverBody>
                 </Popover>
+				
+				
               </p>
             </div>
           </footer>
@@ -86,8 +118,10 @@ class Welcome extends Component {
   }
 }
 
+
+
 const mapStateToProps = (state) => {
   console.log('redux state:', state);
 };
 
-export default connect(mapStateToProps)(Welcome);
+export default connect(mapStateToProps)(GameList);
