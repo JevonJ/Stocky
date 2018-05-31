@@ -6,6 +6,7 @@ import { createLogger } from 'redux-logger';
 
 import reducers from './reducers';
 import Welcome from './components/login/Welcome';
+import Host from './components/login/Host';
 
 const logger = createLogger();
 
@@ -20,8 +21,8 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={createStore(reducers, applyMiddleware(logger))}>
-        <Welcome socket={this.socket} />
+        <Provider store={createStore(reducers, applyMiddleware(logger))}>
+            <Host socket={this.socket} />
       </Provider>
     );
   }
