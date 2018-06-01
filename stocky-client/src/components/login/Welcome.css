@@ -1,0 +1,14 @@
+/*
+ * Cover
+ */
+.loginWelcome-cover {
+  padding: 0 1.9rem;
+}
+.loginWelcome-cover .btn-lg {
+  padding: .75rem 1.25rem;
+  margin: 1em;
+  font-weight: 700;
+}
+.loginWelcome-cover p {
+  margin: 1em;  
+}
