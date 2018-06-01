@@ -5,6 +5,7 @@ import { Route, withRouter, NavLink } from 'react-router-dom';
 
 import * as actions from '../../actions';
 import Welcome from './Welcome';
+import Host from './Host';
 
 import './Main.css';
 
@@ -44,8 +45,8 @@ class Main extends Component {
                 exact
                 className="nav-link"
                 activeClassName="active"
-                href="/about"
-                to="/about"
+                href="/host-game"
+                to="/host-game"
               >
                 About
               </NavLink>
@@ -55,6 +56,7 @@ class Main extends Component {
 
         <Route exact path="/" component={Welcome} />
 
+        <Route exact path="/host-game" component={Host} />
         <Route exact path="/about" component={Welcome} />
 
         <footer className="mastfoot mt-auto">
