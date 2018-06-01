@@ -1,31 +1,24 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import reducers from './reducers';
-import Welcome from './components/login/Welcome';
-import Host from './components/login/Host';
-
-const logger = createLogger();
+import listeners from './listeners';
+import Main from './components/login/Main';
 
 class App extends Component {
   componentWillMount() {
     this.socket = socketIOClient('http://localhost:4001');
-
-    this.socket.on('change color', (col) => {
-      document.body.style.backgroundColor = col;
-    });
+    listeners(this.socket, this.props.dispatch);
   }
 
   render() {
     return (
-        <Provider store={createStore(reducers, applyMiddleware(logger))}>
-            <Host socket={this.socket} />
-      </Provider>
+      <Router>
+        <Main socket={this.socket} />
+      </Router>
     );
   }
 }
 
-export default App;
+export default connect()(App);
