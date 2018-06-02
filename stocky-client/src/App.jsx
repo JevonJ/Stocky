@@ -6,10 +6,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import listeners from './listeners';
 import Main from './components/login/Main';
 
+import { setPlayer, setRoom } from './actions';
+
 class App extends Component {
   componentWillMount() {
     this.socket = socketIOClient('http://localhost:4001');
-    listeners(this.socket, this.props.dispatch);
+    listeners(this.socket, this.props);
   }
 
   render() {
@@ -21,4 +23,4 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+export default connect(null, { setPlayer, setRoom })(App);

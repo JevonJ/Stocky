@@ -105,7 +105,7 @@ class Main extends Component {
             </div>
           </footer>
         </div>
-      </div>  
+      </div>
     );
   }
 }

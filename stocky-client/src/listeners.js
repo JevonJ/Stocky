@@ -1,7 +1,9 @@
-import { setPlayer } from './actions';
+export default (socket, actions) => {
+  socket.on('join_room', (player) => {
+    actions.setRoom(player);
+  });
 
-export default (socket, dispatch) => {
-  socket.on('change color', (player) => {
-    dispatch(setPlayer(player));
+  socket.on('set_player', (player) => {
+    actions.setPlayer(player);
   });
 };

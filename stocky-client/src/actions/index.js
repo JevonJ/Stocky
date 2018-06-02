@@ -1,8 +1,2 @@
-import { SET_PLAYER } from './types';
-
-export const setPlayer = (playerName) => {
-  return {
-    type: SET_PLAYER,
-    payload: playerName,
-  };
-};
+export * from './PlayerActions';
+export * from './RoomActions';
