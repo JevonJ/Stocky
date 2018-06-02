@@ -1,7 +1,9 @@
-export default(state = [], payload) => {
-  switch (payload) {
-    case 'addPlayer':
-      return [...state, payload.item];
+import { SET_PLAYER } from '../actions/types';
+
+export default(state = 'white', action) => {
+  switch (action.type) {
+    case SET_PLAYER:
+      return action.payload;
     default:
       return state;
   }
