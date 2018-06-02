@@ -5,9 +5,10 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 
 import reducers from './reducers';
-import Welcome from './components/login/Welcome';
+import Main from './components/login/Main';
 import GameList from './components/login/GameList';
-//import GameList from './components/login/PopupPassword';
+import Popuppassword from './components/login/Popuppassword';
+
 
 const logger = createLogger();
 
@@ -24,7 +25,7 @@ class App extends Component {
     return (
       <Provider store={createStore(reducers, applyMiddleware(logger))}>
        
-        <GameList socket={this.socket} />
+        <Main socket={this.socket} />
       </Provider>
     );
   }
