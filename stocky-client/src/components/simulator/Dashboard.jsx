@@ -343,7 +343,7 @@ class Dashboard extends Component {
             <div>
               <Card body outline color="warning">
                 <CardTitle>Current Events</CardTitle>
-                <CardText>Engineering sector is having a boom of/... <br/>ETI Group is udergoing a scandal...
+                <CardText>Engineering sector is having a boom of/... <br/>ETI Group is undergoing a scandal...
                 </CardText>
                 <Button color="secondary">Clear</Button>
               </Card>
