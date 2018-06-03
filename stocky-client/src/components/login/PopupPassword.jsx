@@ -1,92 +1,45 @@
-import React, { Component } from 'react';
+import React from 'react';
+// import { connect } from 'react-redux';
+import { Button, Fade, Form, FormGroup, Label, Input, Col } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
 
-import { ListGroup, ListGroupItem } from 'reactstrap';
-import { connect } from 'react-redux';
-import { Button, Fade, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
-//import { Popover, PopoverBody, PopoverHeader } from 'reactstrap';
-//import { Route, withRouter, NavLink } from 'react-router-dom';
-import './Welcome.css';
-import logo from './logo1.png'; 
-
-import * as actions from '../../actions';
-import Welcome from './Welcome';
-//import PopupPassword from './PopupPassword';
-
-class Popuppassword extends Component {
-  render() {
-    return (
+const Popuppassword = withRouter(({ history }) => (
       <Fade in tag="div" timeout={500}>
         <main role="main" className="inner cover">
-          <h1 className="cover-heading">Game List</h1>
-          <p className="lead">Which game would you like to play ?</p>
-          <p className="lead">
-            <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-              <DropdownToggle caret>
-                 Select Game
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem>Stocky</DropdownItem>
-                <DropdownItem>Brilliant Stocker</DropdownItem>
-                <DropdownItem>G Stock Market</DropdownItem>
-              </DropdownMenu>  
-            </ButtonDropdown>  
-            </p >
-      <p className="lead">
-              
-			 
-             
-      </p>
-      <div>
-        <InputGroup>
-        <InputGroupAddon addonType="prepend">@</InputGroupAddon>
-        <Input placeholder="username" />
-      </InputGroup>  
-      <br /> 
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>
-            <Input addon type="checkbox" aria-label="Checkbox for following text input" />
-          </InputGroupText>  
-        </InputGroupAddon>  
-      <Input placeholder="Check it out" />
-      </InputGroup>  
-      <br /> 
-      <InputGroup>
-        <Input placeholder="username" />
-        <InputGroupAddon addonType="append">@example.com</InputGroupAddon>
-      </InputGroup>  
-      <br /> 
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>$</InputGroupText>
-      <InputGroupText>$</InputGroupText>
-        </InputGroupAddon>  
-      <Input placeholder="Dolla dolla billz yo!" />
-      <InputGroupAddon addonType="append">
-        <InputGroupText>$</InputGroupText>
-      <InputGroupText>$</InputGroupText>
-        </InputGroupAddon>  
-      </InputGroup>  
-      <br /> 
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-      <Input placeholder="Amount" type="number" step="1" />
-      <InputGroupAddon addonType="append">.00</InputGroupAddon>
-      </InputGroup>  
-    </div >  
-            
-          </main >  
+        <Col sm={{ size: 10, offset: 2 }}>
+          <h1 className="cover-heading">Login To Your Game</h1>
+          </Col>
+        </main>
+        <div className="d-flex w-50 h-100 p-3 mx-auto flex-column">
+          <Form>
+
+             <FormGroup row>
+              <Label for="username" sm={4} style={{ textAlign: "right" }}>Username</Label>
+              <Col sm={8}>
+                <Input type="text" name="username" id="username"></Input>
+              </Col>
+            </FormGroup>
+          <FormGroup row>
+              <Label for="password" sm={4} style={{ textAlign: "right" }}>Password</Label>
+              <Col sm={8}>
+                <Input type="password" name="password" id="password"></Input>
+              </Col>
+            </FormGroup>
+           
+            <FormGroup check row>
+            <p className="lead">
+                <Button outline color="success" size="lg">Start Game</Button>{''}
+                <Button outline color="secondary" size="lg">Cancel</Button>
+              </p>
+            </FormGroup>
+          </Form>
+        </div>
       </Fade>
-    );
-  }
-}
+));
+// const mapStateToProps = (state) => {
+//   console.log('redux state:', state);
+//   return {};
+// };
+export default Popuppassword;
 
 
-
-const mapStateToProps = (state) => {
-  console.log('redux state:', state);
-};
-
-export default connect(mapStateToProps)(Popuppassword);
