@@ -6,6 +6,8 @@ import { Route, withRouter, NavLink } from 'react-router-dom';
 import * as actions from '../../actions';
 import Welcome from './Welcome';
 import Host from './Host';
+import GameList from './GameList';
+import PopupPassword from './Popuppassword';
 
 import BGImage from '../../images/welcome.jpeg'
 import './Main.css';
@@ -57,8 +59,8 @@ class Main extends Component {
                   exact
                   className="loginMain-nav-link"
                   activeClassName="active"
-                  href="/host-game"
-                  to="/host-game"
+                  href="/Game-List"
+                  to="/Game-List"
                 >
                   About
                 </NavLink>
@@ -67,9 +69,10 @@ class Main extends Component {
           </header>
 
           <Route exact path="/" component={Welcome} />
-
-          <Route exact path="/host-game" component={Host} />
+          <Route exact path="/host-game" component={Host } />
+          <Route exact path="/game-List" component={GameList } />
           <Route exact path="/about" component={Welcome} />
+          <Route exact path="/password" component={PopupPassword} />
 
           <footer className="loginMain-mastfoot mt-auto">
             <div className="inner">
