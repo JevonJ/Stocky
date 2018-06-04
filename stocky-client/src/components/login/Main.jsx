@@ -6,6 +6,7 @@ import { Route, withRouter, NavLink } from 'react-router-dom';
 import * as actions from '../../actions';
 import Welcome from './Welcome';
 import Host from './Host';
+import Lobby from './Lobby';
 
 import './Main.css';
 
@@ -58,6 +59,7 @@ class Main extends Component {
 
         <Route exact path="/host-game" component={Host} />
         <Route exact path="/about" component={Welcome} />
+        <Route exact path="/lobby" component={Lobby} />
 
         <footer className="mastfoot mt-auto">
           <div className="inner">
@@ -69,7 +71,7 @@ class Main extends Component {
                 id="Popover1"
                 onClick={() => this.togglePopover()}
               >
-                  Team Titans.
+                Team Titans.
               </button>
               <Popover
                 placement="top"
