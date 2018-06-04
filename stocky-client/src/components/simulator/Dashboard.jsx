@@ -30,7 +30,7 @@ class Dashboard extends Component {
       <Row>
         <Col sm="3">
           <Row>
-            <Button color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
+            <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
           </Row>
           <Row>
             <Collapse isOpen={this.state.collapse}>
@@ -71,7 +71,7 @@ class Dashboard extends Component {
             </Collapse>
           </Row>
           <Row>
-            <Button color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
+            <Button outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
           </Row>
           <Row>
             <Collapse isOpen={this.state.collapse1}>
@@ -125,7 +125,7 @@ class Dashboard extends Component {
                   isOpen={this.state.btnDropright}
                   toggle={() => this.setState({ btnDropright: !this.state.btnDropright })}
                 >
-                  <DropdownToggle caret>
+                  <DropdownToggle outline caret>
                     Search by
                   </DropdownToggle>
                   <DropdownMenu>
@@ -327,7 +327,7 @@ class Dashboard extends Component {
         <Col sm="3">
           <Row>
             <Col sm="6">
-              <div>
+              <div align="center">
                 <Card body inverse color="danger" className="text-center">
                   <CardTitle><h3>Round Number</h3></CardTitle>
                   <CardText><h3>2</h3></CardText>
@@ -335,6 +335,7 @@ class Dashboard extends Component {
               </div>
             </Col>
             <Col sm="6">
+              <p><b>Time is Running!!!</b></p>
               <CountDown
                 seconds={60}
                 color="#000"
@@ -383,7 +384,7 @@ class Dashboard extends Component {
                 {
                   this.state.news.map(newselement => <CardText>{newselement}</CardText>)
                 }
-                <Button onClick={() => this.addTonews()} color="secondary">Clear</Button>
+                <Button onClick={() => this.addTonews()} outline color="secondary">Clear</Button>
               </Card>
             </div>
           </Row>
@@ -397,7 +398,7 @@ class Dashboard extends Component {
                     <ListGroupItem>ETI Group is undergoing a scandal...</ListGroupItem>
                   </ListGroup>
                 </CardText>
-                <Button color="secondary">Clear</Button>
+                <Button outline color="secondary">Clear</Button>
               </Card>
             </div>
           </Row>

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import SimulatorMain from './components/simulator/SimulatorMain';
 
 import listeners from './listeners';
 import Main from './components/login/Main';
@@ -16,10 +15,12 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <SimulatorMain socket={this.socket} />
+        <Main socket={this.socket} />
       </Router>
     );
   }
 }
 
 export default connect()(App);
+
+

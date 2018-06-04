@@ -7,7 +7,7 @@ import * as actions from '../../actions';
 import Welcome from './Welcome';
 import Host from './Host';
 import GameList from './GameList';
-import PopupPassword from './Popuppassword';
+import PopupPassword from './PopupPassword';
 
 import BGImage from '../../images/welcome.jpeg'
 import './Main.css';
