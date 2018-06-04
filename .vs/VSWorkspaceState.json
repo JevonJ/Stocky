@@ -1,12 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\stocky-client",
     "\\stocky-client\\src",
     "\\stocky-client\\src\\components",
-    "\\stocky-client\\src\\components\\login",
-    "\\stocky-server"
+    "\\stocky-client\\src\\components\\login"
   ],
-  "SelectedNode": "\\stocky-client\\src\\components\\login\\Main.css",
+  "SelectedNode": "\\stocky-client",
   "PreviewInSolutionExplorer": false
 }
