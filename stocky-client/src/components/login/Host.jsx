@@ -1,9 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Fade, Form, FormGroup, Label, Input, Col } from 'reactstrap';
-import { withRouter } from 'react-router';
 
-const Host = withRouter(({ history }) => (
+const Host = () => (
   <Fade in tag="div" timeout={200}>
     <main role="main" className="inner cover">
       <h1 className="cover-heading">Signup</h1>
@@ -36,14 +35,14 @@ const Host = withRouter(({ history }) => (
         </FormGroup>
         <FormGroup check row>
           <Col sm={{ size: 10, offset: 2 }}>
-            <Button outline color="success" onClick={() => { history.push('/lobby') }} size="lg">Create</Button>{'  '}
+            <Button outline color="success" size="lg">Create</Button>{'  '}
             <Button outline color="secondary" size="lg">Cancel</Button>
           </Col>
         </FormGroup>
       </Form>
     </div>
   </Fade>
-));
+);
 const mapStateToProps = (state) => {
   console.log('redux state:', state);
   return {};
