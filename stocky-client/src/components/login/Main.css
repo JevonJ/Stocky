@@ -3,66 +3,42 @@
  */
 
 /* Links */
-a,
-a:focus,
-a:hover {
+.loginMain-a,
+.loginMain-a:focus {
   color: #fff;
 }
 
-.btn-link {
+.loginMain-a:hover {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.loginMain-btn-link {
   color: #fff;
 }
 
-/* Custom default button */
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
-  color: #333;
-  text-shadow: none; /* Prevent inheritance from `body` */
-  background-color: #fff;
-  border: .05rem solid #fff;
+.loginMain-btn-link:hover {
+  color: #aaa;
+  text-decoration: none;
 }
 
-
-/*
- * Base structure
- */
-html,
-body {
-  height: 100%;
-  background-size: cover;
-  background-image: url(../../images/welcome.jpeg);
-}
-
-body {
-  display: -ms-flexbox;
-  display: flex;
-  color: #fff;
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-}
-
-.cover-container {
-  max-width: 42em;
-}
-
-.main-container {
+.loginMain-container {
   background-color: rgba(0, 0, 0, .8);
 }
 
 /*
  * Header
  */
-.masthead {
+.loginMain-masthead {
   margin-bottom: 2rem;
   padding: 2em 2em 0 2em;
 }
 
-.masthead-brand {
+.loginMain-masthead-brand {
   margin-bottom: 0;
 }
 
-.nav-masthead .nav-link {
+.loginMain-nav-masthead .loginMain-nav-link {
   padding: .25rem 0;
   font-weight: 700;
   color: rgba(255, 255, 255, .5);
@@ -70,49 +46,36 @@ body {
   border-bottom: .25rem solid transparent;
 }
 
-.nav-masthead .nav-link:hover,
-.nav-masthead .nav-link:focus {
+.loginMain-nav-masthead .loginMain-nav-link:hover,
+.loginMain-nav-masthead .loginMain-nav-link:focus {
   border-bottom-color: rgba(255, 255, 255, .25);
 }
 
-.nav-masthead .nav-link + .nav-link {
+loginMain-nav-link {
+  text-decoration-line: none;
+}
+
+.loginMain-nav-masthead .loginMain-nav-link + .loginMain-nav-link {
   margin-left: 1rem;
 }
 
-.nav-masthead .active {
+.loginMain-nav-masthead .active {
   color: #fff;
   border-bottom-color: #fff;
 }
 
 @media (min-width: 48em) {
-  .masthead-brand {
+  .loginMain-masthead-brand {
     float: left;
   }
-  .nav-masthead {
+  .loginMain-nav-masthead {
     float: right;
   }
 }
 
-
-/*
- * Cover
- */
-.cover {
-  padding: 0 1.9rem;
-}
-.cover .btn-lg {
-  padding: .75rem 1.25rem;
-  margin: 1em;
-  font-weight: 700;
-}
-.cover p {
-  margin: 1em;  
-}
-
-
 /*
  * Footer
  */
-.mastfoot {
+.loginMain-mastfoot {
   color: rgba(255, 255, 255, .5);
 }
