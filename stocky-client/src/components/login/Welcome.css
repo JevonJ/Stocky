@@ -1,0 +1,16 @@
+/*
+ * Cover
+ */
+.loginWelcome-cover {
+  padding-left: 30%;
+  padding-right: 30%;
+}
+.loginWelcome-cover .btn-lg {
+  padding: .75rem 1.25rem;
+  margin: 1em;
+  font-weight: 700;
+}
+.loginWelcome-cover p {
+  margin: 1em;  
+}
+
