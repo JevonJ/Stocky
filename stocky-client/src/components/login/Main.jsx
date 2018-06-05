@@ -8,6 +8,7 @@ import Welcome from './Welcome';
 import Host from './Host';
 import GameList from './GameList';
 import PopupPassword from './PopupPassword';
+import Lobby from './Lobby';
 
 import BGImage from '../../images/welcome.jpeg'
 import './Main.css';
@@ -73,6 +74,7 @@ class Main extends Component {
           <Route exact path="/game-List" component={GameList } />
           <Route exact path="/about" component={Welcome} />
           <Route exact path="/password" component={PopupPassword} />
+          <Route exact path="/lobby" component={Lobby} />
 
           <footer className="loginMain-mastfoot mt-auto">
             <div className="inner">
