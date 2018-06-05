@@ -8,6 +8,7 @@ import stocks from './stocksReducer';
 import sectors from './sectorsReducer';
 import sectorStocks from './sectorStocksReducer';
 import stockInfo from './stockInfoReducer';
+import common from './commonReducer';
 
 export default combineReducers({
   rooms,
@@ -18,4 +19,5 @@ export default combineReducers({
   sectors,
   sectorStocks,
   stockInfo,
+  common,
 });

@@ -1,6 +1,10 @@
 export default (socket, actions) => {
-  socket.on('join_room', (player) => {
-    actions.setRoom(player);
+  socket.on('set_rooms', (rooms) => {
+    actions.setRoom(rooms);
+  });
+
+  socket.on('set_room_info', (roomInfo) => {
+    actions.setRoomInfo(roomInfo);
   });
 
   socket.on('set_player', (player) => {

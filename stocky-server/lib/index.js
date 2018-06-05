@@ -4,6 +4,7 @@ import Cluster from 'cluster';
 import SocketIO from 'socket.io';
 import StickySessions from 'sticky-session';
 import { createStore, compose, applyMiddleware } from 'redux';
+import cors from 'cors';
 
 import store from './store';
 
@@ -18,7 +19,16 @@ const app = Express(),
 // Set public folder
 app.use(Express.static('public'));
 
-app.get('/hello', (req, res) => res.send("Hello world"));
+app.use(cors());
+
+app.get('/api/check-status', (req, res) => res.status(200).json({ Connected: true }));
+app.get('/api/init-data', (req, res) => {
+  const { rooms, roomInfo } = store.getState();
+  res.status(200).json({
+    rooms,
+    roomInfo
+  });
+});
 
 //this creates a socket using the server instance
 const io = SocketIO(server);

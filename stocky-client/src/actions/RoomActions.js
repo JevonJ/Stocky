@@ -1,8 +1,8 @@
-import { SET_ROOM } from './types';
+import { SET_ROOMS } from './types';
 
 export const setRoom = (roomName) => {
   return {
-    type: SET_ROOM,
+    type: SET_ROOMS,
     payload: roomName,
   };
 };
