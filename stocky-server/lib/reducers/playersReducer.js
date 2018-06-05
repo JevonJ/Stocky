@@ -5,8 +5,10 @@ const InitialState = {};
 export default (state = InitialState, action) => {
   switch (action.type) {
     case SET_PLAYER:
-      return { ...action.payload };
+      const newState = { ...state };
+      newState[action.payload.room] = [action.payload.player]; 
+      return { ...newState };
     default:
       return state;
-  }
+  } 
 };

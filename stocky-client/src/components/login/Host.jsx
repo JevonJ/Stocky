@@ -1,51 +1,124 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Fade, Form, FormGroup, Label, Input, Col } from 'reactstrap';
+import { Button, Fade, Form, FormGroup, Label, Input } from 'reactstrap';
 
-const Host = () => (
-  <Fade in tag="div" timeout={200}>
-    <main role="main" className="inner cover">
-      <h1 className="cover-heading">Signup</h1>
-    </main>
-    <div className="d-flex w-50 h-100 p-3 mx-auto flex-column">
-      <Form>
-        <FormGroup row>
-          <Label for="lobbyName" sm={4} style={{ textAlign: "right" }}>Lobby Name</Label>
-          <Col sm={8}>
-            <Input type="text" name="lobbyName" id="lobbyName"></Input>
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="username" sm={4} style={{ textAlign: "right" }}>Username</Label>
-          <Col sm={8}>
-            <Input type="text" name="username" id="username"></Input>
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="private" sm={4} style={{ textAlign: "right" }}>Private</Label>
-          <Col sm={2}>
-            <Input type="checkbox" name="private" id="private"></Input>
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="password" sm={4} style={{ textAlign: "right" }}>Password</Label>
-          <Col sm={8}>
-            <Input type="password" name="password" id="password"></Input>
-          </Col>
-        </FormGroup>
-        <FormGroup check row>
-          <Col sm={{ size: 10, offset: 2 }}>
-            <Button outline color="success" size="lg">Create</Button>{'  '}
-            <Button outline color="secondary" size="lg">Cancel</Button>
-          </Col>
-        </FormGroup>
-      </Form>
-    </div>
-  </Fade>
-);
-const mapStateToProps = (state) => {
-  console.log('redux state:', state);
-  return {};
-};
+class Host extends Component {
+  constructor() {
+    super();
 
-export default connect(mapStateToProps)(Host);
+    this.state = {
+      hostForm: {
+        roomName: '',
+        username: '',
+        isPrivate: false,
+        password: '',
+      },
+    };
+  }
+
+  onInputChange({ target: { name, value } }) {
+    const hostForm = { ...this.state.hostForm };
+    hostForm[name] = value;
+    this.setState({ hostForm });
+  }
+
+  onCheckboxChange({ target: { name, checked } }) {
+    const hostForm = { ...this.state.hostForm };
+    hostForm[name] = checked;
+    this.setState({ hostForm });
+  }
+
+  createGame() {
+    const {
+      hostForm: {
+        roomName, username, password,
+      },
+    } = this.state;
+    this.props.socket.emit('create_game', this.state.hostForm);
+  }
+
+  render() {
+    const {
+      hostForm: {
+        roomName, username, isPrivate, password,
+      },
+    } = this.state;
+
+    const { socket, history } = this.props;
+    console.log(this.props);
+
+    return (
+      <Fade in tag="div" timeout={500}>
+        <main role="main" className="inner loginWelcome-cover">
+          <h1 className="loginWelcome-cover-heading">Select a Game Room</h1>
+          <Form>
+            <FormGroup row>
+              <Label for="roomName">Game Room Name</Label>
+              <Input
+                type="text"
+                name="roomName"
+                id="roomName"
+                onChange={e => this.onInputChange(e)}
+                value={roomName}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="username">Username</Label>
+              <Input
+                type="text"
+                name="username"
+                id="username"
+                onChange={e => this.onInputChange(e)}
+                value={username}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label check>
+                <Input
+                  type="checkbox"
+                  name="isPrivate"
+                  id="isPrivate"
+                  onChange={e => this.onCheckboxChange(e)}
+                  value={isPrivate}
+                />
+                Private
+              </Label>
+            </FormGroup>
+            { isPrivate &&
+              <FormGroup row>
+                <Label for="password">Password</Label>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  onChange={e => this.onInputChange(e)}
+                  value={password}
+                />
+              </FormGroup>
+            }
+          </Form>
+          <p className="lead">
+            <Button
+              outline
+              color="success"
+              size="lg"
+              onClick={() => this.createGame()}
+            >
+              Create Game
+            </Button>
+            <Button
+              outline
+              color="secondary"
+              size="lg"
+              onClick={() => history.goBack()}
+            >
+              Cancel
+            </Button>
+          </p>
+        </main>
+      </Fade>
+    );
+  }
+}
+
+export default connect(null)(Host);

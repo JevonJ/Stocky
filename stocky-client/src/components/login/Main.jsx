@@ -3,23 +3,24 @@ import { connect } from 'react-redux';
 import { Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 
-import * as actions from '../../actions';
 import Welcome from './Welcome';
 import Host from './Host';
 import GameList from './GameList';
 import PopupPassword from './PopupPassword';
+import Loading from './Loading';
 
-import BGImage from '../../images/welcome.jpeg'
+import BGImage from '../../images/welcome.jpeg';
 import './Main.css';
 
 const styles = {
   container: {
     backgroundSize: 'cover',
-    display: 'flex', color: '#fff',
+    display: 'flex',
+    color: '#fff',
     backgroundImage: `url(${BGImage})`,
     boxShadow: 'inset 0 0 5rem rgba(0, 0, 0, 1)',
     textShadow: '0 .05rem .1rem rgba(0, 0, 0, .5)',
-  }
+  },
 };
 
 class Main extends Component {
@@ -37,7 +38,7 @@ class Main extends Component {
   }
 
   render() {
-    const { setPlayer, players } = this.props;
+    const { socket } = this.props;
 
     return (
       <div style={styles.container}>
@@ -68,11 +69,18 @@ class Main extends Component {
             </div>
           </header>
 
-          <Route exact path="/" component={Welcome} />
-          <Route exact path="/host-game" component={Host } />
-          <Route exact path="/game-List" component={GameList } />
-          <Route exact path="/about" component={Welcome} />
-          <Route exact path="/password" component={PopupPassword} />
+          {
+            this.props.isLoading ?
+              <Loading />
+                :
+              <div>
+                <Route exact path="/" component={Welcome} />
+                <Route exact path="/host-game" component={({ history }) => <Host history={history} socket={socket} />} />
+                <Route exact path="/game-List" component={GameList} />
+                <Route exact path="/about" component={Welcome} />
+                <Route exact path="/password" component={PopupPassword} />
+              </div>
+          }
 
           <footer className="loginMain-mastfoot mt-auto">
             <div className="inner">
@@ -108,7 +116,7 @@ class Main extends Component {
             </div>
           </footer>
         </div>
-      </div>  
+      </div>
     );
   }
 }
@@ -116,7 +124,8 @@ class Main extends Component {
 const mapStateToProps = state => (
   {
     players: state.players,
+    isLoading: state.common.isLoading,
   }
 );
 
-export default withRouter(connect(mapStateToProps, actions)(Main));
+export default withRouter(connect(mapStateToProps)(Main));

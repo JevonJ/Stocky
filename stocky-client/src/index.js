@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReduxThunk from 'redux-thunk';
 
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -14,7 +15,7 @@ import './index.css';
 const logger = createLogger();
 
 ReactDOM.render(
-  <Provider store={createStore(reducers, applyMiddleware(logger))}>
+  <Provider store={createStore(reducers, applyMiddleware(ReduxThunk, logger))}>
     <App />
   </Provider>
   , document.getElementById('root'),

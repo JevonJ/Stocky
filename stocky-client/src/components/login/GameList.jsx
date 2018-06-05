@@ -1,41 +1,59 @@
-import React from 'react';
-//import { connect } from 'react-redux';
-import { Button, Fade, Form, FormGroup, Label, Input, Col } from 'reactstrap';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Button, Fade, Form, FormGroup, Input } from 'reactstrap';
 
-const GameList = withRouter(({ history }) => (
-  <Fade in tag="div" timeout={500}>
-    <main role="main" className="inner cover">
-      <Col sm={{ size: 10, offset: 2 }}>
-        <h1 className="cover-heading">Game List</h1>
-      </Col>
-    </main>
-    <div className="d-flex w-50 h-100 p-3 mx-auto flex-column">
-      <Form>
-        <FormGroup row>
-          <Label for="selectgame" sm={4} style={{ textAlign: "right" }}>Select Your game</Label>
-          <Col sm={8}>
-            <Input type="select" name="selectgame" id="selectgame" >
-              <option>Stocky</option>
-              <option>Brilliant Stocker</option>
-              <option>Stock Marker</option>
-              <option>Stocker</option>
-            </Input>
-          </Col>
-        </FormGroup>
-        <FormGroup check row>
-          <Col sm={{ size: 12, offset: 2 }}>
-            <Button outline color="success" onClick={() => history.push('/password')} size="lg">Login Game</Button>{'  '}
-          </Col>
-        </FormGroup>
-      </Form>
-    </div>
-  </Fade>
-));
+class GameList extends Component {
+  static renderGameList(room) {
+    return (
+      <option key={room}>{room}</option>
+    );
+  }
 
-// const mapStateToProps = (state) => {
-//   console.log('redux state:', state);
-//   return {};
-// };
+  render() {
+    const { rooms, history } = this.props;
 
-export default GameList;
+    return (
+      <Fade in tag="div" timeout={500}>
+        <main role="main" className="inner loginWelcome-cover">
+          <h1 className="loginWelcome-cover-heading">Select a Game Room</h1>
+          <Form>
+            <FormGroup>
+              <Input type="select" name="selectMulti" id="selectgame" multiple bsSize="lg">
+                {
+                  rooms.map(room => GameList.renderGameList(room))
+                }
+              </Input>
+            </FormGroup>
+          </Form>
+          <p className="lead">
+            <Button
+              outline
+              color="success"
+              size="lg"
+              onClick={() => history.push('/password')}
+            >
+              Join Game
+            </Button>
+            <Button
+              outline
+              color="secondary"
+              size="lg"
+              onClick={() => history.goBack()}
+            >
+              Cancel
+            </Button>
+          </p>
+        </main>
+      </Fade>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    rooms: state.rooms,
+    roomInfo: state.roomInfo,
+  };
+};
+
+export default connect(mapStateToProps)(GameList);
