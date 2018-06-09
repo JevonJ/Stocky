@@ -7,6 +7,7 @@ import Welcome from './Welcome';
 import Host from './Host';
 import GameList from './GameList';
 import PopupPassword from './PopupPassword';
+import Lobby from './Lobby';
 import Loading from './Loading';
 
 import BGImage from '../../images/welcome.jpeg';
@@ -79,6 +80,7 @@ class Main extends Component {
                 <Route exact path="/game-List" component={GameList} />
                 <Route exact path="/about" component={Welcome} />
                 <Route exact path="/password" component={PopupPassword} />
+                <Route exact path="/lobby" component={Lobby} />
               </div>
           }
 
