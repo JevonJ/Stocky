@@ -2,24 +2,30 @@ import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import SimulatorMain from './components/simulator/SimulatorMain';
 
+import BuyModalMain from './components/modals/BuyModalMain';
 import listeners from './listeners';
 import Main from './components/login/Main';
 
+import { setRoom, setPlayer, initialize, setRoomInfo } from './actions';
+
 class App extends Component {
   componentWillMount() {
-    this.socket = socketIOClient('http://localhost:4001');
-    listeners(this.socket, this.props.dispatch);
+    const socket = socketIOClient('http://localhost:4001');
+    listeners(socket, this.props);
+
+    this.socket = socket;
+
+    this.props.initialize();
   }
 
   render() {
     return (
       <Router>
-        <SimulatorMain socket={this.socket} />
+        <Main socket={this.socket} />
       </Router>
     );
   }
 }
 
-export default connect()(App);
+export default connect(null, { setRoom, setPlayer, initialize, setRoomInfo })(App);
