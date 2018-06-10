@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+import http from 'axios/lib/adapters/http';
 import { SET_PLAYER, SET_IS_LOADING, SET_ROOMS, SET_ROOM_INFO } from './types';
 
 function getInitialData() {
-  return axios.get('http://localhost:4001/api/init-data');
+  return axios.get('http://localhost:4001/api/init-data', {
+    adapter: http,
+  });
 }
 
 export const initialize = () => {
@@ -14,7 +17,10 @@ export const initialize = () => {
         dispatch({ type: SET_ROOM_INFO, payload: data.roomInfo });
         dispatch({ type: SET_IS_LOADING, payload: false });
       },
-      error => console.log('AAAAAAAa', error),
+      (error) => {
+        if (!error.response) console.log('Network Error');
+        if (error.response) console.log(error.response);
+      },
     );
   };
 };
