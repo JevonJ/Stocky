@@ -1,5 +1,8 @@
 export const SET_PLAYER = 'SET_PLAYER';
 
+//  user types
+export const SET_USER = 'SET_USER';
+
 // room types
 export const SET_ROOMS = 'SET_ROOM';
 

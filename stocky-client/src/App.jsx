@@ -22,7 +22,7 @@ class App extends Component {
         <Main socket={this.socket} />
       </Provider>
     );
-  }
+  } 
 }
 
 export default App;

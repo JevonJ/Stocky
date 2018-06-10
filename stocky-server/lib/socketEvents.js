@@ -9,9 +9,9 @@ export default function (io, { dispatch, getState}) {
       console.log(data);
       socket.join(data.roomName, () => {
         dispatch(setRoom(data.roomName)).then(() => {
+          const State = getState();
+          io.emit('set_rooms', State.rooms);
           dispatch(setRoomInfo(data)).then(() => {
-            const State = getState();
-            io.emit('set_rooms', State.rooms);
             io.emit('set_room_info', State.roomInfo)
           });
         });
@@ -19,7 +19,7 @@ export default function (io, { dispatch, getState}) {
     });
 
     socket.on('set_player', (data) => {
-      dispatch(setPlayer(data));
+      dispatch(setPlayer(data)); 
       io.emit('set_player', data);
     });
 

@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import listeners from '../listeners';
 import Main from '../components/login/Main';
+import BuyModalMain from './modals/BuyModalMain';
 
 import { setRoom, setPlayer, initialize, setRoomInfo } from '../actions';
 
