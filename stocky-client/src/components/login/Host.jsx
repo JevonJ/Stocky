@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Fade, Form, FormGroup, Label, Input } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class Host extends Component {
   constructor() {
@@ -29,11 +30,6 @@ class Host extends Component {
   }
 
   createGame() {
-    const {
-      hostForm: {
-        roomName, username, password,
-      },
-    } = this.state;
     this.props.socket.emit('create_game', this.state.hostForm);
   }
 
@@ -44,8 +40,7 @@ class Host extends Component {
       },
     } = this.state;
 
-    const { socket, history } = this.props;
-    console.log(this.props);
+    const { history } = this.props;
 
     return (
       <Fade in tag="div" timeout={500}>
@@ -120,5 +115,12 @@ class Host extends Component {
     );
   }
 }
+
+Host.propTypes = {
+  socket: PropTypes.shape({
+    emit: PropTypes.func.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({}).isRequired,
+};
 
 export default connect(null)(Host);

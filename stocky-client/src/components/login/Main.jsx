@@ -8,6 +8,7 @@ import Host from './Host';
 import GameList from './GameList';
 import PopupPassword from './PopupPassword';
 import Loading from './Loading';
+import Lobby from './Lobby';
 
 import BGImage from '../../images/welcome.jpeg';
 import './Main.css';
@@ -76,6 +77,7 @@ class Main extends Component {
               <div>
                 <Route exact path="/" component={Welcome} />
                 <Route exact path="/host-game" component={({ history }) => <Host history={history} socket={socket} />} />
+                <Route exact path="/lobby" component={Lobby} />
                 <Route exact path="/game-List" component={GameList} />
                 <Route exact path="/about" component={Welcome} />
                 <Route exact path="/password" component={PopupPassword} />

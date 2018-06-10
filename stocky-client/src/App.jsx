@@ -1,31 +1,28 @@
 import React, { Component } from 'react';
-import socketIOClient from 'socket.io-client';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
+import ReduxThunk from 'redux-thunk';
 
-import BuyModalMain from './components/modals/BuyModalMain';
-import listeners from './listeners';
-import Main from './components/login/Main';
+import Main from './components/Main';
+import reducers from './reducers';
 
-import { setRoom, setPlayer, initialize, setRoomInfo } from './actions';
+const logger = createLogger();
+
+let middleWare = [ReduxThunk];
 
 class App extends Component {
-  componentWillMount() {
-    const socket = socketIOClient('http://localhost:4001');
-    listeners(socket, this.props);
-
-    this.socket = socket;
-
-    this.props.initialize();
-  }
-
   render() {
+    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+      middleWare = [...middleWare, logger];
+    }
+
     return (
-      <Router>
+      <Provider store={createStore(reducers, applyMiddleware(...middleWare))}>
         <Main socket={this.socket} />
-      </Router>
+      </Provider>
     );
-  }
+  } 
 }
 
-export default connect(null, { setRoom, setPlayer, initialize, setRoomInfo })(App);
+export default App;
