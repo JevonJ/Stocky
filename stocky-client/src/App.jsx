@@ -3,6 +3,7 @@ import socketIOClient from 'socket.io-client';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import BuyModalMain from './components/modals/BuyModalMain';
 import listeners from './listeners';
 import Main from './components/login/Main';
 

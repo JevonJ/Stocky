@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
+import DashboardHeader from './DashboardHeader';
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
