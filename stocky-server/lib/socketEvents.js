@@ -4,15 +4,28 @@ export default function (io, { dispatch, getState}) {
   // Set socket.io listeners.
   io.on('connect', (socket) => {
     console.log('User connected: ', socket.id);
+    io.origins((origin, callback) => {
+      if (origin !== 'http://localhost:3000') {
+        return callback('origin not allowed', false);
+      }
+
+      callback(null, true);
+    });
 
     socket.on('create_game', (data) => {
-      console.log(data);
-      socket.join(data.roomName, () => {
-        dispatch(setRoom(data.roomName)).then(() => {
-          const State = getState();
-          io.emit('set_rooms', State.rooms);
+      socket.join(data.room, () => {
+        socket.room = data.room;        
+        dispatch(setRoom(data.room)).then(() => {
           dispatch(setRoomInfo(data)).then(() => {
+            const State = getState();
+            io.emit('set_rooms', State.rooms);
             io.emit('set_room_info', State.roomInfo)
+          });
+          dispatch(setPlayer(data)).then(() => {
+            const State = getState();
+            io.to(data.room).emit('set_players', State.players[data.room]);
+            socket.emit('set_user', { name: data.username, host: true, room: data.room });
+            socket.emit('go_to_lobby');
           });
         });
       });
@@ -35,14 +48,9 @@ export default function (io, { dispatch, getState}) {
     });
 
     socket.on('disconnect', (data) => {
-      console.log('user disconnected:', socket.id);
-
-      socket.leave(socket.room);
-      dispatch(removeRoom('AAD')).then(() => {
+      dispatch(removeRoom(socket.room)).then(() => {
         io.emit('set_rooms', getState().rooms);
       });
-      
-      // socket.broadcast.to('justin bieber fans').emit('set_player');
     });
   });
 }

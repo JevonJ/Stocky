@@ -25,7 +25,7 @@ export const initialize = () => {
   };
 };
 
-export const setPlayer = playerName => ({
+export const setPlayer = players => ({
   type: SET_PLAYER,
-  payload: playerName,
+  payload: players,
 });

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import listeners from '../listeners';
-import Main from '../components/login/Main';
-import BuyModalMain from './modals/BuyModalMain';
+import { setRoom, setPlayer, initialize, setRoomInfo, setUser } from '../actions';
 
-import { setRoom, setPlayer, initialize, setRoomInfo } from '../actions';
+import LoginMain from '../components/login/Main';
+import Simulator from './simulator/SimulatorMain';
 
-class App extends Component {
+class Main extends Component {
   componentWillMount() {
     const socket = socketIOClient('http://localhost:4001');
     listeners(socket, this.props);
@@ -23,11 +24,19 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <Main socket={this.socket} />
-      </Router>
+      <Switch>
+        <Route exact path="/" component={() => <Redirect to="/login" />} />
+        <Route path="/login" component={props => <LoginMain socket={this.socket} {...props} />} />
+        <Route exact path="/simulator" component={Simulator} />
+      </Switch>
     );
   }
 }
 
-export default connect(null, { setRoom, setPlayer, initialize, setRoomInfo })(App);
+Main.propTypes = {
+  initialize: PropTypes.func.isRequired,
+};
+
+export default connect(null, {
+  setRoom, setPlayer, initialize, setRoomInfo, setUser,
+})(Main);

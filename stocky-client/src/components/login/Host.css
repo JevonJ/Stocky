@@ -1,0 +1,12 @@
+.loginHost-cover {
+  padding-left: 30%;
+  padding-right: 30%;
+}
+.loginHost-cover .btn-lg {
+  padding: .75rem 1.25rem;
+  margin: 1em;
+  font-weight: 700;
+}
+.loginHost-cover p {
+  margin: 1em;  
+}

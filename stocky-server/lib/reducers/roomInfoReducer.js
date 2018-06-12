@@ -6,11 +6,11 @@ export default (state = InitialState, { payload, type }) => {
   switch (type) {
     case SET_ROOM_INFO:
       let newState = { ...state };
-      newState[payload.roomName] = {
+      newState[payload.room] = {
         round: 0,
         isPrivate: payload.isPrivate,
         password: payload.password,
-        name: payload.roomName
+        name: payload.room
       }
       return { ...newState };
     default:

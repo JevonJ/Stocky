@@ -7,7 +7,15 @@ export default (socket, actions) => {
     actions.setRoomInfo(roomInfo);
   });
 
-  socket.on('set_player', (player) => {
-    actions.setPlayer(player);
+  socket.on('set_players', (players) => {
+    actions.setPlayer(players);
+  });
+
+  socket.on('set_user', (user) => {
+    actions.setUser(user);
+  });
+
+  socket.on('go_to_lobby', () => {
+    actions.history.push('/login/lobby');
   });
 };
