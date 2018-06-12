@@ -3,12 +3,28 @@ import { connect } from 'react-redux';
 import { Button, Fade, Row, Col, Container, Table } from 'reactstrap';
 
 class Lobby extends Component {
+  static renderUsers(player, index) {
+    return (
+      <tr key={player}>
+        <th scope="row">{index + 1}</th>
+        <td>{player.name}</td>
+      </tr>
+    );
+  }
+
+  componentWillMount() {
+    const { user, history } = this.props;
+    if (user.constructor === Object && Object.keys(user).length === 0) {
+      history.replace('/');
+    }
+  }
 
   render() {
+    const { user, players } = this.props;
     return (
       <Fade in tag="div" timeout={200}>
         <main role="main" className="inner cover">
-          <h1 className="cover-heading">Lobby</h1>
+          <h1 className="cover-heading">Lobby : {user && user.room}</h1>
           <p className="lead">Connected Players</p>
         </main>
         <Container>
@@ -19,25 +35,12 @@ class Lobby extends Component {
                   <tr>
                     <th>#</th>
                     <th>Username</th>
-                    <th>Email</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>AshaneAlvis</td>
-                    <td>ashanealvis@gmail.com</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>JevonJanz</td>
-                    <td>jevonjaz@gmail.com</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>SamSmith</td>
-                    <td>samsmith@gmail.com</td>
-                  </tr>
+                  {
+                    players && players.map((player, index) => Lobby.renderUsers(player, index))
+                  }
                 </tbody>
               </Table>
             </Col>
@@ -49,13 +52,13 @@ class Lobby extends Component {
           </Row>
         </Container>
       </Fade>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log('redux state:', state);
-  return {};
-};
+const mapStateToProps = ({ user, players }) => ({
+  user,
+  players,
+});
 
 export default connect(mapStateToProps)(Lobby);
