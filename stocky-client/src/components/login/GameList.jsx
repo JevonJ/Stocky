@@ -17,11 +17,12 @@ class GameList extends Component {
       username: 'jevon',
       password: '',
       visibility: false,
+      selectedRoom: '',
     };
   }
 
   onInputChange({ target: { name, value } }) {
-    console.log(name, value);
+    console.log('DDDDDDD');
     const newState = { ...this.state };
     newState[name] = value;
     this.setState(newState);
@@ -33,6 +34,34 @@ class GameList extends Component {
     });
   }
 
+  onSelectChange({ target: { value } }) {
+    this.setState({
+      selectedRoom: [value],
+    });  
+  }
+
+  renderPasswordField() {
+    const { selectedRoom } = this.state;
+    const { roomInfo } = this.props;
+
+    if (!selectedRoom) return null;
+
+    const room = roomInfo[selectedRoom];
+    console.log('AAAAAAAAAAAAAAAAAAAAA', room);
+    if (room.isPrivate) {
+      return (
+        <FormGroup row>
+          <Label for="password">Password</Label>
+          <InputGroup>
+            <Input type={this.state.visibility ? 'text' : 'password'} name="password" id="password" />
+            <InputGroupAddon addonType="append">
+              <Button color="secondary" onClick={() => this.changeVisibility()}>To the Right!</Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </FormGroup>
+      );
+    }
+  }
   render() {
     const { rooms, history } = this.props;
 
@@ -42,7 +71,7 @@ class GameList extends Component {
           <h1 className="loginWelcome-cover-heading">Select a Game Room</h1>
           <Form>
             <FormGroup>
-              <Input type="select" name="roomName" id="selectgame" multiple bsSize="lg" value={this.state.roomName} onChange={e => this.onInputChange(e)}>
+              <Input type="select" name="roomName" id="selectgame" multiple value={this.state.selectedRoom} bsSize="lg" onChange={e => this.onSelectChange(e)}>
                 {
                   rooms.map(room => GameList.renderGameList(room))
                 }
@@ -52,15 +81,7 @@ class GameList extends Component {
               <Label for="username">Username</Label>
               <Input type="text" name="username" id="username" value={this.state.username} onChange={e => this.onInputChange(e)} />
             </FormGroup>
-            <FormGroup row>
-              <Label for="password">Password</Label>
-              <InputGroup>
-                <Input type={this.state.visibility ? 'text' : 'password'} name="password" id="password" />
-                <InputGroupAddon addonType="append">
-                  <Button color="secondary" onClick={() => this.changeVisibility()}>To the Right!</Button>
-                </InputGroupAddon>
-              </InputGroup>
-            </FormGroup>
+            {this.renderPasswordField()}
           </Form>
           <p className="lead">
             <Button
