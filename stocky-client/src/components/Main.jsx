@@ -27,7 +27,7 @@ class Main extends Component {
       <Switch>
         <Route exact path="/" component={() => <Redirect to="/login" />} />
         <Route path="/login" component={props => <LoginMain socket={this.socket} {...props} />} />
-        <Route exact path="/simulator" component={Simulator} />
+        <Route exact path="/simulator" component={() => <Simulator socket={this.socket} />} />
       </Switch>
     );
   }

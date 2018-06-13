@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
+import BuyModal from '../modals/BuyModalMain';
 import DashboardHeader from './DashboardHeader';
 
 class Dashboard extends Component {
@@ -11,6 +12,7 @@ class Dashboard extends Component {
       collapse: false,
       collapse1: false,
       news: [],
+      modal: false,
     };
   }
 
@@ -27,9 +29,22 @@ class Dashboard extends Component {
     });
   }
 
+  toggleModal(stockData) {
+    this.setState({
+      modal: !this.state.modal,
+      selectedStock: stockData,
+    });
+  }
+
   render() {
     return (
       <Row>
+        <BuyModal
+          isOpen={this.state.modal}
+          toggle={() => this.toggleModal()}
+          stockData={this.state.selectedStock}
+          socket={this.props.socket}
+        />
         <Col sm="3">
           <Row>
             <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
@@ -198,7 +213,7 @@ class Dashboard extends Component {
                       <td>Financial</td>
                       <td>Rs.15.00</td>
                       <td>Rs.18.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'SPL', uPrice:'18.00'})}>Buy</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>AIB group</td>
@@ -206,7 +221,7 @@ class Dashboard extends Component {
                       <td>Financial</td>
                       <td>Rs.13.00</td>
                       <td>Rs.12.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'AIB', uPrice:'12.00'})}>Buy</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Felix pvt.Ltd</td>
@@ -214,7 +229,7 @@ class Dashboard extends Component {
                       <td>Health Care</td>
                       <td>Rs.10.00</td>
                       <td>Rs.15.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'FLV', uPrice:'15.00'})}>Buy</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Abans pvt.Ltd</td>

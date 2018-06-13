@@ -47,6 +47,10 @@ export default function (io, { dispatch, getState}) {
       });
     });
 
+    socket.on('purchase_stocks', (data) => {
+      console.log('SEREVERR', data);
+    });
+
     socket.on('disconnect', (data) => {
       dispatch(removeRoom(socket.room)).then(() => {
         io.emit('set_rooms', getState().rooms);
