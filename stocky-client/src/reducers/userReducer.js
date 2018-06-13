@@ -1,6 +1,10 @@
 import { SET_USER } from '../actions/types';
 
-const InitialState = {};
+const InitialState = {
+  name: 'Geeth',
+  cash: 1000,
+  room: 'room1',
+};
 
 export default (state = InitialState, action) => {
   switch (action.type) {
