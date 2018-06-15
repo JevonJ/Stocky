@@ -2,30 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, FormGroup, Form, Input } from 'reactstrap';
 
-class BuyModalMain extends React.Component {
+class SellSharesModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      modal: false
+    /*this.state = {
+      sellModal: false
     };
-    this.toggle = this.toggle.bind(this);
+    this.toggle = this.toggle.bind(this);*/
   }
-
-  toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
-  }
-
   
   render() {
+    console.log('AAAAA', this.props.isOpen);
     return (
-      <div>
-        <Button color="success" onClick={this.toggle}>{this.props.buttonLabel}
-          Sell
-        </Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}  >
-          <ModalHeader style={{ color: 'black' }} toggle={this.toggle} >You are going to sell</ModalHeader>
+        <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className}  >
+          <ModalHeader style={{ color: 'black' }}>You are going to sell</ModalHeader>
           <ModalBody style={{ color: 'black' }} className="mbody" >
             <ListGroup>
               <ListGroupItem>Company Symbol</ListGroupItem>
@@ -43,10 +33,9 @@ class BuyModalMain extends React.Component {
             <Button color="danger " onClick={this.toggle}>Not interested</Button>
           </ModalFooter>
         </Modal>
-      </div>
     );
   }
 }
 
 
-export default BuyModalMain;
+export default SellSharesModal;
