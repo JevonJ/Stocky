@@ -24,7 +24,7 @@ export default function (io, { dispatch, getState}) {
           dispatch(setPlayer(data)).then(() => {
             const State = getState();
             io.to(data.room).emit('set_players', State.players[data.room]);
-            socket.emit('set_user', { name: data.username, host: true, room: data.room });
+            socket.emit('set_user', { name: data.username, host: true, room: data.room, cash: '1000' });
             socket.emit('go_to_lobby');
           });
         });
@@ -45,6 +45,10 @@ export default function (io, { dispatch, getState}) {
           });
         });      
       });
+    });
+
+    socket.on('start_game', (data) => {
+      io.to(data).emit('set_start_timer', 5);
     });
 
     socket.on('purchase_stocks', (data) => {

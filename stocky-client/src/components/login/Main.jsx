@@ -81,7 +81,11 @@ class Main extends Component {
                   path="/login/host-game"
                   component={({ history }) => <Host history={history} socket={socket} />}
                 />
-                <Route exact path="/login/lobby" component={Lobby} />
+                <Route
+                  exact
+                  path="/login/lobby"
+                  component={({ history }) => <Lobby history={history} socket={socket} />}
+                />
                 <Route exact path="/login/game-List" component={GameList} />
                 <Route exact path="/login/about" component={Welcome} />
               </div>
