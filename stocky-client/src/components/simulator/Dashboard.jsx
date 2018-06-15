@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
+import { connect } from 'react-redux';
 
 import BuyModal from '../modals/BuyModalMain';
 import DashboardHeader from './DashboardHeader';
+import PlayerList from './PlayerList';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -378,38 +380,8 @@ class Dashboard extends Component {
             </Col>
           </Row>
           <Row>
-            <Card body outline color="danger">
-              <CardTitle><h5>Room name: Team Titans</h5></CardTitle>
-              <CardText>
-                <Table borderless>
-                  <thead>
-                    <tr>
-                      <th>Rank </th>
-                      <th>Name</th>
-                      <th>Assets</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Jevon</td>
-                      <td>LKR 77,660.65</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Ashen</td>
-                      <td>LKR 63,687.11</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Inuri</td>
-                      <td>LKR 50,984.99</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </CardText>
-            </Card>
-          </Row>
+            <PlayerList players={this.props.players}/>
+          </Row>  
           <Row>
             <div>
               <Card body outline color="primary">
@@ -441,4 +413,8 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = ({ players }) => ({
+  players,
+});
+
+export default connect(mapStateToProps)(Dashboard);
