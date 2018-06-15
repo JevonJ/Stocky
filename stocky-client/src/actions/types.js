@@ -1,4 +1,6 @@
+// player stocks
 export const SET_PLAYER = 'SET_PLAYER';
+export const BUY_STOCK = 'BUY_STOCK';
 
 //  user types
 export const SET_USER = 'SET_USER';
@@ -15,3 +17,6 @@ export const SET_IS_LOADING = 'SET_IS_LOADING';
 // time types
 export const SET_START_TIME = 'SET_START_TIME';
 export const SET_ROUND_TIME = 'SET_ROUND_TIME';
+
+// playerStock types
+export const SET_PLAYER_STOCKS = 'SET_PLAYER_STOCKS';

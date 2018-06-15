@@ -1,4 +1,4 @@
-import { setPlayer, setRoom, removeRoom, setRoomInfo } from './actions';
+import { setPlayer, setRoom, removeRoom, setRoomInfo, buyStock, setPlayerStocks } from './actions';
 
 export default function (io, { dispatch, getState}) {
   // Set socket.io listeners.
@@ -27,6 +27,10 @@ export default function (io, { dispatch, getState}) {
             socket.emit('set_user', { name: data.username, host: true, room: data.room, cash: '1000' });
             socket.emit('go_to_lobby');
           });
+          dispatch(setPlayerStocks(data)).then(() => {
+            const State = getState();
+            io.to(data.room).emit('set_player_stocks', State.playerStocks[data.room]);
+          });
         });
       });
     });
@@ -52,7 +56,11 @@ export default function (io, { dispatch, getState}) {
     });
 
     socket.on('purchase_stocks', (data) => {
-      console.log('SEREVERR', data);
+      dispatch(buyStock(data)).then(() => {
+        const State = getState();
+        const playerStocks = State.playerStocks[data.room];
+        io.to(data.room).emit('buy_stock', { [data.username]: playerStocks[data.username]});
+      });
     });
 
     socket.on('disconnect', (data) => {

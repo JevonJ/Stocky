@@ -11,6 +11,10 @@ export default (socket, actions) => {
     actions.setPlayer(players);
   });
 
+  socket.on('set_player_stocks', (data) => {
+    actions.setPlayerStocks(data);
+  });
+
   socket.on('set_user', (user) => {
     actions.setUser(user);
   });
@@ -21,5 +25,9 @@ export default (socket, actions) => {
 
   socket.on('set_start_timer', (seconds) => {
     actions.setStartTime(seconds);
+  });
+
+  socket.on('buy_stock', (data) => {
+    actions.buyStock(data);
   });
 };
