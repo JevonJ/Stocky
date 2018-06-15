@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Popover, PopoverBody, PopoverHeader } from 'reactstrap';
 import { Route, withRouter, NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Welcome from './Welcome';
 import Host from './Host';
@@ -52,8 +53,8 @@ class Main extends Component {
                   exact
                   className="loginMain-nav-link"
                   activeClassName="active"
-                  href="/"
-                  to="/"
+                  href="/login"
+                  to="/login"
                 >
                   Home
                 </NavLink>
@@ -61,8 +62,8 @@ class Main extends Component {
                   exact
                   className="loginMain-nav-link"
                   activeClassName="active"
-                  href="/Game-List"
-                  to="/Game-List"
+                  href="login/about"
+                  to="login/about"
                 >
                   About
                 </NavLink>
@@ -75,12 +76,19 @@ class Main extends Component {
               <Loading />
                 :
               <div>
-                <Route exact path="/" component={Welcome} />
-                <Route exact path="/host-game" component={({ history }) => <Host history={history} socket={socket} />} />
-                <Route exact path="/game-List" component={GameList} />
-                <Route exact path="/about" component={Welcome} />
-                <Route exact path="/password" component={PopupPassword} />
-                <Route exact path="/lobby" component={Lobby} />
+                <Route exact path="/login" component={Welcome} />
+                <Route
+                  exact
+                  path="/login/host-game"
+                  component={({ history }) => <Host history={history} socket={socket} />}
+                />
+                <Route
+                  exact
+                  path="/login/lobby"
+                  component={({ history }) => <Lobby history={history} socket={socket} />}
+                />
+                <Route exact path="/login/game-List" component={GameList} />
+                <Route exact path="/login/about" component={Welcome} />
               </div>
           }
 
@@ -129,5 +137,10 @@ const mapStateToProps = state => (
     isLoading: state.common.isLoading,
   }
 );
+
+Main.propTypes = {
+  socket: PropTypes.shape({}).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
 
 export default withRouter(connect(mapStateToProps)(Main));

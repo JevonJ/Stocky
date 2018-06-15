@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Fade, Form, FormGroup, Input, Label, InputGroup, InputGroupAddon } from 'reactstrap';
+import FontAwesome from 'react-fontawesome';
 
 class GameList extends Component {
   static renderGameList(room) {
@@ -62,6 +63,7 @@ class GameList extends Component {
       );
     }
   }
+
   render() {
     const { rooms, history } = this.props;
 

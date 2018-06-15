@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
+import BuyModal from '../modals/BuyModalMain';
+import DashboardHeader from './DashboardHeader';
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -9,6 +12,7 @@ class Dashboard extends Component {
       collapse: false,
       collapse1: false,
       news: [],
+      modal: false,
     };
   }
 
@@ -25,9 +29,22 @@ class Dashboard extends Component {
     });
   }
 
+  toggleModal(stockData) {
+    this.setState({
+      modal: !this.state.modal,
+      selectedStock: stockData,
+    });
+  }
+
   render() {
     return (
       <Row>
+        <BuyModal
+          isOpen={this.state.modal}
+          toggle={() => this.toggleModal()}
+          stockData={this.state.selectedStock}
+          socket={this.props.socket}
+        />
         <Col sm="3">
           <Row>
             <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
@@ -196,7 +213,8 @@ class Dashboard extends Component {
                       <td>Financial</td>
                       <td>Rs.15.00</td>
                       <td>Rs.18.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'SPL', uPrice:'18.00'})}>Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>AIB group</td>
@@ -204,7 +222,8 @@ class Dashboard extends Component {
                       <td>Financial</td>
                       <td>Rs.13.00</td>
                       <td>Rs.12.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'AIB', uPrice:'12.00'})}>Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Felix pvt.Ltd</td>
@@ -212,7 +231,8 @@ class Dashboard extends Component {
                       <td>Health Care</td>
                       <td>Rs.10.00</td>
                       <td>Rs.15.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'FLV', uPrice:'15.00'})}>Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Abans pvt.Ltd</td>
@@ -221,6 +241,7 @@ class Dashboard extends Component {
                       <td>Rs.17.00</td>
                       <td>Rs.13.00</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Holmes pvt.Ltd</td>
@@ -229,6 +250,7 @@ class Dashboard extends Component {
                       <td>Rs.15.00</td>
                       <td>Rs.15.00</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Morningstar pvt.Ltd</td>
@@ -237,6 +259,7 @@ class Dashboard extends Component {
                       <td>Rs.20.00</td>
                       <td>Rs.18.00</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Chandra Group</td>
@@ -245,6 +268,7 @@ class Dashboard extends Component {
                       <td>Rs.22.00</td>
                       <td>Rs.20.00</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Singhe Hospitals pvt.Ltd</td>
@@ -253,6 +277,7 @@ class Dashboard extends Component {
                       <td>Rs.25.59</td>
                       <td>Rs.52.00</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Chello Diary Products</td>
@@ -261,6 +286,7 @@ class Dashboard extends Component {
                       <td>Rs.20.50</td>
                       <td>Rs.45.00</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>1,009</td>
@@ -269,6 +295,7 @@ class Dashboard extends Component {
                       <td>porta</td>
                       <td>Mauris</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>1,010</td>
@@ -277,6 +304,7 @@ class Dashboard extends Component {
                       <td>lacinia</td>
                       <td>arcu</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>1,011</td>
@@ -285,6 +313,7 @@ class Dashboard extends Component {
                       <td>Class</td>
                       <td>aptent</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>1,012</td>
@@ -293,6 +322,7 @@ class Dashboard extends Component {
                       <td>ad</td>
                       <td>litora</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td> 
                     </tr>
                     <tr>
                       <td>1,013</td>
@@ -301,6 +331,7 @@ class Dashboard extends Component {
                       <td>conubia</td>
                       <td>nostra</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>1,014</td>
@@ -309,6 +340,7 @@ class Dashboard extends Component {
                       <td>himenaeos</td>
                       <td>Curabitur</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>1,015</td>
@@ -317,6 +349,7 @@ class Dashboard extends Component {
                       <td>in</td>
                       <td>libero</td>
                       <td><Button color="success">Buy</Button>{' '}</td>
+                      <td><Button color="danger">Sell</Button>{' '}</td>
                     </tr>
                   </tbody>
                 </table>

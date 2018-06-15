@@ -9,6 +9,8 @@ import sectors from './sectorsReducer';
 import sectorStocks from './sectorStocksReducer';
 import stockInfo from './stockInfoReducer';
 import common from './commonReducer';
+import user from './userReducer';
+import time from './timeReducer';
 
 export default combineReducers({
   rooms,
@@ -20,4 +22,6 @@ export default combineReducers({
   sectorStocks,
   stockInfo,
   common,
+  user,
+  time,
 });

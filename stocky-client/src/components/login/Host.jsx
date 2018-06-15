@@ -1,6 +1,10 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Fade, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Fade, Form, FormGroup, Label, Input, FormFeedback, InputGroup, InputGroupAddon, CustomInput } from 'reactstrap';
+import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
+
+import './Host.css';
 
 class Host extends Component {
   constructor() {
@@ -8,17 +12,31 @@ class Host extends Component {
 
     this.state = {
       hostForm: {
-        roomName: '',
+        room: '',
         username: '',
         isPrivate: false,
         password: '',
       },
+      visibility: false,
+      roomNameError: '',
+      userNameError: '',
+      passwordError: '',
     };
   }
 
   onInputChange({ target: { name, value } }) {
     const hostForm = { ...this.state.hostForm };
-    hostForm[name] = value;
+    hostForm[name] = value.replace(/\s/g, '');
+
+    if (name === 'room') {
+      const { rooms } = this.props;
+      const roomTaken = !(rooms.indexOf(value) < 0);
+      this.setState({
+        hostForm,
+        roomNameError: roomTaken ? 'That name is already taken..' : '',
+      });
+    }
+
     this.setState({ hostForm });
   }
 
@@ -28,39 +46,73 @@ class Host extends Component {
     this.setState({ hostForm });
   }
 
-  createGame() {
-    const {
-      hostForm: {
-        roomName, username, password,
-      },
-    } = this.state;
-    this.props.socket.emit('create_game', this.state.hostForm);
+  createGame(e) {
+    const { hostForm, roomNameError } = this.state;
+
+    if (hostForm.room.length === 0) {
+      this.setState({
+        roomNameError: 'Please enter a valid room name.',
+      });
+      return;
+    }
+
+    if (hostForm.username.length === 0) {
+      this.setState({
+        userNameError: 'Please enter a valid user name.',
+      });
+      return;
+    }
+
+    if (hostForm.isPrivate && hostForm.password.length === 0) {
+      this.setState({
+        passwordError: 'Please enter a password.',
+      });
+      return;
+    }
+
+    if (roomNameError === '') {
+      e.target.setAttribute('disabled', 'disabled');
+      this.props.socket.emit('create_game', this.state.hostForm);
+    }
+  }
+
+  changeVisibility() {
+    this.setState({
+      visibility: !this.state.visibility,
+    });
   }
 
   render() {
     const {
       hostForm: {
-        roomName, username, isPrivate, password,
+        room, username, isPrivate, password,
       },
+      roomNameError,
+      userNameError,
+      passwordError,
     } = this.state;
 
-    const { socket, history } = this.props;
-    console.log(this.props);
+    const { history } = this.props;
 
     return (
       <Fade in tag="div" timeout={500}>
-        <main role="main" className="inner loginWelcome-cover">
-          <h1 className="loginWelcome-cover-heading">Select a Game Room</h1>
+        <main role="main" className="inner loginHost-cover">
+          <h1 className="loginHost-cover-heading">Host A Game</h1>
           <Form>
             <FormGroup row>
-              <Label for="roomName">Game Room Name</Label>
+              <Label for="room">Game Room Name</Label>
               <Input
+                invalid={roomNameError !== ''}
+                valid={room.length > 0 ? !roomNameError : false}
                 type="text"
-                name="roomName"
-                id="roomName"
+                name="room"
+                id="room"
+                autoComplete="off"
                 onChange={e => this.onInputChange(e)}
-                value={roomName}
+                value={room}
               />
+              <FormFeedback valid>Sweet! that name is available</FormFeedback>
+              <FormFeedback>{roomNameError}</FormFeedback>
             </FormGroup>
             <FormGroup row>
               <Label for="username">Username</Label>
@@ -68,32 +120,48 @@ class Host extends Component {
                 type="text"
                 name="username"
                 id="username"
+                autoComplete="off"
+                invalid={userNameError !== ''}
                 onChange={e => this.onInputChange(e)}
                 value={username}
               />
+              <FormFeedback>{userNameError}</FormFeedback>
             </FormGroup>
             <FormGroup row>
-              <Label check>
-                <Input
-                  type="checkbox"
-                  name="isPrivate"
-                  id="isPrivate"
-                  onChange={e => this.onCheckboxChange(e)}
-                  value={isPrivate}
-                />
-                Private
-              </Label>
+              <CustomInput
+                type="checkbox"
+                name="isPrivate"
+                id="isPrivate"
+                label="Private Game"
+                onChange={e => this.onCheckboxChange(e)}
+                value={isPrivate}
+              />
             </FormGroup>
             { isPrivate &&
               <FormGroup row>
                 <Label for="password">Password</Label>
-                <Input
-                  type="password"
-                  name="password"
-                  id="password"
-                  onChange={e => this.onInputChange(e)}
-                  value={password}
-                />
+                <InputGroup>
+                  <Input
+                    type={this.state.visibility ? 'text' : 'password'}
+                    name="password"
+                    id="password"
+                    value={password}
+                    invalid={passwordError !== ''}
+                    autoComplete="password"
+                    onChange={e => this.onInputChange(e)}
+                  />
+
+                  <InputGroupAddon addonType="append">
+                    <Button color="secondary" onClick={() => this.changeVisibility()}>
+                      <FontAwesome
+                        className="super-crazy-colors"
+                        name={this.state.visibility ? 'eye' : 'eye-slash'}
+                        size="2x"
+                      />
+                    </Button>
+                  </InputGroupAddon>
+                </InputGroup>
+                <FormFeedback>{passwordError}</FormFeedback>
               </FormGroup>
             }
           </Form>
@@ -102,7 +170,7 @@ class Host extends Component {
               outline
               color="success"
               size="lg"
-              onClick={() => this.createGame()}
+              onClick={e => this.createGame(e)}
             >
               Create Game
             </Button>
@@ -121,4 +189,16 @@ class Host extends Component {
   }
 }
 
-export default connect(null)(Host);
+Host.propTypes = {
+  socket: PropTypes.shape({
+    emit: PropTypes.func.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({}).isRequired,
+  rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+const mapStateToProps = ({ rooms }) => ({
+  rooms,
+});
+
+export default connect(mapStateToProps)(Host);
