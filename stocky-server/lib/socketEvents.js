@@ -57,7 +57,9 @@ export default function (io, { dispatch, getState}) {
 
     socket.on('purchase_stocks', (data) => {
       dispatch(buyStock(data)).then(() => {
-        // io.emit('set_rooms', getState().rooms);
+        const State = getState();
+        const playerStocks = State.playerStocks[data.room];
+        io.to(data.room).emit('buy_stock', { [data.username]: playerStocks[data.username]});
       });
     });
 

@@ -26,4 +26,8 @@ export default (socket, actions) => {
   socket.on('set_start_timer', (seconds) => {
     actions.setStartTime(seconds);
   });
+
+  socket.on('buy_stock', (data) => {
+    actions.buyStock(data);
+  });
 };

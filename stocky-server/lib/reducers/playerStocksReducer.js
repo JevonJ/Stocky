@@ -10,8 +10,17 @@ export default (state = InitialState, { type, payload }) => {
       return {...state, ...player};
     case BUY_STOCK:
       const newState = {...state};
-      console.log('AAAAAAAAAAAAAa', payload);
-      return state;
+      let room = { ...newState[payload.room] };
+      let purchased = room[payload.username].purchased;
+      room[payload.username].purchased = [...purchased, {
+        stockSymbol: payload.stockSymbol,
+        initStockQty: payload.initStockQty,
+        soldStockQty: [],
+        unitPrice: payload.unitPrice,
+        Round: payload.unitPrice,
+      }];
+      newState[payload.room] = room;
+      return newState;
     default:
       return state;
   }

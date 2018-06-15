@@ -42,7 +42,7 @@ class BuyModalMain extends Component {
     const data = {};
     
     data['room'] = user.room;
-    data['name'] = user.name;
+    data['username'] = user.name;
     data['stockSymbol'] = this.props.stockData.symbol;
     data['initStockQty'] = this.state.quantity;
     data['unitPrice'] = this.props.stockData.uPrice;
@@ -94,19 +94,8 @@ class BuyModalMain extends Component {
   }
 }
 const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
-  user: {
-    name: 'Jevon',
-    room: 'room1',
-    cash: '1000',
-  },
-  roomInfo : {
-    room1: {
-      round: 1,
-      isPrivate: false,
-      name: 'room1',
-      isStarted: false,
-    }  
-  },
+  user,
+  roomInfo,
   playerStocks,
 });
 
