@@ -94,7 +94,11 @@ class BuyModalMain extends Component {
   }
 }
 const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
-  user,
+  user: {
+    name: 'Jevon',
+    room: 'room1',
+    cash: '1000',
+  },
   roomInfo : {
     room1: {
       round: 1,
