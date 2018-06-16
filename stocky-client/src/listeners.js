@@ -7,7 +7,27 @@ export default (socket, actions) => {
     actions.setRoomInfo(roomInfo);
   });
 
-  socket.on('set_player', (player) => {
-    actions.setPlayer(player);
+  socket.on('set_players', (players) => {
+    actions.setPlayer(players);
+  });
+
+  socket.on('set_player_stocks', (data) => {
+    actions.setPlayerStocks(data);
+  });
+
+  socket.on('set_user', (user) => {
+    actions.setUser(user);
+  });
+
+  socket.on('go_to_lobby', () => {
+    actions.history.push('/login/lobby');
+  });
+
+  socket.on('set_start_timer', (seconds) => {
+    actions.setStartTime(seconds);
+  });
+
+  socket.on('buy_stock', (data) => {
+    actions.buyStock(data);
   });
 };
