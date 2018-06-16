@@ -1,4 +1,7 @@
-const InitialState = {};
+const InitialState = {Finance:['AX'],
+	Technology: ['BX'],
+	Industries: ['CV'],
+};
 
 export default (state = InitialState, action) => {
   switch (action.type) {

@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
 import DashboardHeader from './DashboardHeader';
 
 class Dashboard extends Component {
+
+  static renderDashboard(Stock,Sector,Sector_Stock) {
+    return (
+      // console.log(SectorStock)
+      // <tr><td>{Stock}</td><td>{Sector}</td><td>{SectorStock}</td></tr>
+      <tr><td>{Stock}</td></tr>
+    );
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +38,8 @@ class Dashboard extends Component {
   }
 
   render() {
+    const { stocks, sectors,sector_Stocks } = this.props;
+
     return (
       <Row>
         <Col sm="3">
@@ -181,6 +193,7 @@ class Dashboard extends Component {
             <Row>
               <div className="table-responsive">
                 <table className="table table-striped table-sm">
+
                   <thead>
                     <tr>
                       <th>Company name</th>
@@ -194,7 +207,7 @@ class Dashboard extends Component {
                   <tbody>
                     <tr>
                       <td>Singer pvt.Ltd</td>
-                      <td>SPL</td>
+                     { stocks.map(stock => Dashboard.renderDashboard(stock))}
                       <td>Financial</td>
                       <td>Rs.15.00</td>
                       <td>Rs.18.00</td>
@@ -410,4 +423,15 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+// export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    stocks: state.stocks,
+    sectors: state.sectors,
+    sector_Stocks: state.sector_Stocks
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);
+
+
