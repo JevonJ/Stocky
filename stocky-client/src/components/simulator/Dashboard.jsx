@@ -3,7 +3,7 @@ import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button,
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
-import sellShareModal from '../modals/SellSharesModal';
+import SellShareModal from '../modals/SellSharesModal';
 import DashboardHeader from './DashboardHeader';
 
 class Dashboard extends Component {
@@ -38,10 +38,10 @@ class Dashboard extends Component {
     });
   }
 
-  toggleSellModal() {
-    console.log('llllll', this.state.sellModal);
+  toggleSellModal(sellStockData) {
     this.setState({
       sellModal: !this.state.sellModal,
+      selectedSellStock: sellStockData,
     });
   }
 
@@ -56,9 +56,10 @@ class Dashboard extends Component {
           socket={this.props.socket}
         />
       
-        <sellShareModal
+        <SellShareModal
           isOpen={this.state.sellModal}
           toggle={() => this.toggleSellModal()}
+          sellStockData={this.state.selectedSellStock}
         />
       
         <Col sm="3">
@@ -122,26 +123,26 @@ class Dashboard extends Component {
                   <tr>
                     <th scope="row">1</th>
                     <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td><Button color="danger" onClick= {() => this.toggleSellModal()}>Sell</Button>{' '}</td>
+                    <td>20</td>
+                    <td>15.00</td>
+                    <td>18.00</td>
+                    <td><Button color="danger" onClick= {() => this.toggleSellModal({symbol: 'Mark', oldPrice: 15.00, curPrice: 18.00, avlqty: 20})}>Sell</Button>{' '}</td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
                     <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@mdo</td>
-                    <td>@fat</td>
-                    <td><Button color="danger">Sell</Button>{' '}</td>
+                    <td>15</td>
+                    <td>12.00</td>
+                    <td>10.00</td>
+                    <td><Button color="danger" onClick= {() => this.toggleSellModal({symbol: 'Mark', oldPrice: 12.00, curPrice: 10.00, avlqty: 15})}>Sell</Button>{' '}</td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
                     <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>@mdo</td>
-                    <td><Button color="danger">Sell</Button>{' '}</td>
+                    <td>12</td>
+                    <td>16.00</td>
+                    <td>16.00</td>
+                    <td><Button color="danger" onClick= {() => this.toggleSellModal({symbol: 'Mark', oldPrice: 16.00, curPrice: 16.00, avlqty: 12})}>Sell</Button>{' '}</td>
                   </tr>
                 </tbody>
               </Table>

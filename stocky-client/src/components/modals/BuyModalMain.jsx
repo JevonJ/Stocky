@@ -50,6 +50,16 @@ class BuyModalMain extends Component {
   
     this.props.socket.emit('purchase_stocks', data);
 
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.setState({
+      quantity: "1",
+      totalPrice: "0",
+      profitLoss: "0",
+      isWarnVisible: false,
+    });
     this.props.toggle();
   }
 
@@ -58,7 +68,7 @@ class BuyModalMain extends Component {
     const { totalPrice, isWarnVisible } = this.state;
 
     return (
-        <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className}  >
+        <Modal id="BuyModal" isOpen={this.props.isOpen} toggle={() => this.closeModal()} className={this.props.className}  >
           <ModalHeader style={{ color: 'black' }} >You are going to buy</ModalHeader>
           <ModalBody style={{ color: 'black' }} className="mbody" >
             <ListGroup>
@@ -87,7 +97,7 @@ class BuyModalMain extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="success" onClick={() =>this.buyStock()}>Buy</Button>
-            <Button color="danger " onClick={this.props.toggle}>Not interested</Button>
+            <Button color="danger " onClick={() => this.closeModal()}>Not interested</Button>
           </ModalFooter>
         </Modal>
     );
