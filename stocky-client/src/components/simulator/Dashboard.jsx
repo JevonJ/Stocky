@@ -430,7 +430,7 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ stocks, sectors, sectorStocks }) => {
+const mapStateToProps = ({ players, stocks, sectors, sectorStocks }) => {
   return {
     players,
     stocks,
