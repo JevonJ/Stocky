@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 import { connect } from 'react-redux';
@@ -9,6 +10,15 @@ import DashboardHeader from './DashboardHeader';
 import PlayerList from './PlayerList';
 
 class Dashboard extends Component {
+
+  static renderDashboard(Stock,Sector,Sector_Stock) {
+    return (
+      // console.log(SectorStock)
+      // <tr><td>{Stock}</td><td>{Sector}</td><td>{SectorStock}</td></tr>
+      <tr><td>{Stock}</td></tr>
+    );
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -49,6 +59,8 @@ class Dashboard extends Component {
 
 
   render() {
+    const { stocks, sectors,sector_Stocks } = this.props;
+
     return (
       <Row>
         <BuyModal
@@ -218,6 +230,7 @@ class Dashboard extends Component {
             <Row>
               <div className="table-responsive">
                 <table className="table table-striped table-sm">
+
                   <thead>
                     <tr>
                       <th>Company name</th>
@@ -231,7 +244,7 @@ class Dashboard extends Component {
                   <tbody>
                     <tr>
                       <td>Singer pvt.Ltd</td>
-                      <td>SPL</td>
+                     { stocks.map(stock => Dashboard.renderDashboard(stock))}
                       <td>Financial</td>
                       <td>Rs.15.00</td>
                       <td>Rs.18.00</td>
@@ -417,8 +430,15 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ players }) => ({
-  players,
-});
+const mapStateToProps = ({ stocks, sectors, sectorStocks }) => {
+  return {
+    players,
+    stocks,
+    sectors,
+    sectorStocks,
+  };
+};
 
 export default connect(mapStateToProps)(Dashboard);
+
+

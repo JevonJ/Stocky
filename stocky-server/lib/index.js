@@ -23,10 +23,13 @@ app.use(cors());
 
 app.get('/api/check-status', (req, res) => res.status(200).json({ Connected: true }));
 app.get('/api/init-data', (req, res) => {
-  const { rooms, roomInfo } = store.getState();
+  const { rooms, roomInfo,stocks,sectors,sector_Stocks} = store.getState();
   res.status(200).json({
     rooms,
-    roomInfo
+    roomInfo,
+    stocks,
+    sectors,
+    sector_Stocks
   });
 });
 

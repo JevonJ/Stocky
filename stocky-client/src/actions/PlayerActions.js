@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import http from 'axios/lib/adapters/http';
-import { SET_PLAYER, SET_IS_LOADING, SET_ROOMS, SET_ROOM_INFO, BUY_STOCK } from './types';
+import { SET_PLAYER, SET_IS_LOADING, SET_ROOMS, SET_ROOM_INFO,SET_STOCKS,SET_SECTORS,SET_SECTOR_STOCKS, BUY_STOCK} from './types';
 
 function getInitialData() {
   return axios.get('http://localhost:4001/api/init-data', {
@@ -14,6 +14,9 @@ export const initialize = () => {
     getInitialData().then(
       ({ data }) => {
         dispatch({ type: SET_ROOMS, payload: data.rooms });
+        dispatch({ type: SET_STOCKS, payload: data.stocks });
+        dispatch({ type: SET_SECTORS, payload: data.sectors });
+        dispatch({ type: SET_SECTOR_STOCKS, payload: data.sector_Stocks });
         dispatch({ type: SET_ROOM_INFO, payload: data.roomInfo });
         dispatch({ type: SET_IS_LOADING, payload: false });
       },

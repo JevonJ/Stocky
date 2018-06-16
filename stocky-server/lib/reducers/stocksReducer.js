@@ -1,4 +1,4 @@
-const InitialState = [];
+const InitialState = ['AX', 'BX', 'CV'];
 
 export default (state = InitialState, action) => {
   switch (action.type) {
