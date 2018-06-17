@@ -23,6 +23,9 @@ export const SET_SECTORS = 'SET_SECTORS';
 // sectorsstocks types
 export const SET_SECTOR_STOCKS = 'SET_SECTOR_STOCKS';
 
+// stock info types
+export const SET_STOCK_INFO = 'SET_STOCK_INFO';
+
 // time types
 export const SET_START_TIME = 'SET_START_TIME';
 export const SET_ROUND_TIME = 'SET_ROUND_TIME';
