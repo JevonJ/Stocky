@@ -24,7 +24,7 @@ export default function (io, { dispatch, getState}) {
           dispatch(setPlayer(data)).then(() => {
             const State = getState();
             io.to(data.room).emit('set_players', State.players[data.room]);
-            socket.emit('set_user', { name: data.username, host: true, room: data.room, cash: '1000' });
+            socket.emit('set_user', { name: data.username, host: true, room: data.room, cash: 1000 });
             socket.emit('go_to_lobby');
           });
           dispatch(setPlayerStocks(data)).then(() => {
@@ -59,8 +59,10 @@ export default function (io, { dispatch, getState}) {
       dispatch(buyStock(data)).then(() => {
         const State = getState();
         const playerStocks = State.playerStocks[data.room];
+        socket.emit('set_user', { cash: data.currentCashInHand - (data.initStockQty*data.unitPrice) });        
         io.to(data.room).emit('buy_stock', { [data.username]: playerStocks[data.username]});
         socket.to(data.room).emit('update_live_feed', data);
+        io.to(data.room).emit('set_players', State.players[data.room]);
       });
     });
 
