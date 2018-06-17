@@ -13,13 +13,14 @@ class BuyModalMain extends Component {
   }
 
   onChange({ target: { name, value } }) {
-    const { stockData } = this.props;
+    const { stock, stockInfo } = this.props;
+    const stockData = stockInfo[stock];
     let isWarnVisible = false;
     if (value > this.validateNofStocks()) {
       value = this.validateNofStocks();
       isWarnVisible = true;
     }
-    let totalPrice = value * stockData.uPrice;
+    let totalPrice = value * stockData.currentPrice;
     totalPrice = totalPrice.toFixed(2);
 
     this.setState({
@@ -30,21 +31,26 @@ class BuyModalMain extends Component {
   }
 
   validateNofStocks() {
-    const { user, stockData } = this.props;
-    const nos = Math.trunc(user.cash / stockData.uPrice);
+    const { user, stock, stockInfo } = this.props;
+    const stockData = stockInfo[stock];
+    const nos = Math.trunc(user.cash / stockData.currentPrice);
     return (nos);
   }
 
   buyStock() {
-    const { user, roomInfo, stockData } = this.props;
+    const {
+      user, roomInfo, stock, stockInfo,
+    } = this.props;
+    const stockData = stockInfo[stock];
+
     const { room, name, cash } = user;
     const data = {
       room,
       username: name,
       currentCashInHand: cash,
-      stockSymbol: stockData.symbol,
+      stockSymbol: stockData.stockSymbol,
       initStockQty: parseInt(this.state.quantity, 10),
-      unitPrice: parseInt(stockData.uPrice, 10),
+      unitPrice: parseInt(stockData.currentPrice, 10),
       round: roomInfo[room].currentRound,
     };
 
@@ -62,21 +68,21 @@ class BuyModalMain extends Component {
   }
 
   render() {
-    const { stockData } = this.props;
+    const { stock, stockInfo } = this.props;
     const { totalPrice, isWarnVisible } = this.state;
+    const stockData = stockInfo[stock];
 
     return (
       <Modal
         id="BuyModal"
         isOpen={this.props.isOpen}
         toggle={() => this.closeModal()}
-        className={this.props.className}
       >
         <ModalHeader style={{ color: 'black' }} >You are going to buy</ModalHeader>
         <ModalBody style={{ color: 'black' }} className="mbody" >
           <ListGroup>
-            <ListGroupItem>Company Symbol: {stockData && stockData.symbol}</ListGroupItem>
-            <ListGroupItem>Unit Price: {stockData && stockData.uPrice}</ListGroupItem>
+            <ListGroupItem>Company Symbol: {stockData && stockData.stockSymbol}</ListGroupItem>
+            <ListGroupItem>Unit Price: {stockData && stockData.currentPrice}</ListGroupItem>
             <ListGroupItem>
               <FormGroup>
                 Number of Stocks
@@ -95,7 +101,7 @@ class BuyModalMain extends Component {
                 <p style={{ color: 'red' }}>Sorry! This is the maximum stocks which you can buy with your remaining cash.</p>
               }
             </ListGroupItem>
-            <ListGroupItem>Price: {stockData && (totalPrice === '0' ? stockData.uPrice : totalPrice)}</ListGroupItem>
+            <ListGroupItem>Price: {stockData && (totalPrice === '0' ? stockData.currentPrice : totalPrice)}</ListGroupItem>
           </ListGroup>
         </ModalBody>
         <ModalFooter>
@@ -106,6 +112,8 @@ class BuyModalMain extends Component {
     );
   }
 }
+
+
 const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
   user,
   roomInfo,

@@ -1,10 +1,10 @@
-import { SET_ROOM_INFO } from '../actions/types';
+import { CREATE_GAME } from '../actions/types';
 
 const InitialState = {};
 
 export default (state = InitialState, { payload, type }) => {
   switch (type) {
-    case SET_ROOM_INFO:
+    case CREATE_GAME:
       let newState = { ...state };
       newState[payload.room] = {
         rounds: 20,

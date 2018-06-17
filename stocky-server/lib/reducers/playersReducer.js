@@ -1,5 +1,4 @@
-import { SET_PLAYER, BUY_STOCK } from '../actions/types';
-import { buyStock } from '../actions';
+import { SET_PLAYER, BUY_STOCK, CREATE_GAME } from '../actions/types';
 
 const InitialState = {};
 
@@ -18,15 +17,17 @@ function updateCashAmount(state, payload) {
   return newState;
 }
 
+function setPlayer(state, payload) {
+  const newState = { ...state };
+  newState[payload.room] = [{ name: payload.username, cash: 1000 }]; 
+  return { ...newState };
+}
+
 export default (state = InitialState, { payload, type }) => {
   switch (type) {
-    case SET_PLAYER:
-      const newState = { ...state };
-      newState[payload.room] = [{ name: payload.username, cash: 1000 }]; 
-      return { ...newState };
-    case BUY_STOCK: 
-      return updateCashAmount(state, payload);
-    default:
-      return state;
+    case SET_PLAYER: return setPlayer(state, payload);
+    case CREATE_GAME: return setPlayer(state, payload);
+    case BUY_STOCK: return updateCashAmount(state, payload);
+    default: return state;
   } 
 };
