@@ -15,6 +15,10 @@ export default (socket, actions) => {
     actions.setPlayerStocks(data);
   });
 
+  socket.on('set_room_stocks', (data) => {
+    actions.setRoomStocks(data);
+  });
+
   socket.on('set_user', (user) => {
     actions.setUser(user);
   });
@@ -29,5 +33,9 @@ export default (socket, actions) => {
 
   socket.on('buy_stock', (data) => {
     actions.buyStock(data);
+  });
+
+  socket.on('update_live_feed', (data) => {
+    actions.updateFeed(data);
   });
 };

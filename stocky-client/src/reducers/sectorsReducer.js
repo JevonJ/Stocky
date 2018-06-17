@@ -1,14 +1,7 @@
-import { SET_SECTORS } from '../actions/types';
-
-const InitialState = [];
-// const InitialState = [];
-
-
+const InitialState = ['FINANCE', 'ENERGY', 'HEALTH', 'REAL_ESTATE'];
 
 export default (state = InitialState, action) => {
   switch (action.type) {
-    case SET_SECTORS:
-      return [...action.payload];
     default:
       return state;
   }

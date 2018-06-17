@@ -1,27 +1,42 @@
-import { BUY_STOCK, SET_PLAYER_STOCKS } from '../actions/types';
+import { BUY_STOCK, SET_PLAYER_STOCKS, CREATE_GAME } from '../actions/types';
 
 const InitialState = {};
 
+function updatePlayerStock(state, payload) {
+  const newState = { ...state };
+  let room = { ...newState[payload.room] };
+  let purchased = room[payload.username].purchased;
+  
+  const purchaseExist = purchased.findIndex((({ stockSymbol, round }) => (stockSymbol === payload.stockSymbol && round === payload.round)));
+
+  if(purchaseExist < 0) {
+    room[payload.username].purchased = [...purchased, {
+      stockSymbol: payload.stockSymbol,
+      initStockQty: payload.initStockQty,
+      soldStockQty: [],
+      unitPrice: payload.unitPrice,
+      round: payload.round,
+    }];
+    newState[payload.room] = room;
+    return newState;
+  } else {
+    purchased[purchaseExist].initStockQty += payload.initStockQty;
+    room[payload.username].purchased = [...purchased];
+    newState[payload.room] = room;
+    return newState;
+  }
+}
+
+function setPlayerStock(state, payload) {
+  const player = {};
+  player[payload.room] = { [payload.username]: { purchased: [], sold: [] } }
+  return { ...state, ...player };
+}
 export default (state = InitialState, { type, payload }) => {
   switch (type) {
-    case SET_PLAYER_STOCKS:
-      const player = {};
-      player[payload.room] = { [payload.username]: { purchased: [], sold: [] } }
-      return {...state, ...player};
-    case BUY_STOCK:
-      const newState = {...state};
-      let room = { ...newState[payload.room] };
-      let purchased = room[payload.username].purchased;
-      room[payload.username].purchased = [...purchased, {
-        stockSymbol: payload.stockSymbol,
-        initStockQty: payload.initStockQty,
-        soldStockQty: [],
-        unitPrice: payload.unitPrice,
-        Round: payload.unitPrice,
-      }];
-      newState[payload.room] = room;
-      return newState;
-    default:
-      return state;
+    case SET_PLAYER_STOCKS: return setPlayerStock(state, payload);
+    case CREATE_GAME: return setPlayerStock(state, payload);
+    case BUY_STOCK: return updatePlayerStock(state, payload);
+    default: return state;
   }
 };

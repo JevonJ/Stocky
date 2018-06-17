@@ -1,13 +1,14 @@
-import { SET_ROOM_INFO } from '../actions/types';
+import { CREATE_GAME } from '../actions/types';
 
 const InitialState = {};
 
 export default (state = InitialState, { payload, type }) => {
   switch (type) {
-    case SET_ROOM_INFO:
+    case CREATE_GAME:
       let newState = { ...state };
       newState[payload.room] = {
-        round: 0,
+        rounds: 20,
+        currentRound: 0,
         isPrivate: payload.isPrivate,
         password: payload.password,
         name: payload.room

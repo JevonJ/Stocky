@@ -1,11 +1,7 @@
-import { SET_STOCKS } from '../actions/types';
-
-const InitialState = [];
+const InitialState = ['LFIN', 'VANI', 'CINS', 'AFSL', 'HPFL', 'LGL', 'PAP', 'VLL', 'SINH', 'NHL', 'AMSL', 'CHL', 'SLND', 'TWOD', 'KDL', 'CTLD'];
 
 export default (state = InitialState, action) => {
   switch (action.type) {
-    case SET_STOCKS:
-      return [...action.payload];
     default:
       return state;
   }

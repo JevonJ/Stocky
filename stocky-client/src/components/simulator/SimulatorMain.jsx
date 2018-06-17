@@ -8,7 +8,7 @@ const SimulatorMain = props => (
     <Header />
     <div className="container-fluid">
       <div className="p-3 mb-2 bg-gradient-dark text-black">
-        <Dashboard {...props}/>
+        <Dashboard {...props} />
       </div>
     </div>
   </div>
