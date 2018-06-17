@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
-import { connect } from 'react-redux';
 
 import BuyModal from '../modals/BuyModalMain';
 import SellShareModal from '../modals/SellSharesModal';
@@ -11,8 +10,7 @@ import PlayerList from './PlayerList';
 import LiveFeed from './LiveFeed';
 
 class Dashboard extends Component {
-
-  static renderDashboard(Stock,Sector,Sector_Stock) {
+  static renderDashboard(Stock, Sector, Sector_Stock) {
     return (
       // console.log(SectorStock)
       // <tr><td>{Stock}</td><td>{Sector}</td><td>{SectorStock}</td></tr>
@@ -60,7 +58,9 @@ class Dashboard extends Component {
 
 
   render() {
-    const { stocks, sectors,sector_Stocks } = this.props;
+    const {
+      socket, players, playerStocks, stocks, sectors, sector_Stocks,
+    } = this.props;
 
     return (
       <Row>
@@ -68,15 +68,15 @@ class Dashboard extends Component {
           isOpen={this.state.modal}
           toggle={() => this.toggleModal()}
           stockData={this.state.selectedStock}
-          socket={this.props.socket}
+          socket={socket}
         />
-      
+
         <SellShareModal
           isOpen={this.state.sellModal}
           toggle={() => this.toggleSellModal()}
           sellStockData={this.state.selectedSellStock}
         />
-      
+
         <Col sm="3">
           <Row>
             <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
@@ -141,7 +141,14 @@ class Dashboard extends Component {
                     <td>20</td>
                     <td>15.00</td>
                     <td>18.00</td>
-                    <td><Button color="danger" onClick= {() => this.toggleSellModal({symbol: 'Mark', oldPrice: 15.00, curPrice: 18.00, avlqty: 20})}>Sell</Button>{' '}</td>
+                    <td><Button
+                      color="danger"
+                      onClick={() => this.toggleSellModal({
+                        symbol: 'Mark', oldPrice: 15.00, curPrice: 18.00, avlqty: 20,
+                      })}
+                    >Sell
+                        </Button>{' '}
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
@@ -149,7 +156,14 @@ class Dashboard extends Component {
                     <td>15</td>
                     <td>12.00</td>
                     <td>10.00</td>
-                    <td><Button color="danger" onClick= {() => this.toggleSellModal({symbol: 'Mark', oldPrice: 12.00, curPrice: 10.00, avlqty: 15})}>Sell</Button>{' '}</td>
+                    <td><Button
+                      color="danger"
+                      onClick={() => this.toggleSellModal({
+                        symbol: 'Mark', oldPrice: 12.00, curPrice: 10.00, avlqty: 15,
+                      })}
+                    >Sell
+                        </Button>{' '}
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
@@ -157,7 +171,14 @@ class Dashboard extends Component {
                     <td>12</td>
                     <td>16.00</td>
                     <td>16.00</td>
-                    <td><Button color="danger" onClick= {() => this.toggleSellModal({symbol: 'Mark', oldPrice: 16.00, curPrice: 16.00, avlqty: 12})}>Sell</Button>{' '}</td>
+                    <td><Button
+                      color="danger"
+                      onClick={() => this.toggleSellModal({
+                        symbol: 'Mark', oldPrice: 16.00, curPrice: 16.00, avlqty: 12,
+                      })}
+                    >Sell
+                        </Button>{' '}
+                    </td>
                   </tr>
                 </tbody>
               </Table>
@@ -245,11 +266,11 @@ class Dashboard extends Component {
                   <tbody>
                     <tr>
                       <td>Singer pvt.Ltd</td>
-                     { stocks.map(stock => Dashboard.renderDashboard(stock))}
+                      { stocks.map(stock => Dashboard.renderDashboard(stock))}
                       <td>Financial</td>
                       <td>Rs.15.00</td>
                       <td>Rs.18.00</td>
-                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'SPL', uPrice:'18.00'})}>Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() => this.toggleModal({ symbol: 'SPL', uPrice: '18.00' })}>Buy</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>AIB group</td>
@@ -257,7 +278,7 @@ class Dashboard extends Component {
                       <td>Financial</td>
                       <td>Rs.13.00</td>
                       <td>Rs.12.00</td>
-                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'AIB', uPrice:'12.00'})}>Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() => this.toggleModal({ symbol: 'AIB', uPrice: '12.00' })}>Buy</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Felix pvt.Ltd</td>
@@ -265,7 +286,7 @@ class Dashboard extends Component {
                       <td>Health Care</td>
                       <td>Rs.10.00</td>
                       <td>Rs.15.00</td>
-                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'FLV', uPrice:'15.00'})}>Buy</Button>{' '}</td>
+                      <td><Button color="success" onClick={() => this.toggleModal({ symbol: 'FLV', uPrice: '15.00' })}>Buy</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>Abans pvt.Ltd</td>
@@ -345,7 +366,7 @@ class Dashboard extends Component {
                       <td>sociosqu</td>
                       <td>ad</td>
                       <td>litora</td>
-                      <td><Button color="success">Buy</Button>{' '}</td> 
+                      <td><Button color="success">Buy</Button>{' '}</td>
                     </tr>
                     <tr>
                       <td>1,013</td>
@@ -398,10 +419,10 @@ class Dashboard extends Component {
             </Col>
           </Row>
           <Row>
-            <PlayerList players={this.props.players}/>
-          </Row>  
+            <PlayerList players={players} playerStocks={playerStocks} />
+          </Row>
           <Row>
-            <LiveFeed liveFeed={this.props.liveFeed}/>
+            <LiveFeed liveFeed={this.props.liveFeed} />
           </Row>
           <Row>
             <div>
@@ -423,16 +444,16 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ stocks, sectors, sectorStocks, liveFeed, players, }) => {
-  return {
-    players,
-    stocks,
-    sectors,
-    sectorStocks,
-    liveFeed,
-  };
-};
+const mapStateToProps = ({
+  stocks, sectors, sectorStocks, liveFeed, players, playerStocks,
+}) => ({
+  players,
+  stocks,
+  sectors,
+  playerStocks,
+  sectorStocks,
+  liveFeed,
+});
 
 export default connect(mapStateToProps)(Dashboard);
-
 
