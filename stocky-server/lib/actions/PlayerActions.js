@@ -1,4 +1,11 @@
-import { SET_PLAYER, BUY_STOCK } from './types';
+import { SET_PLAYER, BUY_STOCK, CREATE_GAME } from './types';
+
+export const createGame = (data) => {
+  return dispatch => new Promise((resolve, reject) => {
+    dispatch({ type: CREATE_GAME, payload: data });
+    resolve(dispatch);
+  });
+};
 
 export const setPlayer = (data) => {
   return dispatch => new Promise((resolve, reject) => {

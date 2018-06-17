@@ -15,6 +15,10 @@ export default (socket, actions) => {
     actions.setPlayerStocks(data);
   });
 
+  socket.on('set_room_stocks', (data) => {
+    actions.setRoomStocks(data);
+  });
+
   socket.on('set_user', (user) => {
     actions.setUser(user);
   });

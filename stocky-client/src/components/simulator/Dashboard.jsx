@@ -22,6 +22,13 @@ class Dashboard extends Component {
     };
   }
 
+  componentWillMount() {
+    const { user, history } = this.props;
+    if (user.constructor === Object && Object.keys(user).length === 0) {
+      history.replace('/login');
+    }
+  }
+
   toggle(type) {
     if (type === 'collapse') this.setState({ collapse: !this.state.collapse });
     if (type === 'collapse1') this.setState({ collapse1: !this.state.collapse1 });
@@ -52,9 +59,8 @@ class Dashboard extends Component {
 
   render() {
     const {
-      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed,
+      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user,
     } = this.props;
-
     return (
       <Row>
         <BuyModal
@@ -244,13 +250,16 @@ class Dashboard extends Component {
               <h2>Currently in Market {'>>>'}</h2>
             </Row>
             <Row>
-              <StockList
-                sectors={sectors}
-                sectorStocks={sectorStocks}
-                stocks={stocks}
-                stockInfo={stockInfo}
-                toggleModal={stock => this.toggleModal(stock)}
-              />
+              {Object.keys(user).length !== 0 &&
+                <StockList
+                  sectors={sectors}
+                  sectorStocks={sectorStocks}
+                  stocks={stocks}
+                  stockInfo={stockInfo}
+                  roomStocks={roomStocks}
+                  toggleModal={stock => this.toggleModal(stock)}
+                />
+              }
             </Row>
           </Container>
         </Col>
@@ -275,7 +284,7 @@ class Dashboard extends Component {
             </Col>
           </Row>
           <Row>
-            <PlayerList players={this.props.players} />
+            <PlayerList players={players} playerStocks={playerStocks} />
           </Row>
           <Row>
             <LiveFeed liveFeed={liveFeed} />
@@ -301,7 +310,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = ({
-  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo,
+  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo, roomStocks, user
 }) => ({
   players,
   stocks,
@@ -310,6 +319,8 @@ const mapStateToProps = ({
   sectorStocks,
   stockInfo,
   liveFeed,
+  roomStocks,
+  user,
 });
 
 export default connect(mapStateToProps)(Dashboard);

@@ -42,7 +42,7 @@ class PlayerList extends Component {
     const { playerStocks } = this.props;
 
     const newPlayersObj = players.map((player) => {
-      const stocks = [...playerStocks[player.name].purchased];
+      const stocks = playerStocks[player.name].purchased;
       const totalAssets = (PlayerList.calculatePurchased(stocks) + player.cash);
       return { totalAssets, ...player };
     });

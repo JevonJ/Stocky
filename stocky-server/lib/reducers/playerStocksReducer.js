@@ -1,5 +1,4 @@
-import { BUY_STOCK, SET_PLAYER_STOCKS } from '../actions/types';
-import { buyStock } from '../actions';
+import { BUY_STOCK, SET_PLAYER_STOCKS, CREATE_GAME } from '../actions/types';
 
 const InitialState = {};
 
@@ -28,15 +27,16 @@ function updatePlayerStock(state, payload) {
   }
 }
 
+function setPlayerStock(state, payload) {
+  const player = {};
+  player[payload.room] = { [payload.username]: { purchased: [], sold: [] } }
+  return { ...state, ...player };
+}
 export default (state = InitialState, { type, payload }) => {
   switch (type) {
-    case SET_PLAYER_STOCKS:
-      const player = {};
-      player[payload.room] = { [payload.username]: { purchased: [], sold: [] } }
-      return { ...state, ...player };
-    case BUY_STOCK:
-      return updatePlayerStock(state, payload);
-    default:
-      return state;
+    case SET_PLAYER_STOCKS: return setPlayerStock(state, payload);
+    case CREATE_GAME: return setPlayerStock(state, payload);
+    case BUY_STOCK: return updatePlayerStock(state, payload);
+    default: return state;
   }
 };

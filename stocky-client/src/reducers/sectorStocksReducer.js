@@ -1,12 +1,12 @@
-
-import { SET_SECTOR_STOCKS } from '../actions/types';
-
-const InitialState = {};
+const InitialState = {
+  Finance: ['LFIN', 'VANI', 'CINS', 'AFSL'],
+  Energy: ['HPFL', 'LGL', 'PAP', 'VLL'],
+  Health: ['SINH', 'NHL', 'AMSL', 'CHL'],
+  RealEstate: ['SLND', 'TWOD', 'KDL', 'CTLD'],
+};
 
 export default (state = InitialState, action) => {
   switch (action.type) {
-    case SET_SECTOR_STOCKS:
-      return { ...action.payload };
     default:
       return state;
   }

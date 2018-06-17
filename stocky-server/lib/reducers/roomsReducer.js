@@ -1,11 +1,11 @@
-import { SET_ROOM, REMOVE_ROOM } from '../actions/types';
+import { REMOVE_ROOM, CREATE_GAME } from '../actions/types';
 
 const InitialState = [];
 
 export default (state = InitialState, action) => {
   switch (action.type) {
-    case SET_ROOM:
-      return [...state, action.payload];
+    case CREATE_GAME:
+      return [...state, action.payload.room];  
     case REMOVE_ROOM:
       const newState = [...state]
       return newState.filter(e => e !== action.payload);

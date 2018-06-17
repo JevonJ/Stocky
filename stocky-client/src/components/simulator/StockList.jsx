@@ -3,16 +3,16 @@ import { Button, Table } from 'reactstrap';
 
 class StockList extends Component {
   renderStocks(stock) {
-    const { stockInfo, toggleModal } = this.props;
+    const { stockInfo, toggleModal, roomStocks } = this.props;
     const info = stockInfo[stock];
-
+    const prices = roomStocks[stock];
     return (
       <tr key={info.stockName}>
         <td>{info.stockName}</td>
         <td>{info.stockSymbol}</td>
-        <td>Financial</td>
-        <td>{info.previousPrice}</td>
-        <td>{info.currentPrice}</td>
+        <td>{info.stockSector}</td>
+        <td>{prices.previousPrice.toFixed(2)}</td>
+        <td>{prices.currentPrice.toFixed(2)}</td>
         <td><Button color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
       </tr>
     );
