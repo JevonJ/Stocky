@@ -30,17 +30,18 @@ class GameList extends Component {
     newState[name] = value.replace(/\s/g, '');
     if (name === 'username') {
       const { players } = this.props;
-      console.log('PLAYEEERS', players);
       const playerExist = players.filter((player) => {
         return value === player.name;
-        //usernameError: playerExist.length !== 0 ? 'exits' : '';
-        //console.log(usernameError);
       });
-      //this.setState({
-      //  usernameError: playerExist.length !== 0 ? 'exits' : '',
-      //});
+
+      this.setState({
+        ...newState,
+        usernameError: playerExist.length === 0 ? '' : 'Username Taken..',
+      });
+      return;
+    } else {
       this.setState(newState);
-      console.log('EXISSSSSTTTSSS', playerExist.length);
+      return;
     }
   }
 
@@ -59,7 +60,7 @@ class GameList extends Component {
 
   joinGame(e) {
     const {
-      selectedRoom, username, password, usernameError, passwordError, roomError
+      selectedRoom, username, password, usernameError, passwordError, roomError,
     } = this.state;
 
     if (username.length === 0) {
@@ -102,7 +103,7 @@ class GameList extends Component {
   }
 
   renderPasswordField() {
-    const { selectedRoom, passwordError } = this.state;
+    const { selectedRoom, passwordError, password } = this.state;
     const { roomInfo } = this.props;
 
     if (!selectedRoom[0]) return null;
@@ -117,8 +118,8 @@ class GameList extends Component {
               invalid={passwordError !== ''}
               name="password"
               id="password"
-              value={this.state.password}
               autoComplete="password"
+              value={this.state.password}
               onChange={e => this.onInputChange(e)} />
             <InputGroupAddon addonType="append">
               <Button color="secondary" onClick={() => this.changeVisibility()}>visibility (o)</Button>
@@ -133,11 +134,10 @@ class GameList extends Component {
   render() {
 
     const {
-      selectedRoom, username, password, usernameError, roomError
+      selectedRoom, username, usernameError, roomError, password,
     } = this.state;
 
     const { rooms, history, socket } = this.props;
-    console.log('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCc', this.state);
     return (
       <Fade in tag="div" timeout={200}>
         <main role="main" className="inner loginWelcome-cover">
@@ -166,7 +166,9 @@ class GameList extends Component {
                 name="username"
                 id="username"
                 value={this.state.username}
-                onChange={e => this.onInputChange(e)} />
+                onChange={e => this.onInputChange(e)}
+              />
+              <FormFeedback valid>Sweet! that name is available</FormFeedback>
               <FormFeedback>{usernameError}</FormFeedback>
             </FormGroup>
             {this.renderPasswordField()}

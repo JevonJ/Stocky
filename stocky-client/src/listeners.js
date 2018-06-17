@@ -8,7 +8,6 @@ export default (socket, actions) => {
   });
 
   socket.on('set_players', (players) => {
-    console.log('SEETTTTTTTTTTT', players);
     actions.setPlayer(players);
   });
 
