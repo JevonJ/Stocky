@@ -39,7 +39,7 @@ class BuyModalMain extends Component {
 
   buyStock() {
     const {
-      user, roomInfo, stock, stockInfo 
+      user, roomInfo, stock, stockInfo,
     } = this.props;
     const stockData = stockInfo[stock];
 
@@ -55,7 +55,6 @@ class BuyModalMain extends Component {
     };
 
     this.props.socket.emit('purchase_stocks', data);
-
     this.closeModal();
   }
 
