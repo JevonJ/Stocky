@@ -9,20 +9,18 @@ function getInitialData() {
   });
 }
 
-export const initialize = () => {
-  return (dispatch) => {
-    getInitialData().then(
-      ({ data }) => {
-        dispatch({ type: SET_ROOMS, payload: data.rooms });
-        dispatch({ type: SET_ROOM_INFO, payload: data.roomInfo });
-        dispatch({ type: SET_IS_LOADING, payload: false });
-      },
-      (error) => {
-        if (!error.response) console.log('Network Error');
-        if (error.response) console.log(error.response);
-      },
-    );
-  };
+export const initialize = () => (dispatch) => {
+  getInitialData().then(
+    ({ data }) => {
+      dispatch({ type: SET_ROOMS, payload: data.rooms });
+      dispatch({ type: SET_ROOM_INFO, payload: data.roomInfo });
+      dispatch({ type: SET_IS_LOADING, payload: false });
+    },
+    (error) => {
+      if (!error.response) console.log('Network Error');
+      if (error.response) console.log(error.response);
+    },
+  );
 };
 
 export const setPlayer = players => ({

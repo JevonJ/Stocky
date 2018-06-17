@@ -1,4 +1,4 @@
-const InitialState = [];
+const InitialState = ['FINANCE', 'ENERGY', 'HEALTH', 'REAL_ESTATE'];
 
 export default (state = InitialState, action) => {
   switch (action.type) {
@@ -6,3 +6,4 @@ export default (state = InitialState, action) => {
       return state;
   }
 };
+

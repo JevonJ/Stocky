@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
+import SellShareModal from '../modals/SellSharesModal';
 import DashboardHeader from './DashboardHeader';
+import PlayerList from './PlayerList';
+import LiveFeed from './LiveFeed';
+import StockList from './StockList';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -13,7 +18,15 @@ class Dashboard extends Component {
       collapse1: false,
       news: [],
       modal: false,
+      sellModal: false,
     };
+  }
+
+  componentWillMount() {
+    const { user, history } = this.props;
+    if (user.constructor === Object && Object.keys(user).length === 0) {
+      history.replace('/login');
+    }
   }
 
   toggle(type) {
@@ -29,22 +42,41 @@ class Dashboard extends Component {
     });
   }
 
-  toggleModal(stockData) {
+  toggleModal(stock) {
     this.setState({
       modal: !this.state.modal,
-      selectedStock: stockData,
+      selectedStock: stock,
     });
   }
 
+  toggleSellModal(sellStockData) {
+    this.setState({
+      sellModal: !this.state.sellModal,
+      selectedSellStock: sellStockData,
+    });
+  }
+
+
   render() {
+    const {
+      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user,
+    } = this.props;
     return (
       <Row>
         <BuyModal
           isOpen={this.state.modal}
           toggle={() => this.toggleModal()}
-          stockData={this.state.selectedStock}
-          socket={this.props.socket}
+          stock={this.state.selectedStock}
+          stockInfo={stockInfo}
+          socket={socket}
         />
+
+        <SellShareModal
+          isOpen={this.state.sellModal}
+          toggle={() => this.toggleSellModal()}
+          sellStockData={this.state.selectedSellStock}
+        />
+
         <Col sm="3">
           <Row>
             <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
@@ -106,23 +138,47 @@ class Dashboard extends Component {
                   <tr>
                     <th scope="row">1</th>
                     <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
+                    <td>20</td>
+                    <td>15.00</td>
+                    <td>18.00</td>
+                    <td><Button
+                      color="danger"
+                      onClick={() => this.toggleSellModal({
+                        symbol: 'Mark', oldPrice: 15.00, curPrice: 18.00, avlqty: 20,
+                      })}
+                    >Sell
+                        </Button>{' '}
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
                     <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@mdo</td>
-                    <td>@fat</td>
+                    <td>15</td>
+                    <td>12.00</td>
+                    <td>10.00</td>
+                    <td><Button
+                      color="danger"
+                      onClick={() => this.toggleSellModal({
+                        symbol: 'Mark', oldPrice: 12.00, curPrice: 10.00, avlqty: 15,
+                      })}
+                    >Sell
+                        </Button>{' '}
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
                     <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>@mdo</td>
+                    <td>12</td>
+                    <td>16.00</td>
+                    <td>16.00</td>
+                    <td><Button
+                      color="danger"
+                      onClick={() => this.toggleSellModal({
+                        symbol: 'Mark', oldPrice: 16.00, curPrice: 16.00, avlqty: 12,
+                      })}
+                    >Sell
+                        </Button>{' '}
+                    </td>
                   </tr>
                 </tbody>
               </Table>
@@ -194,166 +250,16 @@ class Dashboard extends Component {
               <h2>Currently in Market {'>>>'}</h2>
             </Row>
             <Row>
-              <div className="table-responsive">
-                <table className="table table-striped table-sm">
-                  <thead>
-                    <tr>
-                      <th>Company name</th>
-                      <th>Symbol</th>
-                      <th>Sector</th>
-                      <th>Last</th>
-                      <th>Current</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Singer pvt.Ltd</td>
-                      <td>SPL</td>
-                      <td>Financial</td>
-                      <td>Rs.15.00</td>
-                      <td>Rs.18.00</td>
-                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'SPL', uPrice:'18.00'})}>Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>AIB group</td>
-                      <td>AIB</td>
-                      <td>Financial</td>
-                      <td>Rs.13.00</td>
-                      <td>Rs.12.00</td>
-                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'AIB', uPrice:'12.00'})}>Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>Felix pvt.Ltd</td>
-                      <td>FVL</td>
-                      <td>Health Care</td>
-                      <td>Rs.10.00</td>
-                      <td>Rs.15.00</td>
-                      <td><Button color="success" onClick={() =>this.toggleModal({symbol: 'FLV', uPrice:'15.00'})}>Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>Abans pvt.Ltd</td>
-                      <td>APL</td>
-                      <td>Technologies</td>
-                      <td>Rs.17.00</td>
-                      <td>Rs.13.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>Holmes pvt.Ltd</td>
-                      <td>HPL</td>
-                      <td>Engineering</td>
-                      <td>Rs.15.00</td>
-                      <td>Rs.15.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>Morningstar pvt.Ltd</td>
-                      <td>MPL</td>
-                      <td>Financial</td>
-                      <td>Rs.20.00</td>
-                      <td>Rs.18.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>Chandra Group</td>
-                      <td>CHG</td>
-                      <td>Consumer Service</td>
-                      <td>Rs.22.00</td>
-                      <td>Rs.20.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>Singhe Hospitals pvt.Ltd</td>
-                      <td>SHP</td>
-                      <td>Healthcare</td>
-                      <td>Rs.25.59</td>
-                      <td>Rs.52.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>Chello Diary Products</td>
-                      <td>CDP</td>
-                      <td>Consumer Service</td>
-                      <td>Rs.20.50</td>
-                      <td>Rs.45.00</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>1,009</td>
-                      <td>augue</td>
-                      <td>semper</td>
-                      <td>porta</td>
-                      <td>Mauris</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>1,010</td>
-                      <td>massa</td>
-                      <td>Vestibulum</td>
-                      <td>lacinia</td>
-                      <td>arcu</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>1,011</td>
-                      <td>eget</td>
-                      <td>nulla</td>
-                      <td>Class</td>
-                      <td>aptent</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>1,012</td>
-                      <td>taciti</td>
-                      <td>sociosqu</td>
-                      <td>ad</td>
-                      <td>litora</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td> 
-                    </tr>
-                    <tr>
-                      <td>1,013</td>
-                      <td>torquent</td>
-                      <td>per</td>
-                      <td>conubia</td>
-                      <td>nostra</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>1,014</td>
-                      <td>per</td>
-                      <td>inceptos</td>
-                      <td>himenaeos</td>
-                      <td>Curabitur</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                    <tr>
-                      <td>1,015</td>
-                      <td>sodales</td>
-                      <td>ligula</td>
-                      <td>in</td>
-                      <td>libero</td>
-                      <td><Button color="success">Buy</Button>{' '}</td>
-                      <td><Button color="danger">Sell</Button>{' '}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              {Object.keys(user).length !== 0 &&
+                <StockList
+                  sectors={sectors}
+                  sectorStocks={sectorStocks}
+                  stocks={stocks}
+                  stockInfo={stockInfo}
+                  roomStocks={roomStocks}
+                  toggleModal={stock => this.toggleModal(stock)}
+                />
+              }
             </Row>
           </Container>
         </Col>
@@ -378,48 +284,10 @@ class Dashboard extends Component {
             </Col>
           </Row>
           <Row>
-            <Card body outline color="danger">
-              <CardTitle><h5>Room name: Team Titans</h5></CardTitle>
-              <CardText>
-                <Table borderless>
-                  <thead>
-                    <tr>
-                      <th>Rank </th>
-                      <th>Name</th>
-                      <th>Assets</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Jevon</td>
-                      <td>LKR 77,660.65</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Ashen</td>
-                      <td>LKR 63,687.11</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Inuri</td>
-                      <td>LKR 50,984.99</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </CardText>
-            </Card>
+            <PlayerList players={players} playerStocks={playerStocks} />
           </Row>
           <Row>
-            <div>
-              <Card body outline color="primary">
-                <CardTitle>Live feed</CardTitle>
-                {
-                  this.state.news.map(newselement => <CardText>{newselement}</CardText>)
-                }
-                <Button onClick={() => this.addTonews()} outline color="secondary">Clear</Button>
-              </Card>
-            </div>
+            <LiveFeed liveFeed={liveFeed} />
           </Row>
           <Row>
             <div>
@@ -441,4 +309,19 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = ({
+  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo, roomStocks, user
+}) => ({
+  players,
+  stocks,
+  sectors,
+  playerStocks,
+  sectorStocks,
+  stockInfo,
+  liveFeed,
+  roomStocks,
+  user,
+});
+
+export default connect(mapStateToProps)(Dashboard);
+

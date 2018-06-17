@@ -2,51 +2,114 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, FormGroup, Form, Input } from 'reactstrap';
 
-class BuyModalMain extends React.Component {
-  constructor(props) {
-    super(props);
+class SellSharesModal extends Component {
+  constructor() {
+    super();
     this.state = {
-      modal: false
+      quantity: "1",
+      totalPrice: "0",
+      profitLoss: "0",
+      isWarnVisible: false,
     };
-    this.toggle = this.toggle.bind(this);
   }
 
-  toggle() {
+  onChange({ target: { name, value } }) {
+    const { user, sellStockData } = this.props;
+    let isWarnVisible = false;
+    if (value >= sellStockData.avlqty) {
+      value = sellStockData.avlqty;
+      isWarnVisible = true;
+    };
+    let totalPrice = value * sellStockData.curPrice;
+    totalPrice = totalPrice.toFixed(2);
+
+    let profitLoss = totalPrice - (value * sellStockData.oldPrice);
+    profitLoss = (Math.abs(profitLoss)).toFixed(2);
+
     this.setState({
-      modal: !this.state.modal
+      quantity: value,
+      totalPrice,
+      profitLoss,
+      isWarnVisible,
     });
   }
 
-  
+  sellStock() {
+    const { user, roomInfo, sellStockData } = this.props;
+
+    const data = {};
+
+    data['room'] = user.room;
+    data['name'] = user.name;
+    data['stockSymbol'] = this.props.sellStockData.symbol;
+    data['stockQty'] = this.state.quantity;
+    data['unitPrice'] = this.props.sellStockData.curPrice;
+    data['round'] = roomInfo[user.room].round;
+
+    this.props.socket.emit('sell_stocks', data); 
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.setState({
+      quantity: "1",
+      totalPrice: "0",
+      profitLoss: "0",
+      isWarnVisible: false,
+    });
+    this.props.toggle();
+  }
+
   render() {
+    const { sellStockData } = this.props;
+    const { totalPrice, profitLoss, isWarnVisible } = this.state;
+
     return (
-      <div>
-        <Button color="success" onClick={this.toggle}>{this.props.buttonLabel}
-          Sell
-        </Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}  >
-          <ModalHeader style={{ color: 'black' }} toggle={this.toggle} >You are going to sell</ModalHeader>
-          <ModalBody style={{ color: 'black' }} className="mbody" >
-            <ListGroup>
-              <ListGroupItem>Company Symbol</ListGroupItem>
-              <ListGroupItem>
-                <FormGroup>
-                  Number of Stocks
-          <Input type="number" name="number" id="exampleNumber" placeholder="Number of Stocks" min={1} />
-                </FormGroup>
-              </ListGroupItem>
-              <ListGroupItem>Price</ListGroupItem>
-            </ListGroup>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="success" onClick={this.toggle}>Sell</Button>
-            <Button color="danger " onClick={this.toggle}>Not interested</Button>
-          </ModalFooter>
-        </Modal>
-      </div>
+      <Modal id="SellModal" isOpen={this.props.isOpen} toggle={() => this.closeModal()} className={this.props.className}>
+        <ModalHeader style={{ color: 'black' }}>You are going to sell</ModalHeader>
+        <ModalBody style={{ color: 'black' }} className="mbody" >
+          <ListGroup>
+            <ListGroupItem>Company Symbol: {sellStockData && sellStockData.symbol}</ListGroupItem>
+            <ListGroupItem>
+              <FormGroup>
+                Number of Stocks
+                <Input
+                  type="number"
+                  name="qauntity"
+                  placeholder="Number of Stocks"
+                  max={sellStockData && sellStockData.avlqty}
+                  min={1}
+                  value={this.state.quantity}
+                  onChange={(e) => this.onChange(e)}
+                />
+              </FormGroup>
+              {
+                isWarnVisible &&
+                <p style={{ color: 'red' }}>Sorry! Cannot exceed your available stock quantity.</p>
+              }
+            </ListGroupItem>
+            <ListGroupItem>Price: {sellStockData && (totalPrice === "0" ? (sellStockData.curPrice).toFixed(2) : totalPrice)}</ListGroupItem>
+            <ListGroupItem>{sellStockData && sellStockData.curPrice > sellStockData.oldPrice ? "Profit:" : sellStockData && sellStockData.curPrice < sellStockData.oldPrice ? "Loss:" : "Profit/Loss:"} {sellStockData && (totalPrice === "0" ? (Math.abs(sellStockData.curPrice - sellStockData.oldPrice)).toFixed(2) : profitLoss)}</ListGroupItem>
+          </ListGroup>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="success" onClick={() => this.sellStock()}>Sell</Button>
+          <Button color="danger " onClick={() => this.closeModal()}>Not interested</Button>
+        </ModalFooter>
+      </Modal>
     );
   }
 }
-
-
-export default BuyModalMain;
+const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
+  user,
+  roomInfo: {
+    room1: {
+      round: 1,
+      isPrivate: false,
+      name: 'room1',
+      isStarted: false,
+    }
+  },
+  playerStocks,
+});
+export default connect(mapStateToProps)(SellSharesModal);

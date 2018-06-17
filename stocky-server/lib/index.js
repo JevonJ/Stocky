@@ -26,7 +26,7 @@ app.get('/api/init-data', (req, res) => {
   const { rooms, roomInfo } = store.getState();
   res.status(200).json({
     rooms,
-    roomInfo
+    roomInfo,
   });
 });
 
