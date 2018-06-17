@@ -11,6 +11,7 @@ import stockInfo from './stockInfoReducer';
 import common from './commonReducer';
 import user from './userReducer';
 import time from './timeReducer';
+import liveFeed from './liveFeedReducer';
 
 export default combineReducers({
   rooms,
@@ -24,4 +25,5 @@ export default combineReducers({
   common,
   user,
   time,
+  liveFeed,
 });

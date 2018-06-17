@@ -8,6 +8,7 @@ import BuyModal from '../modals/BuyModalMain';
 import SellShareModal from '../modals/SellSharesModal';
 import DashboardHeader from './DashboardHeader';
 import PlayerList from './PlayerList';
+import LiveFeed from './LiveFeed';
 
 class Dashboard extends Component {
 
@@ -400,15 +401,7 @@ class Dashboard extends Component {
             <PlayerList players={this.props.players}/>
           </Row>  
           <Row>
-            <div>
-              <Card body outline color="primary">
-                <CardTitle>Live feed</CardTitle>
-                {
-                  this.state.news.map(newselement => <CardText>{newselement}</CardText>)
-                }
-                <Button onClick={() => this.addTonews()} outline color="secondary">Clear</Button>
-              </Card>
-            </div>
+            <LiveFeed liveFeed={this.props.liveFeed}/>
           </Row>
           <Row>
             <div>
@@ -430,12 +423,13 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ stocks, sectors, sectorStocks }) => {
+const mapStateToProps = ({ stocks, sectors, sectorStocks, liveFeed, players, }) => {
   return {
     players,
     stocks,
     sectors,
     sectorStocks,
+    liveFeed,
   };
 };
 

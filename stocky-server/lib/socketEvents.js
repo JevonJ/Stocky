@@ -60,6 +60,7 @@ export default function (io, { dispatch, getState}) {
         const State = getState();
         const playerStocks = State.playerStocks[data.room];
         io.to(data.room).emit('buy_stock', { [data.username]: playerStocks[data.username]});
+        socket.to(data.room).emit('update_live_feed', data);
       });
     });
 
