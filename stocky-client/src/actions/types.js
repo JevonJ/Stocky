@@ -29,3 +29,6 @@ export const SET_ROUND_TIME = 'SET_ROUND_TIME';
 
 // playerStock types
 export const SET_PLAYER_STOCKS = 'SET_PLAYER_STOCKS';
+
+// live feed types
+export const UPDATE_FEED = 'UPDATE_FEED';

@@ -7,7 +7,8 @@ export default (state = InitialState, { payload, type }) => {
     case SET_ROOM_INFO:
       let newState = { ...state };
       newState[payload.room] = {
-        round: 0,
+        rounds: 20,
+        currentRound: 0,
         isPrivate: payload.isPrivate,
         password: payload.password,
         name: payload.room
