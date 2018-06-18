@@ -7,8 +7,9 @@ import PropTypes from 'prop-types';
 import Welcome from './Welcome';
 import Host from './Host';
 import GameList from './GameList';
-import Loading from './Loading';
+import PopupPassword from './PopupPassword';
 import Lobby from './Lobby';
+import Loading from './Loading';
 
 import BGImage from '../../images/welcome.jpeg';
 import './Main.css';
@@ -32,6 +33,11 @@ class Main extends Component {
     };
   }
 
+  shouldComponentUpdate(nextProps) {
+    console.log('BBBBBBBBBBBBBBBB', this.props.rooms !== nextProps.rooms);
+    return this.props.rooms !== nextProps.rooms || this.props.isLoading !== nextProps.isLoading;
+  }
+
   togglePopover() {
     this.setState({
       popoverOpen: !this.state.popoverOpen,
@@ -39,6 +45,7 @@ class Main extends Component {
   }
 
   render() {
+    console.log('MAINNNNNN');
     const { socket } = this.props;
 
     return (
@@ -86,7 +93,11 @@ class Main extends Component {
                   path="/login/lobby"
                   component={({ history }) => <Lobby history={history} socket={socket} />}
                 />
-                <Route exact path="/login/game-List" component={GameList} />
+                <Route
+                  exact
+                  path="/login/game-List"
+                  component={({ history }) => <GameList history={history} socket={socket} />}
+                />
                 <Route exact path="/login/about" component={Welcome} />
               </div>
           }
@@ -132,6 +143,7 @@ class Main extends Component {
 
 const mapStateToProps = state => (
   {
+    rooms: state.rooms,
     players: state.players,
     isLoading: state.common.isLoading,
   }

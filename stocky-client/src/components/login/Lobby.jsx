@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 class Lobby extends Component {
   static renderUsers(player, index) {
     return (
-      <tr key={player}>
+      <tr key={player.name}>
         <th scope="row">{index + 1}</th>
         <td>{player.name}</td>
       </tr>
