@@ -75,6 +75,7 @@ class Dashboard extends Component {
           isOpen={this.state.sellModal}
           toggle={() => this.toggleSellModal()}
           sellStockData={this.state.selectedSellStock}
+          socket={socket}
         />
 
         <Col sm="3">

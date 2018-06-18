@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import http from 'axios/lib/adapters/http';
-import { SET_PLAYER, SET_IS_LOADING, SET_ROOMS, SET_ROOM_INFO, BUY_STOCK } from './types';
+import { SET_PLAYER, SET_IS_LOADING, SET_ROOMS, SET_ROOM_INFO, BUY_STOCK, SELL_STOCK } from './types';
 
 function getInitialData() {
   return axios.get('http://localhost:4001/api/init-data', {
@@ -30,5 +30,10 @@ export const setPlayer = players => ({
 
 export const buyStock = data => ({
   type: BUY_STOCK,
+  payload: data,
+});
+
+export const sellStock = data => ({
+  type: SELL_STOCK,
   payload: data,
 });

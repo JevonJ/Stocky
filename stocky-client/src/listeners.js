@@ -35,6 +35,10 @@ export default (socket, actions) => {
     actions.buyStock(data);
   });
 
+  socket.on('sell_stock', (data) => {
+    actions.sellStock(data);
+  });
+
   socket.on('update_live_feed', (data) => {
     actions.updateFeed(data);
   });
