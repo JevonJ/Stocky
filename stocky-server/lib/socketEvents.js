@@ -35,12 +35,12 @@ export default function (io, { dispatch, getState }) {
 
     socket.on('join_room', (data) => {
       socket.join(data.room, () => {
-        dispatch(setRoom(data.room)).then(() => {
-          dispatch(setPlayer(data)).then(() => {
-            io.emit('set_rooms', getState().rooms);
-            io.to(data.room).emit('set_player', getState().players);
-          });
-        });      
+        dispatch(setPlayer(data)).then(() => {
+          const State = getState();
+          io.to(data.room).emit('set_player', getState().players);
+          io.to(data.room).emit('set_player_stocks', State.playerStocks[data.room]);
+          socket.emit('go_to_lobby');
+        });
       });
     });
 
