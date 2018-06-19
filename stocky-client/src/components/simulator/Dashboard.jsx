@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
+import { Container, Row, Col, ListGroup, ListGroupItem, Badge, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
@@ -71,10 +71,10 @@ class Dashboard extends Component {
     });
   }
 
-  sortBySector(){
+  sortBySector() {
     this.setState({
-      
-    })
+
+    });
   }
 
   render() {
@@ -86,7 +86,12 @@ class Dashboard extends Component {
         {(time.start_time > 0) &&
           <div id="Overlay" style={styles.overlay}>
             <div style={{ paddingTop: '18%' }}>
-              <Col sm="12" style={{ color: '#8c98a5', fontWeight: 'bold', fontSize: '2em', textAlign: 'center', padding: '1em' }}>
+              <Col
+                sm="12"
+                style={{
+                 color: '#8c98a5', fontWeight: 'bold', fontSize: '2em', textAlign: 'center', padding: '1em',
+                }}
+              >
                 Game starting in...
               </Col>
               <div style={{ paddingLeft: '45%' }}>
@@ -213,7 +218,7 @@ class Dashboard extends Component {
             <Row>
               <Col sm="6">
                 <div align="center">
-                  <RoundNumber roomInfo={roomInfo} user={user}/>
+                  {roomInfo[user.room] && <RoundNumber roomInfo={roomInfo} user={user} />}
                 </div>
               </Col>
               <Col sm="6">
