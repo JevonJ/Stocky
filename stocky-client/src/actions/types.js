@@ -1,6 +1,7 @@
 // player stocks
 export const SET_PLAYER = 'SET_PLAYER';
 export const BUY_STOCK = 'BUY_STOCK';
+export const SELL_STOCK = 'SELL_STOCK';
 
 //  user types
 export const SET_USER = 'SET_USER';
