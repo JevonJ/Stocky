@@ -21,11 +21,12 @@ class PurchasedStockList extends Component {
     renderPurchasedStocks(purchasedStocks, index) {
         const {roomStocks} = this.props;
         const stockPrice = roomStocks[purchasedStocks.stockSymbol].currentPrice;
+        const totalSoldQty = purchasedStocks.soldStockQty.reduce((a, b) => a + b, 0);
         return (
           <tr key={purchasedStocks.stockSymbol}>
             <td>{index + 1}</td>
             <td>{purchasedStocks.stockSymbol}</td>
-            <td>{purchasedStocks.initStockQty}</td>
+            <td>{purchasedStocks.initStockQty - totalSoldQty}</td>
             <td>{purchasedStocks.unitPrice}</td>
             <td>{stockPrice}</td>
 
