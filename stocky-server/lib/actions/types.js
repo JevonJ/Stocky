@@ -6,6 +6,7 @@ export const REMOVE_PLAYER = 'REMOVE_PLAYER';
 export const CREATE_GAME = 'CREATE_GAME';
 export const BUY_STOCK = 'BUY_STOCK';
 export const SELL_STOCK = 'SELL_STOCK';
+export const START_GAME = 'START_GAME';
 
 // room info types
 

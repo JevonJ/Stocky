@@ -1,4 +1,4 @@
-import { setPlayer, removeRoom, buyStock, sellStock, setPlayerStocks, createGame, removePlayer } from './actions';
+import { setPlayer, removeRoom, buyStock, sellStock, setPlayerStocks, createGame, removePlayer, startGame } from './actions';
 
 export default function (io, { dispatch, getState }) {
   // Set socket.io listeners.
@@ -52,7 +52,12 @@ export default function (io, { dispatch, getState }) {
     });
 
     socket.on('start_game', (data) => {
-      io.to(data).emit('set_start_timer', 5);
+      dispatch(startGame(data)).then(() => {
+        const State = getState();        
+        io.to(data).emit('set_start_timer', 5);
+        io.emit('set_room_info', State.roomInfo);
+        socket.emit('go_to_simulator');              
+      });
     });
 
     socket.on('purchase_stocks', (data) => {
@@ -84,7 +89,6 @@ export default function (io, { dispatch, getState }) {
         if(!playersExist) {
           dispatch(removeRoom(socket.room)).then(() => {
             const newState = getState();
-            console.log(newState);
             io.emit('set_rooms', newState.rooms);
           });
           return;

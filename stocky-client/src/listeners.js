@@ -31,6 +31,10 @@ export default (socket, actions) => {
     actions.history.push('/login');
   });
 
+  socket.on('go_to_simulator', () => {
+    actions.history.push('/simulator');
+  });
+
   socket.on('set_start_timer', (seconds) => {
     actions.setStartTime(seconds);
   });
