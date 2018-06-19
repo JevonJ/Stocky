@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label } from 'reactstrap';
+import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, ButtonGroup } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
@@ -56,6 +56,11 @@ class Dashboard extends Component {
     });
   }
 
+  sortBySector(){
+    this.setState({
+      
+    })
+  }
 
   render() {
     const {
@@ -250,6 +255,12 @@ class Dashboard extends Component {
               <h2>Currently in Market {'>>>'}</h2>
             </Row>
             <Row>
+              <ButtonGroup>
+                <Button outline color="info">Sort by sector</Button>
+                <Button outline color="info">Sort by price</Button>
+              </ButtonGroup>
+            </Row>
+            <Row>
               {Object.keys(user).length !== 0 &&
                 <StockList
                   sectors={sectors}
@@ -310,7 +321,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = ({
-  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo, roomStocks, user
+  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo, roomStocks, user,
 }) => ({
   players,
   stocks,
