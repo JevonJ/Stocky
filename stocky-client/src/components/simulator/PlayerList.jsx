@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardText, CardTitle, Table } from 'reactstrap';
+import { Card, CardBody, CardTitle, Table } from 'reactstrap';
 
 class PlayerList extends Component {
   static calculatePurchased(stocks) {
@@ -55,8 +55,8 @@ class PlayerList extends Component {
 
     return (
       <Card body outline color="danger">
-        <CardTitle><h5>Room name: Team Titans</h5></CardTitle>
-        <CardText>
+        <CardTitle>Room name: Team Titans</CardTitle>
+        <CardBody>
           <Table borderless>
             <thead>
               <tr>
@@ -72,7 +72,7 @@ class PlayerList extends Component {
               }
             </tbody>
           </Table>
-        </CardText>
+        </CardBody>
       </Card>
     );
   }

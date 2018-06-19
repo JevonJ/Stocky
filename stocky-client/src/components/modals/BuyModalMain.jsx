@@ -13,8 +13,8 @@ class BuyModalMain extends Component {
   }
 
   onChange({ target: { name, value } }) {
-    const { stock, stockInfo } = this.props;
-    const stockData = stockInfo[stock];
+    const { stock, roomStocks } = this.props;
+    const stockData = roomStocks[stock];
     let isWarnVisible = false;
     if (value > this.validateNofStocks()) {
       value = this.validateNofStocks();
@@ -31,24 +31,23 @@ class BuyModalMain extends Component {
   }
 
   validateNofStocks() {
-    const { user, stock, stockInfo } = this.props;
-    const stockData = stockInfo[stock];
+    const { user, stock, roomStocks } = this.props;
+    const stockData = roomStocks[stock];
     const nos = Math.trunc(user.cash / stockData.currentPrice);
     return (nos);
   }
 
   buyStock() {
     const {
-      user, roomInfo, stock, stockInfo,
+      user, stock, roomStocks, roomInfo,
     } = this.props;
-    const stockData = stockInfo[stock];
-
+    const stockData = roomStocks[stock];
     const { room, name, cash } = user;
     const data = {
       room,
       username: name,
       currentCashInHand: cash,
-      stockSymbol: stockData.stockSymbol,
+      stockSymbol: stock,
       initStockQty: parseInt(this.state.quantity, 10),
       unitPrice: parseInt(stockData.currentPrice, 10),
       round: roomInfo[room].currentRound,
@@ -68,9 +67,9 @@ class BuyModalMain extends Component {
   }
 
   render() {
-    const { stock, stockInfo } = this.props;
+    const { stock, roomStocks } = this.props;
     const { totalPrice, isWarnVisible } = this.state;
-    const stockData = stockInfo[stock];
+    const stockData = roomStocks[stock];
 
     return (
       <Modal
@@ -81,7 +80,7 @@ class BuyModalMain extends Component {
         <ModalHeader style={{ color: 'black' }} >You are going to buy</ModalHeader>
         <ModalBody style={{ color: 'black' }} className="mbody" >
           <ListGroup>
-            <ListGroupItem>Company Symbol: {stockData && stockData.stockSymbol}</ListGroupItem>
+            <ListGroupItem>Company Symbol: {stock}</ListGroupItem>
             <ListGroupItem>Unit Price: {stockData && stockData.currentPrice}</ListGroupItem>
             <ListGroupItem>
               <FormGroup>

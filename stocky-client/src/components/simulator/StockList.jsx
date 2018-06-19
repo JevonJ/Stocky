@@ -22,7 +22,7 @@ class StockList extends Component {
     const { stocks, stockInfo } = this.props;
     return (
       <div className="table-responsive">
-        <Table striped responive size="sm">
+        <Table striped responsive size="sm">
           <thead>
             <tr>
               <th>Company name</th>
