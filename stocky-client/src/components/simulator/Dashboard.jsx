@@ -10,6 +10,7 @@ import LiveFeed from './LiveFeed';
 import StockList from './StockList';
 import SoldStockList from './SoldStockList';
 import PurchasedStockList from './PurchasedStockList';
+import RoundNumber from './RoundNumber';
 
 import { setStartTime } from '../../actions';
 
@@ -199,10 +200,7 @@ class Dashboard extends Component {
             <Row>
               <Col sm="6">
                 <div align="center">
-                  <Card body inverse color="danger" className="text-center">
-                    <CardTitle>Round Number</CardTitle>
-                    <CardText>2</CardText>
-                  </Card>
+                  <RoundNumber roomInfo={roomInfo} user={user}/>
                 </div>
               </Col>
               <Col sm="6">
