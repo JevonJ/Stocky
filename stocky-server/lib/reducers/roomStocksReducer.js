@@ -1,4 +1,4 @@
-import { CREATE_GAME } from '../actions/types';
+import { CREATE_GAME, REMOVE_ROOM } from '../actions/types';
 
 const InitialState = {};
 
@@ -73,9 +73,16 @@ function setRoomStocks(state, payload) {
   return { ...state, [payload.room]: defaultSet };
 }
 
+function removeRoomStocks(state, payload) {
+  const newState = { ...state }
+  delete newState[payload];
+  return { ...newState };
+}
+
 export default (state = InitialState, { type, payload }) => {
   switch (type) {
     case CREATE_GAME: return setRoomStocks(state, payload);
+    case REMOVE_ROOM: return removeRoomStocks(state, payload);
     default:
       return state;
   }

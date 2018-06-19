@@ -37,14 +37,14 @@ class SellSharesModal extends Component {
   sellStock() {
     const { user, roomInfo, sellStockData } = this.props;
 
-    const data = {};
-
-    data['room'] = user.room;
-    data['name'] = user.name;
-    data['stockSymbol'] = this.props.sellStockData.symbol;
-    data['stockQty'] = this.state.quantity;
-    data['unitPrice'] = this.props.sellStockData.curPrice;
-    data['round'] = roomInfo[user.room].round;
+    const data = {
+      room: user.room,
+      username: user.name,
+      stockSymbol: sellStockData.symbol,
+      stockQty: parseInt(this.state.quantity, 10),
+      unitPrice: sellStockData.curPrice,
+      round: roomInfo[user.room].currentRound,
+    };
 
     this.props.socket.emit('sell_stocks', data); 
     this.closeModal();
@@ -102,14 +102,7 @@ class SellSharesModal extends Component {
 }
 const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
   user,
-  roomInfo: {
-    room1: {
-      round: 1,
-      isPrivate: false,
-      name: 'room1',
-      isStarted: false,
-    }
-  },
+  roomInfo,
   playerStocks,
 });
 export default connect(mapStateToProps)(SellSharesModal);
