@@ -1,6 +1,6 @@
 import { setPlayer, removeRoom, buyStock, sellStock, setPlayerStocks, createGame } from './actions';
 
-export default function (io, { dispatch, getState}) {
+export default function (io, { dispatch, getState }) {
   // Set socket.io listeners.
   io.on('connect', (socket) => {
     console.log('User connected: ', socket.id);
@@ -28,15 +28,20 @@ export default function (io, { dispatch, getState}) {
       });
     });
 
+    socket.on('get_players', (room) => {
+      const State = getState();
+      socket.emit('set_players', State.players[room]);
+    });
+
     socket.on('join_room', (data) => {
-      // socket.join(data.room, () => {
-      //   dispatch(setRoom(data.room)).then(() => {
-      //     dispatch(setPlayer(data)).then(() => {
-      //       io.emit('set_rooms', getState().rooms);
-      //       io.to(data.room).emit('set_player', getState().players);
-      //     });
-      //   });      
-      // });
+      socket.join(data.room, () => {
+        dispatch(setPlayer(data)).then(() => {
+          const State = getState();
+          io.to(data.room).emit('set_player', getState().players);
+          io.to(data.room).emit('set_player_stocks', State.playerStocks[data.room]);
+          socket.emit('go_to_lobby');
+        });
+      });
     });
 
     socket.on('start_game', (data) => {
