@@ -29,13 +29,25 @@ function updatePurchasePlayerStock(state, payload) {
 
 }
 
+function reducePurchasedStock(state, payload){
+  const newState = { ...state };
+  let room = { ...newState[payload.room] };
+  let purchased = room[payload.username].purchased;
+  
+  const purchaseExist = purchased.findIndex((({ stockSymbol, round }) => (stockSymbol === payload.stockSymbol && round === payload.round)));
+
+    purchased[purchaseExist].soldStockQty = [...purchased[purchaseExist].soldStockQty ,payload.stockQty];
+    room[payload.username].purchased = [...purchased];
+    newState[payload.room] = room;
+    return newState;
+}
+
 function updateSellPlayerStock(state, payload) {
   const newState = { ...state };
   let room = { ...newState[payload.room] };
   let sold = room[payload.username].sold;
   
   const sellExist = sold.findIndex((({ stockSymbol, round }) => (stockSymbol === payload.stockSymbol && round === payload.round)));
-
    //Sold Stocks
    if(sellExist < 0) {
     room[payload.username].sold = [...sold, {
@@ -45,14 +57,13 @@ function updateSellPlayerStock(state, payload) {
       round: payload.round,
     }];
     newState[payload.room] = room;
-    return newState;
   } else {
     sold[sellExist].stockQty = [...sold[sellExist].stockQty ,payload.stockQty];
     room[payload.username].sold = [...sold];
     newState[payload.room] = room;
-    return newState;
   }
-
+  reducePurchasedStock(state, payload);
+  return newState;
 }
 
 function setPlayerStock(state, payload) {
