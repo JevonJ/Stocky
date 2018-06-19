@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Button, Card, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
+import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button, Card, Table, CardTitle, CardText, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
@@ -62,6 +62,19 @@ class Dashboard extends Component {
       modal: !this.state.modal,
       selectedStock: stock,
     });
+  }
+
+  toggleSellModal(sellStockData) {
+    this.setState({
+      sellModal: !this.state.sellModal,
+      selectedSellStock: sellStockData,
+    });
+  }
+
+  sortBySector(){
+    this.setState({
+      
+    })
   }
 
   render() {
@@ -219,6 +232,22 @@ class Dashboard extends Component {
               <PlayerList players={players} playerStocks={playerStocks} />
             </Row>
             <Row>
+              <ButtonGroup>
+                <Button outline color="info">Sort by sector</Button>
+                <Button outline color="info">Sort by price</Button>
+              </ButtonGroup>
+            </Row>
+            <Row>
+              {Object.keys(user).length !== 0 &&
+                <StockList
+                  sectors={sectors}
+                  sectorStocks={sectorStocks}
+                  stocks={stocks}
+                  stockInfo={stockInfo}
+                  roomStocks={roomStocks}
+                  toggleModal={stock => this.toggleModal(stock)}
+                />
+              }
               <LiveFeed liveFeed={liveFeed} />
             </Row>
             <Row>
