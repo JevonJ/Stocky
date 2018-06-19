@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Fade, Form, FormGroup, Input, Label, InputGroup, InputGroupAddon, FormFeedback } from 'reactstrap';
-import FontAwesome from 'react-fontawesome';
 
 class GameList extends Component {
   static renderGameList(room) {
@@ -21,7 +20,7 @@ class GameList extends Component {
       selectedRoom: [],
       usernameError: '',
       passwordError: '',
-      roomError:'',
+      roomError: '',
     };
   }
 
@@ -38,24 +37,22 @@ class GameList extends Component {
         ...newState,
         usernameError: playerExist.length === 0 ? '' : 'Username Taken..',
       });
-      return;
     } else {
       this.setState(newState);
-      return;
     }
-  }
-
-  changeVisibility() {
-    this.setState({
-      visibility: !this.state.visibility,
-    });
   }
 
   onSelectChange({ target: { value } }) {
     this.props.socket.emit('get_players', value);
     this.setState({
       selectedRoom: [value],
-    });  
+    });
+  }
+
+  changeVisibility() {
+    this.setState({
+      visibility: !this.state.visibility,
+    });
   }
 
   joinGame(e) {
@@ -65,22 +62,24 @@ class GameList extends Component {
 
     if (username.length === 0) {
       this.setState({
-        usernameError:'Please enter valid username.',
+        usernameError: 'Please enter valid username.',
       });
       return;
     }
 
     if (selectedRoom.length === 0) {
       this.setState({
-        roomError:'Please select a room.',
+        roomError: 'Please select a room.',
       });
       return;
     }
 
-    const {
-      roomInfo
-    } = this.props;
-    if (roomInfo[selectedRoom[0]].isPrivate && (roomInfo[selectedRoom[0]].password !== password) && password.length === 0) {
+    const { roomInfo } = this.props;
+    if (
+      roomInfo[selectedRoom[0]].isPrivate &&
+      (roomInfo[selectedRoom[0]].password !== password) &&
+      password.length === 0
+    ) {
       this.setState({
         passwordError: 'Please enter valid group password.',
       });
@@ -89,11 +88,8 @@ class GameList extends Component {
 
     const data = {
       room: selectedRoom[0],
-      username, 
+      username,
       password,
-      usernameError,
-      passwordError,
-      roomError,
     };
 
     if (usernameError === '' && roomError === '') {
@@ -109,49 +105,55 @@ class GameList extends Component {
     if (!selectedRoom[0]) return null;
 
     const room = roomInfo[selectedRoom[0]];
-    if (room.isPrivate) {
-      return (
-        <FormGroup row>
-          <Label for="password">Password</Label>
-          <InputGroup>
-            <Input type={this.state.visibility ? 'text' : 'password'}
-              invalid={passwordError !== ''}
-              name="password"
-              id="password"
-              autoComplete="password"
-              value={this.state.password}
-              onChange={e => this.onInputChange(e)} />
-            <InputGroupAddon addonType="append">
-              <Button color="secondary" onClick={() => this.changeVisibility()}>visibility (o)</Button>
-            </InputGroupAddon>
-          </InputGroup>
-          <FormFeedback>{passwordError}</FormFeedback>
-        </FormGroup>
-      );
+    if (!room.isPrivate) {
+      return null;
     }
+
+    return (
+      <FormGroup row>
+        <Label for="password">Password</Label>
+        <InputGroup>
+          <Input
+            type={this.state.visibility ? 'text' : 'password'}
+            invalid={passwordError !== ''}
+            name="password"
+            id="password"
+            autoComplete="password"
+            value={this.state.password}
+            onChange={e => this.onInputChange(e)}
+          />
+          <InputGroupAddon addonType="append">
+            <Button color="secondary" onClick={() => this.changeVisibility()}>visibility</Button>
+          </InputGroupAddon>
+        </InputGroup>
+        <FormFeedback>{passwordError}</FormFeedback>
+      </FormGroup>
+    );
   }
 
   render() {
-
     const {
       selectedRoom, username, usernameError, roomError, password,
     } = this.state;
 
-    const { rooms, history, socket } = this.props;
+    const { rooms, history } = this.props;
+
     return (
       <Fade in tag="div" timeout={200}>
         <main role="main" className="inner loginWelcome-cover">
           <h1 className="loginWelcome-cover-heading">Select a Game Room</h1>
           <Form>
             <FormGroup>
-              <Input type="select"
+              <Input
+                type="select"
                 invalid={roomError !== ''}
                 name="roomName"
                 id="selectgame"
                 multiple
-                value={selectedRoom[0]}
+                value={selectedRoom[0] || []}
                 bsSize="lg"
-                onChange={e => this.onSelectChange(e)}>
+                onChange={e => this.onSelectChange(e)}
+              >
                 {
                   rooms.map(room => GameList.renderGameList(room))
                 }
@@ -160,7 +162,8 @@ class GameList extends Component {
             </FormGroup>
             <FormGroup row>
               <Label for="username">Username</Label>
-              <Input type="text"
+              <Input
+                type="text"
                 invalid={usernameError !== ''}
                 valid={username.length > 0 ? !usernameError : false}
                 name="username"
@@ -197,12 +200,10 @@ class GameList extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    rooms: state.rooms,
-    roomInfo: state.roomInfo,
-    players: state.players,
-  };
-};
+const mapStateToProps = state => ({
+  rooms: state.rooms,
+  roomInfo: state.roomInfo,
+  players: state.players,
+});
 
 export default connect(mapStateToProps)(GameList);

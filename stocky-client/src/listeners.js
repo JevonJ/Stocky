@@ -27,6 +27,10 @@ export default (socket, actions) => {
     actions.history.push('/login/lobby');
   });
 
+  socket.on('go_to_login', () => {
+    actions.history.push('/login');
+  });
+
   socket.on('set_start_timer', (seconds) => {
     actions.setStartTime(seconds);
   });
