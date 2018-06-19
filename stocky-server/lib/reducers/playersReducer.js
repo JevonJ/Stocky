@@ -1,4 +1,4 @@
-import { SET_PLAYER, BUY_STOCK, SELL_STOCK, CREATE_GAME } from '../actions/types';
+import { SET_PLAYER, BUY_STOCK, SELL_STOCK, CREATE_GAME, REMOVE_ROOM, REMOVE_PLAYER } from '../actions/types';
 
 const InitialState = {};
 
@@ -34,8 +34,28 @@ function updateSellCashAmount(state, payload) {
 
 function setPlayer(state, payload) {
   const newState = { ...state };
-  newState[payload.room] = [{ name: payload.username, cash: 1000 }]; 
+  if (newState[payload.room] && newState[payload.room].length > 0) {
+    newState[payload.room] = [...newState[payload.room], { name: payload.username, cash: 1000 }];
+  } else {
+    newState[payload.room] = [{ name: payload.username, cash: 1000 }];
+  }
+  return newState;
+}
+
+function removeRoom(state, payload) {
+  const newState = { ...state }
+  delete newState[payload];
   return { ...newState };
+}
+
+function removePlayer(state, payload) {
+  const newState = { ...state }
+  const roomPlayers = newState[payload.room].filter((player) => {
+    return player.name !== payload.username
+  });
+  newState[payload.room] = roomPlayers;
+
+  return ({ ...newState });
 }
 
 export default (state = InitialState, { payload, type }) => {
@@ -44,6 +64,8 @@ export default (state = InitialState, { payload, type }) => {
     case CREATE_GAME: return setPlayer(state, payload);
     case BUY_STOCK: return updatePurchaseCashAmount(state, payload);
     case SELL_STOCK: return updateSellCashAmount(state, payload);
+    case REMOVE_ROOM: return removeRoom(state, payload);
+    case REMOVE_PLAYER: return removePlayer(state, payload);
     default: return state;
-  } 
+  }
 };

@@ -1,4 +1,4 @@
-import { BUY_STOCK, SELL_STOCK, SET_PLAYER_STOCKS, CREATE_GAME, SET_PLAYER } from '../actions/types';
+import { BUY_STOCK, SELL_STOCK, SET_PLAYER_STOCKS, CREATE_GAME, SET_PLAYER, REMOVE_ROOM } from '../actions/types';
 
 const InitialState = {};
 
@@ -61,6 +61,13 @@ function setPlayerStock(state, payload) {
   newState[payload.room] = { ...state[payload.room], [payload.username]: { purchased: [], sold: [] } }
   return newState;
 }
+
+function removePlayerStocks(state, payload) {
+  const newState = { ...state }
+  delete newState[payload];
+  return { ...newState };
+}
+
 export default (state = InitialState, { type, payload }) => {
   switch (type) {
     case SET_PLAYER_STOCKS: return setPlayerStock(state, payload);
@@ -68,6 +75,7 @@ export default (state = InitialState, { type, payload }) => {
     case CREATE_GAME: return setPlayerStock(state, payload);
     case BUY_STOCK: return updatePurchasePlayerStock(state, payload);
     case SELL_STOCK: return updateSellPlayerStock(state, payload);
+    case REMOVE_ROOM: return removePlayerStocks(state, payload);
     default: return state;
   }
 };

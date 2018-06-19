@@ -1,4 +1,4 @@
-import { setPlayer, removeRoom, buyStock, sellStock, setPlayerStocks, createGame } from './actions';
+import { setPlayer, removeRoom, buyStock, sellStock, setPlayerStocks, createGame, removePlayer, startGame } from './actions';
 
 export default function (io, { dispatch, getState }) {
   // Set socket.io listeners.
@@ -15,6 +15,8 @@ export default function (io, { dispatch, getState }) {
     socket.on('create_game', (data) => {
       socket.join(data.room, () => {
         socket.room = data.room;
+        socket.username = data.username;
+        socket.gameHost = true;
         dispatch(createGame(data)). then(() => {
           const State = getState();
           io.emit('set_rooms', State.rooms);
@@ -23,7 +25,7 @@ export default function (io, { dispatch, getState }) {
           socket.emit('set_user', { name: data.username, host: true, room: data.room, cash: 1000 });
           socket.emit('go_to_lobby');
           io.to(data.room).emit('set_player_stocks', State.playerStocks[data.room]);
-          io.to(data.room).emit('set_room_stocks', State.roomStocks[data.room]);
+          socket.emit('set_room_stocks', State.roomStocks[data.room]);
         });
       });
     });
@@ -35,17 +37,27 @@ export default function (io, { dispatch, getState }) {
 
     socket.on('join_room', (data) => {
       socket.join(data.room, () => {
+        socket.room = data.room;
+        socket.username = data.username;
+        socket.gameHost = false;
         dispatch(setPlayer(data)).then(() => {
           const State = getState();
-          io.to(data.room).emit('set_player', getState().players);
+          socket.emit('set_user', { name: data.username, host: false, room: data.room, cash: 1000 });          
+          io.to(data.room).emit('set_players', State.players[data.room]);
           io.to(data.room).emit('set_player_stocks', State.playerStocks[data.room]);
           socket.emit('go_to_lobby');
+          socket.emit('set_room_stocks', State.roomStocks[data.room]);
         });
       });
     });
 
     socket.on('start_game', (data) => {
-      io.to(data).emit('set_start_timer', 5);
+      dispatch(startGame(data)).then(() => {
+        const State = getState();        
+        io.to(data).emit('set_start_timer', 5);
+        io.emit('set_room_info', State.roomInfo);
+        socket.emit('go_to_simulator');              
+      });
     });
 
     socket.on('purchase_stocks', (data) => {
@@ -71,9 +83,32 @@ export default function (io, { dispatch, getState }) {
     });
 
     socket.on('disconnect', (data) => {
-      dispatch(removeRoom(socket.room)).then(() => {
-        io.emit('set_rooms', getState().rooms);
-      });
+      if(socket.room) {
+        const State = getState();
+        const playersExist = State.players[socket.room].length > 1;
+        if(!playersExist) {
+          dispatch(removeRoom(socket.room)).then(() => {
+            const newState = getState();
+            io.emit('set_rooms', newState.rooms);
+          });
+          return;
+        } else {
+          const gameHasStarted = State.roomInfo[socket.room].isStarted;
+          if(!gameHasStarted && socket.gameHost) {
+            dispatch(removeRoom(socket.room)).then(() => {
+              const newState = getState();
+              io.emit('set_rooms', newState.rooms);
+              io.to(socket.room).emit('go_to_login');
+            });
+          }
+          if (!gameHasStarted && !socket.gameHost) {
+            dispatch(removePlayer({username: socket.username, room:socket.room})).then(() => {
+              const newState = getState();
+              io.to(socket.room).emit('set_players', newState.players[socket.room]);
+            });
+          }
+        }      
+      }
     });
   });
 }

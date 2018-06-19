@@ -34,8 +34,7 @@ class Main extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log('BBBBBBBBBBBBBBBB', this.props.rooms !== nextProps.rooms);
-    return this.props.rooms !== nextProps.rooms || this.props.isLoading !== nextProps.isLoading;
+    return this.props.isLoading !== nextProps.isLoading;
   }
 
   togglePopover() {
@@ -45,7 +44,6 @@ class Main extends Component {
   }
 
   render() {
-    console.log('MAINNNNNN');
     const { socket } = this.props;
 
     return (
