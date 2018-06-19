@@ -60,7 +60,6 @@ export default function (io, { dispatch, getState}) {
         const playerStocks = State.playerStocks[data.room];
         socket.emit('set_user', { cash: data.currentCashInHand + (data.stockQty*data.unitPrice) });        
         io.to(data.room).emit('sell_stock', { [data.username]: playerStocks[data.username]});
-        console.log(playerStocks[data.username]);
         socket.to(data.room).emit('update_live_feed', data);
         io.to(data.room).emit('set_players', State.players[data.room]);
       });

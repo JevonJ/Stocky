@@ -37,15 +37,15 @@ class SellSharesModal extends Component {
   sellStock() {
     const { user, roomInfo, sellStockData } = this.props;
 
-    const data = {};
+    const data = {
+      room: user.room,
+      username: user.name,
+      stockSymbol: sellStockData.symbol,
+      stockQty: parseInt(this.state.quantity, 10),
+      unitPrice: sellStockData.curPrice,
+      round: roomInfo[user.room].currentRound,
+    };
 
-    data['room'] = user.room;
-    data['username'] = user.name;
-    data['stockSymbol'] = this.props.sellStockData.symbol;
-    data['stockQty'] = this.state.quantity;
-    data['unitPrice'] = this.props.sellStockData.curPrice;
-    data['round'] = roomInfo[user.room].currentRound;
-        console.log(data);
     this.props.socket.emit('sell_stocks', data); 
     this.closeModal();
   }

@@ -4,11 +4,12 @@ import { Container, Row, Col, ListGroup, ListGroupItem, Badge, Collapse, Button,
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
-import SellShareModal from '../modals/SellSharesModal';
 import DashboardHeader from './DashboardHeader';
 import PlayerList from './PlayerList';
 import LiveFeed from './LiveFeed';
 import StockList from './StockList';
+import SoldStockList from './SoldStockList';
+import PurchasedStockList from './PurchasedStockList';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -18,7 +19,6 @@ class Dashboard extends Component {
       collapse1: false,
       news: [],
       modal: false,
-      sellModal: false,
     };
   }
 
@@ -49,17 +49,9 @@ class Dashboard extends Component {
     });
   }
 
-  toggleSellModal(sellStockData) {
-    this.setState({
-      sellModal: !this.state.sellModal,
-      selectedSellStock: sellStockData,
-    });
-  }
-
-
   render() {
     const {
-      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user,
+      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user, roomInfo,
     } = this.props;
     return (
       <Row>
@@ -67,124 +59,30 @@ class Dashboard extends Component {
           isOpen={this.state.modal}
           toggle={() => this.toggleModal()}
           stock={this.state.selectedStock}
-          stockInfo={stockInfo}
+          roomStocks={roomStocks}
+          roomInfo={roomStocks}
           socket={socket}
         />
-
-        <SellShareModal
-          isOpen={this.state.sellModal}
-          toggle={() => this.toggleSellModal()}
-          sellStockData={this.state.selectedSellStock}
-          socket={socket}
-        />
-
+        
         <Col sm="3">
           <Row>
             <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
           </Row>
-          <Row>
-            <Collapse isOpen={this.state.collapse}>
-              <Table striped responsive size="sm">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Symbol</th>
-                    <th>Qty</th>
-                    <th>Value</th>
-                    <th>Current</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>@mdo</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Collapse>
-          </Row>
+          <SoldStockList
+            isOpen={this.state.collapse}
+            playerStocks={playerStocks}
+            user={user} 
+          />
           <Row>
             <Button outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
-          </Row>
-          <Row>
-            <Collapse isOpen={this.state.collapse1}>
-              <Table striped responsive size="sm">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Symbol</th>
-                    <th>Qty</th>
-                    <th>Value</th>
-                    <th>Current</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>20</td>
-                    <td>15.00</td>
-                    <td>18.00</td>
-                    <td><Button
-                      color="danger"
-                      onClick={() => this.toggleSellModal({
-                        symbol: 'Mark', oldPrice: 15.00, curPrice: 18.00, avlqty: 20,
-                      })}
-                    >Sell
-                        </Button>{' '}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>15</td>
-                    <td>12.00</td>
-                    <td>10.00</td>
-                    <td><Button
-                      color="danger"
-                      onClick={() => this.toggleSellModal({
-                        symbol: 'Mark', oldPrice: 12.00, curPrice: 10.00, avlqty: 15,
-                      })}
-                    >Sell
-                        </Button>{' '}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>12</td>
-                    <td>16.00</td>
-                    <td>16.00</td>
-                    <td><Button
-                      color="danger"
-                      onClick={() => this.toggleSellModal({
-                        symbol: 'Mark', oldPrice: 16.00, curPrice: 16.00, avlqty: 12,
-                      })}
-                    >Sell
-                        </Button>{' '}
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Collapse>
-          </Row>
+          </Row>  
+          <PurchasedStockList
+            isOpen={this.state.collapse1}
+            socket={socket}
+            playerStocks={playerStocks}
+            roomStocks={roomStocks}
+            user={user}       
+          />   
           <Row>
             <Card
               body
@@ -311,13 +209,14 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = ({
-  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo, roomStocks, user
+  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo, roomStocks, user, roomInfo,
 }) => ({
   players,
   stocks,
   sectors,
   playerStocks,
   sectorStocks,
+  roomInfo,
   stockInfo,
   liveFeed,
   roomStocks,
