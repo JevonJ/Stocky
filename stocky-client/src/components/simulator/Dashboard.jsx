@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, ListGroup, ListGroupItem, Badge, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
+import { Container, Row, Col, ListGroup, ListGroupItem, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
-import SellShareModal from '../modals/SellSharesModal';
 import DashboardHeaderData from './DashboarHeaderData';
 import PlayerList from './PlayerList';
 import LiveFeed from './LiveFeed';
@@ -39,10 +38,10 @@ class Dashboard extends Component {
   }
 
   componentWillMount() {
-    const { user, history } = this.props;
-    if (user.constructor === Object && Object.keys(user).length === 0) {
-      history.replace('/login');
-    }
+    // const { user, history } = this.props;
+    // if (user.constructor === Object && Object.keys(user).length === 0) {
+    //   history.replace('/login');
+    // }
   }
 
   toggle(type) {
@@ -65,10 +64,9 @@ class Dashboard extends Component {
     });
   }
 
-  toggleSellModal(sellStockData) {
+  toggleSellModal() {
     this.setState({
       sellModal: !this.state.sellModal,
-      selectedSellStock: sellStockData,
     });
   }
 
@@ -83,17 +81,18 @@ class Dashboard extends Component {
       socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user, roomInfo, time, setStartTime,
     } = this.props;
     return (
-      <div>
-        {(time.start_time > 0) &&
+      <Row>
+        {
+          (time.start_time > 0) &&
           <div id="Overlay" style={styles.overlay}>
             <div style={{ paddingTop: '18%' }}>
               <Col
                 sm="12"
                 style={{
-                 color: '#8c98a5', fontWeight: 'bold', fontSize: '2em', textAlign: 'center', padding: '1em',
-                }}
+                    color: '#8c98a5', fontWeight: 'bold', fontSize: '2em', textAlign: 'center', padding: '1em',
+                  }}
               >
-                Game starting in...
+                  Game starting in...
               </Col>
               <div style={{ paddingLeft: '45%' }}>
                 <CountDown
@@ -107,28 +106,30 @@ class Dashboard extends Component {
             </div>
           </div>
         }
-        <Row>
-          <BuyModal
-            isOpen={this.state.modal}
-            toggle={() => this.toggleModal()}
-            stock={this.state.selectedStock}
-            roomStocks={roomStocks}
-            roomInfo={roomStocks}
-            socket={socket}
-          />
+        <BuyModal
+          isOpen={this.state.modal}
+          toggle={() => this.toggleModal()}
+          stock={this.state.selectedStock}
+          roomStocks={roomStocks}
+          roomInfo={roomStocks}
+          socket={socket}
+        />
 
-          <Col sm="3">
-            <Row>
-              <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
-            </Row>
+        <Col xs="3">
+          <Row>
+            <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
+          </Row>
+          <Row>
             <SoldStockList
               isOpen={this.state.collapse}
               playerStocks={playerStocks}
               user={user}
             />
-            <Row>
-              <Button outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
-            </Row>
+          </Row>
+          <Row>
+            <Button outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
+          </Row>
+          <Row>
             <PurchasedStockList
               isOpen={this.state.collapse1}
               socket={socket}
@@ -136,75 +137,40 @@ class Dashboard extends Component {
               roomStocks={roomStocks}
               user={user}
             />
-            <Row>
-              <Card
-                body
-                inverse
-                style={{
+          </Row>
+          <Row>
+            <Card
+              body
+              inverse
+              style={{
                   backgroundColor: '#333', borderColor: '#333', padding: '0.5rem', alignItems: 'center',
                 }}
-              >
-                <CardTitle>Symbol lookup</CardTitle>
-                <CardBody>
-                  <ButtonDropdown
-                    isOpen={this.state.btnDropright}
-                    toggle={() => this.setState({ btnDropright: !this.state.btnDropright })}
-                  >
-                    <DropdownToggle outline caret>
+            >
+              <CardTitle>Symbol lookup</CardTitle>
+              <CardBody>
+                <ButtonDropdown
+                  isOpen={this.state.btnDropright}
+                  toggle={() => this.setState({ btnDropright: !this.state.btnDropright })}
+                >
+                  <DropdownToggle outline caret>
                       Search by
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem>Company name</DropdownItem>
-                      <DropdownItem>Symbol</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                  <Input placeholder="" style={{ marginTop: '1rem', marginBottom: '1rem' }} />
-                  <Label style={{ textAlign: 'center' }}>Arpico(Pvt)Ltd</Label>
-                </CardBody>
-              </Card>
-            </Row>
-          </Col>
-          <Col sm="6">
-            <Container>
-              <DashboardHeaderData user={user} playerStocks={playerStocks}/>
-              <Row>
-                <h2>Currently in Market {'>>>'}</h2>
-              </Row>
-              <Row>
-                {Object.keys(user).length !== 0 &&
-                  <StockList
-                    sectors={sectors}
-                    sectorStocks={sectorStocks}
-                    stocks={stocks}
-                    stockInfo={stockInfo}
-                    roomStocks={roomStocks}
-                    toggleModal={stock => this.toggleModal(stock)}
-                  />
-                }
-              </Row>
-            </Container>
-          </Col>
-          <Col sm="3">
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem>Company name</DropdownItem>
+                    <DropdownItem>Symbol</DropdownItem>
+                  </DropdownMenu>
+                </ButtonDropdown>
+                <Input placeholder="" style={{ marginTop: '1rem', marginBottom: '1rem' }} />
+                <Label style={{ textAlign: 'center' }}>Arpico(Pvt)Ltd</Label>
+              </CardBody>
+            </Card>
+          </Row>
+        </Col>
+        <Col xs="6">
+          <Container>
+            <DashboardHeaderData user={user} playerStocks={playerStocks} />
             <Row>
-              <Col sm="6">
-                <div align="center">
-                  {roomInfo[user.room] && <RoundNumber roomInfo={roomInfo} user={user} />}
-                </div>
-              </Col>
-              <Col sm="6">
-                <p><b>Time is Running!!!</b></p>
-                {time.start_time === 0 &&
-                  <CountDown
-                    seconds={60}
-                    color="#000"
-                    alpha={0.9}
-                    size={100}
-                  />
-                }
-              </Col>
-            </Row>
-            <Row>
-              <PlayerList players={players} playerStocks={playerStocks} />
+              <h2>Currently in Market {'>>>'}</h2>
             </Row>
             <Row>
               <ButtonGroup>
@@ -214,34 +180,59 @@ class Dashboard extends Component {
             </Row>
             <Row>
               {Object.keys(user).length !== 0 &&
-                <StockList
-                  sectors={sectors}
-                  sectorStocks={sectorStocks}
-                  stocks={stocks}
-                  stockInfo={stockInfo}
-                  roomStocks={roomStocks}
-                  toggleModal={stock => this.toggleModal(stock)}
-                />
-              }
-              <LiveFeed liveFeed={liveFeed} />
+              <StockList
+                sectors={sectors}
+                sectorStocks={sectorStocks}
+                stocks={stocks}
+                stockInfo={stockInfo}
+                roomStocks={roomStocks}
+                toggleModal={stock => this.toggleModal(stock)}
+              />
+                }
             </Row>
-            <Row>
-              <div>
-                <Card body outline color="warning">
-                  <CardTitle>Current Events</CardTitle>
-                  <CardBody>
-                    <ListGroup>
-                      <ListGroupItem>Engineering sector is having a boom of/... </ListGroupItem>
-                      <ListGroupItem>ETI Group is undergoing a scandal...</ListGroupItem>
-                    </ListGroup>
-                  </CardBody>
-                  <Button outline color="secondary">Clear</Button>
-                </Card>
+          </Container>
+        </Col>
+        <Col xs="3">
+          <Row>
+            <Col sm="6">
+              <div align="center">
+                {roomInfo[user.room] && <RoundNumber roomInfo={roomInfo} user={user} />}
               </div>
-            </Row>
-          </Col>
-        </Row>
-      </div>
+            </Col>
+            <Col sm="6">
+              <p><b>Time is Running!!!</b></p>
+              {time.start_time === 0 &&
+              <CountDown
+                seconds={60}
+                color="#000"
+                alpha={0.9}
+                size={100}
+              />
+                }
+            </Col>
+          </Row>
+          <Row>
+            <PlayerList players={players} playerStocks={playerStocks} />
+          </Row>
+          <Row>
+            <LiveFeed liveFeed={liveFeed} />
+          </Row>
+          <Row>
+            <div>
+              <Card body outline color="warning">
+                <CardTitle>Current Events</CardTitle>
+                <CardBody>
+                  <ListGroup>
+                    <ListGroupItem>Engineering sector is having a boom of/... </ListGroupItem>
+                    <ListGroupItem>ETI Group is undergoing a scandal...</ListGroupItem>
+                  </ListGroup>
+                </CardBody>
+                <Button outline color="secondary">Clear</Button>
+              </Card>
+            </div>
+          </Row>
+        </Col>
+      </Row>
     );
   }
 }
