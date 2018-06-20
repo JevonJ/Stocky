@@ -111,7 +111,7 @@ class Dashboard extends Component {
           toggle={() => this.toggleModal()}
           stock={this.state.selectedStock}
           roomStocks={roomStocks}
-          roomInfo={roomStocks}
+          roomInfo={roomInfo}
           socket={socket}
         />
 

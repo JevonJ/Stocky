@@ -14,13 +14,13 @@ class BuyModalMain extends Component {
 
   onChange({ target: { name, value } }) {
     const { stock, roomStocks } = this.props;
-    const stockData = roomStocks[stock];
+    const stockDataArr = roomStocks[stock];
     let isWarnVisible = false;
     if (value > this.validateNofStocks()) {
       value = this.validateNofStocks();
       isWarnVisible = true;
     }
-    let totalPrice = value * stockData.currentPrice;
+    let totalPrice = value * stockDataArr[stockDataArr.length - 1];
     totalPrice = totalPrice.toFixed(2);
 
     this.setState({
@@ -32,8 +32,8 @@ class BuyModalMain extends Component {
 
   validateNofStocks() {
     const { user, stock, roomStocks } = this.props;
-    const stockData = roomStocks[stock];
-    const nos = Math.trunc(user.cash / stockData.currentPrice);
+    const stockDataArr = roomStocks[stock];
+    const nos = Math.trunc(user.cash / stockDataArr[stockDataArr.length - 1]);
     return (nos);
   }
 
@@ -41,7 +41,7 @@ class BuyModalMain extends Component {
     const {
       user, stock, roomStocks, roomInfo,
     } = this.props;
-    const stockData = roomStocks[stock];
+    const stockDataArr = roomStocks[stock];
     const { room, name, cash } = user;
     const data = {
       room,
@@ -49,7 +49,7 @@ class BuyModalMain extends Component {
       currentCashInHand: cash,
       stockSymbol: stock,
       initStockQty: parseInt(this.state.quantity, 10),
-      unitPrice: parseInt(stockData.currentPrice, 10),
+      unitPrice: parseInt(stockDataArr[stockDataArr.length - 1], 10),
       round: roomInfo[room].currentRound,
     };
 
@@ -69,7 +69,7 @@ class BuyModalMain extends Component {
   render() {
     const { stock, roomStocks } = this.props;
     const { totalPrice, isWarnVisible } = this.state;
-    const stockData = roomStocks[stock];
+    const stockDataArr = roomStocks[stock];
 
     return (
       <Modal
@@ -81,7 +81,7 @@ class BuyModalMain extends Component {
         <ModalBody style={{ color: 'black' }} className="mbody" >
           <ListGroup>
             <ListGroupItem>Company Symbol: {stock}</ListGroupItem>
-            <ListGroupItem>Unit Price: {stockData && stockData.currentPrice}</ListGroupItem>
+            <ListGroupItem>Unit Price: {stockDataArr && stockDataArr[stockDataArr.length - 1]}</ListGroupItem>
             <ListGroupItem>
               <FormGroup>
                 Number of Stocks
@@ -89,7 +89,7 @@ class BuyModalMain extends Component {
                     type="number"
                     name="qauntity"
                     placeholder="Number of Stocks"
-                    max={stockData && this.validateNofStocks()}
+                    max={stockDataArr && this.validateNofStocks()}
                     min={1}
                     value={this.state.quantity}
                     onChange={e => this.onChange(e)}
@@ -100,7 +100,7 @@ class BuyModalMain extends Component {
                 <p style={{ color: 'red' }}>Sorry! This is the maximum stocks which you can buy with your remaining cash.</p>
               }
             </ListGroupItem>
-            <ListGroupItem>Price: {stockData && (totalPrice === '0' ? stockData.currentPrice : totalPrice)}</ListGroupItem>
+            <ListGroupItem>Price: {stockDataArr && (totalPrice === '0' ? stockDataArr[stockDataArr.length - 1] : totalPrice)}</ListGroupItem>
           </ListGroup>
         </ModalBody>
         <ModalFooter>
