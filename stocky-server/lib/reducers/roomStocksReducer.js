@@ -3,70 +3,22 @@ import { CREATE_GAME, REMOVE_ROOM } from '../actions/types';
 const InitialState = {};
 
 const defaultSet = {
-  LFIN: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  VANI: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  CINS: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  AFSL: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  HPFL: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  LGL: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  PAP: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  VLL: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  SINH: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  NHL: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  AMSL: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  CHL: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  SLND: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  TWOD: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  KDL: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
-  CTLD: {
-    currentPrice: 0,
-    previousPrice: 0,
-  },
+  LFIN: [122],
+  VANI: [34],
+  CINS: [3],
+  AFSL: [21],
+  HPFL: [5],
+  LGL: [20],
+  PAP: [3],
+  VLL: [4],
+  SINH: [2],
+  NHL: [4],
+  AMSL: [10],
+  CHL: [2],
+  SLND: [10],
+  TWOD: [18],
+  KDL: [23],
+  CTLD: [28],
 };
 
 function setRoomStocks(state, payload) {

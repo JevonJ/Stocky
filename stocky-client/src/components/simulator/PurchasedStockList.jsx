@@ -20,7 +20,8 @@ class PurchasedStockList extends Component {
 
   renderPurchasedStocks(purchasedStocks, index) {
     const { roomStocks } = this.props;
-    const stockPrice = roomStocks[purchasedStocks.stockSymbol].currentPrice;
+    const stockPriceArr = roomStocks[purchasedStocks.stockSymbol];
+    const stockPrice = stockPriceArr[stockPriceArr.length - 1];
     const totalSoldQty = purchasedStocks.soldStockQty.reduce((a, b) => a + b, 0);
     return (
       <tr key={purchasedStocks.stockSymbol}>

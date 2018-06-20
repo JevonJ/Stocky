@@ -102,7 +102,7 @@ class Main extends Component {
           <footer className="loginMain-mastfoot mt-auto">
             <div className="inner">
               <p>
-                <a className="loginMain-a" href="https://github.com/JevonJ/Stocky">A Stock Simulator Game </a>  by
+                <a className="loginMain-a" href="https://github.com/JevonJ/Stocky">A Stock Market Simulator Game </a>  by
                 <button
                   type="button"
                   className="btn btn-link loginMain-btn-link"

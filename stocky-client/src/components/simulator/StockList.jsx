@@ -5,14 +5,15 @@ class StockList extends Component {
   renderStocks(stock) {
     const { stockInfo, toggleModal, roomStocks } = this.props;
     const info = stockInfo[stock];
-    const prices = roomStocks[stock];
+    const pricesArr = roomStocks[stock];
+
     return (
       <tr key={info.stockName}>
         <td>{info.stockName}</td>
         <td>{info.stockSymbol}</td>
         <td>{info.stockSector}</td>
-        <td>{prices.previousPrice.toFixed(2)}</td>
-        <td>{prices.currentPrice.toFixed(2)}</td>
+        <td>{pricesArr[pricesArr.length - 2] ? pricesArr[pricesArr.length - 1].toFixed(2) : '--'}</td>
+        <td>{(pricesArr[pricesArr.length - 1]).toFixed(2)}</td>
         <td><Button color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
       </tr>
     );
