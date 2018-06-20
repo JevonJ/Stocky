@@ -21,27 +21,25 @@ class StockList extends Component {
   render() {
     const { stocks, stockInfo } = this.props;
     return (
-      <div className="table-responsive">
-        <Table striped responsive size="sm">
-          <thead>
-            <tr>
-              <th>Company name</th>
-              <th>Symbol</th>
-              <th>Sector</th>
-              <th>Last</th>
-              <th>Current</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {
-              stocks &&
-              (Object.keys(stockInfo).length !== 0) &&
-              stocks.map(stock => this.renderStocks(stock))
-            }
-          </tbody>
-        </Table>
-      </div>
+      <Table striped responsive size="xs">
+        <thead>
+          <tr>
+            <th>Company name</th>
+            <th>Symbol</th>
+            <th>Sector</th>
+            <th>Last</th>
+            <th>Current</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {
+            stocks &&
+            (Object.keys(stockInfo).length !== 0) &&
+            stocks.map(stock => this.renderStocks(stock))
+          }
+        </tbody>
+      </Table>
     );
   }
 }
