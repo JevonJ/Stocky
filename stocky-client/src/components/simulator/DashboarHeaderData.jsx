@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Row, Col, ListGroup, ListGroupItem, Badge } from 'reactstrap';
+
 class DashboardHeaderData extends Component {
-   calculatePurchased(player) {
-    const{playerStocks}=this.props;
-    console.log("data",playerStocks);
+  calculatePurchased(player) {
+    const { playerStocks } = this.props;
     const stocks = playerStocks[player.name].purchased;
     const sum = stocks.reduce((total, stock) => {
       if (stock.initStockQty === 0) {
@@ -19,9 +19,10 @@ class DashboardHeaderData extends Component {
 
   render() {
     const {
-     user,
+      user,
     } = this.props;
     const stockValue = this.calculatePurchased(user);
+
     return (
       <Row>
         <Col>
@@ -53,11 +54,11 @@ class DashboardHeaderData extends Component {
               <h4>Total Asset Value</h4><h5><Badge pill>LKR {user.cash + stockValue}</Badge></h5>
             </ListGroupItem>
           </ListGroup>
-        </Col></Row>
+        </Col>
+      </Row>
     );
   }
 }
-
 
 
 export default DashboardHeaderData;
