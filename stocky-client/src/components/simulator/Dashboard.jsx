@@ -4,7 +4,8 @@ import { Container, Row, Col, ListGroup, ListGroupItem, Badge, ButtonGroup, Butt
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
-import DashboardHeader from './DashboardHeader';
+import SellShareModal from '../modals/SellSharesModal';
+import DashboardHeaderData from './DashboarHeaderData';
 import PlayerList from './PlayerList';
 import LiveFeed from './LiveFeed';
 import StockList from './StockList';
@@ -165,38 +166,7 @@ class Dashboard extends Component {
           </Col>
           <Col sm="6">
             <Container>
-              <Row>
-                <Col>
-                  <ListGroup>
-                    <ListGroupItem
-                      className="justify-content-between"
-                      color="danger"
-                    >
-                      <h4>Cash Remaining</h4><h5><Badge pill>LKR 1,000</Badge></h5>
-                    </ListGroupItem>
-                  </ListGroup>
-                </Col>
-                <Col>
-                  <ListGroup>
-                    <ListGroupItem
-                      className="justify-content-between"
-                      color="warning"
-                    >
-                      <h4>Stock Value</h4><h5><Badge pill>LKR 6,560.65</Badge></h5>
-                    </ListGroupItem>
-                  </ListGroup>
-                </Col>
-                <Col>
-                  <ListGroup>
-                    <ListGroupItem
-                      className="justify-content-between"
-                      color="info"
-                    >
-                      <h4>Total Asset Value</h4><h5><Badge pill>LKR 13,660.65</Badge></h5>
-                    </ListGroupItem>
-                  </ListGroup>
-                </Col>
-              </Row>
+              <DashboardHeaderData user={user} playerStocks={playerStocks}/>
               <Row>
                 <h2>Currently in Market {'>>>'}</h2>
               </Row>
