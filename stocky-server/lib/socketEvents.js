@@ -19,6 +19,7 @@ export default function (io, { dispatch, getState }) {
         socket.gameHost = true;
         dispatch(createGame(data)). then(() => {
           const State = getState();
+          console.log(State.trendModel);
           io.emit('set_rooms', State.rooms);
           io.emit('set_room_info', State.roomInfo)
           io.to(data.room).emit('set_players', State.players[data.room]);
@@ -79,6 +80,13 @@ export default function (io, { dispatch, getState }) {
         io.to(data.room).emit('sell_stock', { [data.username]: playerStocks[data.username]});
         socket.to(data.room).emit('update_live_feed', data);
         io.to(data.room).emit('set_players', State.players[data.room]);
+      });
+    });
+
+    socket.on('calculate_stocks', (data) => {
+      console.log('Server', data);
+      dispatch(calculateStocks(data)).then(() => {
+        
       });
     });
 
