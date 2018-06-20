@@ -38,10 +38,10 @@ class Dashboard extends Component {
   }
 
   componentWillMount() {
-    // const { user, history } = this.props;
-    // if (user.constructor === Object && Object.keys(user).length === 0) {
-    //   history.replace('/login');
-    // }
+    const { user, history } = this.props;
+    if (user.constructor === Object && Object.keys(user).length === 0) {
+      history.replace('/login');
+    }
   }
 
   toggle(type) {
