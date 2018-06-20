@@ -16,11 +16,13 @@ class Host extends Component {
         username: '',
         isPrivate: false,
         password: '',
+        numberOfRounds: 0,
       },
       visibility: false,
       roomNameError: '',
       userNameError: '',
       passwordError: '',
+      numberOfRoundsError: '',
     };
   }
 
@@ -63,6 +65,13 @@ class Host extends Component {
       return;
     }
 
+    if (hostForm.numberOfRounds.length === 0) {
+      this.setState({
+        numberOfRoundsError: 'Please enter number of rounds you want to play',
+      });
+      return;
+    }
+
     if (hostForm.isPrivate && hostForm.password.length === 0) {
       this.setState({
         passwordError: 'Please enter a password.',
@@ -90,6 +99,8 @@ class Host extends Component {
       roomNameError,
       userNameError,
       passwordError,
+      numberOfRounds,
+      numberOfRoundsError,
     } = this.state;
 
     const { history } = this.props;
@@ -115,7 +126,7 @@ class Host extends Component {
               <FormFeedback>{roomNameError}</FormFeedback>
             </FormGroup>
             <FormGroup row>
-              <Label for="username">Username</Label>
+              <Label for="username">User name</Label>
               <Input
                 type="text"
                 name="username"
@@ -126,6 +137,21 @@ class Host extends Component {
                 value={username}
               />
               <FormFeedback>{userNameError}</FormFeedback>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="numberOfRounds">Number of Rounds</Label>
+              <Input
+                type="number"
+                name="numberOfRounds"
+                id="numberOfRounds"
+                autoComplete="off"
+                invalid={numberOfRoundsError !== ''}
+                max={50}
+                min={15}
+                onChange={e => this.onInputChange(e)}
+                value={numberOfRounds}
+              />
+              <FormFeedback>{numberOfRoundsError}</FormFeedback>
             </FormGroup>
             <FormGroup row>
               <CustomInput
