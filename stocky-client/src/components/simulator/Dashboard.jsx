@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, ListGroup, ListGroupItem, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
+import { Row, Col, ListGroup, ListGroupItem, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 
 import BuyModal from '../modals/BuyModalMain';
@@ -119,25 +119,21 @@ class Dashboard extends Component {
           <Row>
             <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
           </Row>
-          <Row>
-            <SoldStockList
-              isOpen={this.state.collapse}
-              playerStocks={playerStocks}
-              user={user}
-            />
-          </Row>
+          <SoldStockList
+            isOpen={this.state.collapse}
+            playerStocks={playerStocks}
+            user={user}
+          />
           <Row>
             <Button outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
           </Row>
-          <Row>
-            <PurchasedStockList
-              isOpen={this.state.collapse1}
-              socket={socket}
-              playerStocks={playerStocks}
-              roomStocks={roomStocks}
-              user={user}
-            />
-          </Row>
+          <PurchasedStockList
+            isOpen={this.state.collapse1}
+            socket={socket}
+            playerStocks={playerStocks}
+            roomStocks={roomStocks}
+            user={user}
+          />
           <Row>
             <Card
               body
@@ -167,48 +163,51 @@ class Dashboard extends Component {
           </Row>
         </Col>
         <Col xs="6">
-          <Container>
-            <DashboardHeaderData user={user} playerStocks={playerStocks} />
-            <Row>
-              <h2>Currently in Market {'>>>'}</h2>
-            </Row>
-            <Row>
-              <ButtonGroup>
-                <Button outline color="info">Sort by sector</Button>
-                <Button outline color="info">Sort by price</Button>
-              </ButtonGroup>
-            </Row>
-            <Row>
-              {Object.keys(user).length !== 0 &&
-              <StockList
-                sectors={sectors}
-                sectorStocks={sectorStocks}
-                stocks={stocks}
-                stockInfo={stockInfo}
-                roomStocks={roomStocks}
-                toggleModal={stock => this.toggleModal(stock)}
-              />
-                }
-            </Row>
-          </Container>
+          <DashboardHeaderData user={user} playerStocks={playerStocks} />
+          <Row>
+            <h2>Currently in Market {'>>>'}</h2>
+          </Row>
+          <Row>
+            <ButtonGroup>
+              <Button outline color="info">Sort by sector</Button>
+              <Button outline color="info">Sort by price</Button>
+            </ButtonGroup>
+          </Row>
+          <Row>
+            {Object.keys(user).length !== 0 &&
+            <StockList
+              sectors={sectors}
+              sectorStocks={sectorStocks}
+              stocks={stocks}
+              stockInfo={stockInfo}
+              roomStocks={roomStocks}
+              toggleModal={stock => this.toggleModal(stock)}
+            />
+              }
+          </Row>
         </Col>
         <Col xs="3">
           <Row>
             <Col sm="6">
-              <div align="center">
+              <Row>
                 {roomInfo[user.room] && <RoundNumber roomInfo={roomInfo} user={user} />}
-              </div>
+              </Row>
             </Col>
             <Col sm="6">
-              <p><b>Time is Running!!!</b></p>
-              {time.start_time === 0 &&
-              <CountDown
-                seconds={60}
-                color="#000"
-                alpha={0.9}
-                size={100}
-              />
+              <Row>
+                <p><b>Time is Running!!!</b></p>
+              </Row>
+              <Row>
+                {
+                  time.start_time === 0 &&
+                    <CountDown
+                      seconds={60}
+                      color="#000"
+                      alpha={0.9}
+                      size={100}
+                    />
                 }
+              </Row>
             </Col>
           </Row>
           <Row>
@@ -218,18 +217,16 @@ class Dashboard extends Component {
             <LiveFeed liveFeed={liveFeed} />
           </Row>
           <Row>
-            <div>
-              <Card body outline color="warning">
-                <CardTitle>Current Events</CardTitle>
-                <CardBody>
-                  <ListGroup>
-                    <ListGroupItem>Engineering sector is having a boom of/... </ListGroupItem>
-                    <ListGroupItem>ETI Group is undergoing a scandal...</ListGroupItem>
-                  </ListGroup>
-                </CardBody>
-                <Button outline color="secondary">Clear</Button>
-              </Card>
-            </div>
+            <Card body outline color="warning">
+              <CardTitle>Current Events</CardTitle>
+              <CardBody>
+                <ListGroup>
+                  <ListGroupItem>Engineering sector is having a boom of/... </ListGroupItem>
+                  <ListGroupItem>ETI Group is undergoing a scandal...</ListGroupItem>
+                </ListGroup>
+              </CardBody>
+              <Button outline color="secondary">Clear</Button>
+            </Card>
           </Row>
         </Col>
       </Row>
