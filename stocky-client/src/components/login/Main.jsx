@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import Welcome from './Welcome';
 import Host from './Host';
 import GameList from './GameList';
-import PopupPassword from './PopupPassword';
 import Lobby from './Lobby';
 import Loading from './Loading';
 

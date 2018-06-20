@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, Button, CardText } from 'reactstrap';
+import { Card, CardTitle, CardText } from 'reactstrap';
 
 class LiveFeed extends Component {
   static renderELemets({

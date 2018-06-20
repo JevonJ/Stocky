@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Card, CardText, Table, Collapse, Row } from 'reactstrap';
+import { Table, Collapse, Row } from 'reactstrap';
 
 class SoldStockList extends Component {
-
   static renderSoldStocks(soldStocks, index) {
     const totalQty = soldStocks.stockQty.reduce((a, b) => a + b, 0);
     return (
@@ -16,32 +15,32 @@ class SoldStockList extends Component {
   }
 
 
-render() {
-    const { playerStocks, user } = this.props;
+  render() {
+    const { playerStocks, user, isOpen } = this.props;
 
     return (
-    
-    <Row>
-            <Collapse isOpen={this.props.isOpen}>
-            <Table striped responsive size="sm">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Symbol</th>
-                  <th>Qty</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
+
+      <Row>
+        <Collapse isOpen={isOpen}>
+          <Table striped responsive size="sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Symbol</th>
+                <th>Qty</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
               {
                  playerStocks[user.name] &&
                  playerStocks[user.name].sold
-                 .map((soldStocks, index) => SoldStockList.renderSoldStocks(soldStocks, index))             
+                 .map((soldStocks, index) => SoldStockList.renderSoldStocks(soldStocks, index))
               }
-              </tbody>
-            </Table>
-            </Collapse>
-    </Row>
+            </tbody>
+          </Table>
+        </Collapse>
+      </Row>
     );
   }
 }

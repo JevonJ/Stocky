@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, Button, CardText } from 'reactstrap';
+import { Card, CardTitle, CardText } from 'reactstrap';
 
 class RoundNumber extends Component {
   render() {
-    const { roomInfo, user} = this.props;
+    const { roomInfo, user } = this.props;
     return (
       <Card body outline color="primary">
         <CardTitle>RoundNumber</CardTitle>
