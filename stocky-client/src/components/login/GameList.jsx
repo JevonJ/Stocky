@@ -73,15 +73,19 @@ class GameList extends Component {
       });
       return;
     }
-
+    
     const { roomInfo } = this.props;
-    if (
-      roomInfo[selectedRoom[0]].isPrivate &&
-      (roomInfo[selectedRoom[0]].password !== password) &&
-      password.length === 0
-    ) {
+    if (roomInfo[selectedRoom[0]].isPrivate &&
+      ((roomInfo[selectedRoom[0]].password !== password) ||
+        password.length === 0)) {
       this.setState({
         passwordError: 'Please enter valid group password.',
+      });
+      return;
+    }
+    if (roomInfo[selectedRoom[0]].isStarted) {
+      this.setState({
+        roomError:'This room has started.',
       });
       return;
     }
@@ -96,6 +100,7 @@ class GameList extends Component {
       e.target.setAttribute('disabled', 'disabled');
       this.props.socket.emit('join_room', data);
     }
+    return;
   }
 
   renderPasswordField() {
@@ -119,7 +124,7 @@ class GameList extends Component {
             name="password"
             id="password"
             autoComplete="password"
-            value={this.state.password}
+            value={password}
             onChange={e => this.onInputChange(e)}
           />
           <InputGroupAddon addonType="append">

@@ -4,8 +4,12 @@
     "\\stocky-client",
     "\\stocky-client\\src",
     "\\stocky-client\\src\\components",
-    "\\stocky-client\\src\\components\\login"
+    "\\stocky-client\\src\\components\\login",
+    "\\stocky-server",
+    "\\stocky-server\\lib",
+    "\\stocky-server\\lib\\reducers",
+    "\\stocky-server\\public"
   ],
-  "SelectedNode": "\\stocky-client\\src\\listeners.js",
+  "SelectedNode": "\\stocky-client\\src\\components\\login\\GameList.jsx",
   "PreviewInSolutionExplorer": false
 }
