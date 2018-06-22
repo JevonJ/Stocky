@@ -8,8 +8,8 @@ export const BUY_STOCK = 'BUY_STOCK';
 export const SELL_STOCK = 'SELL_STOCK';
 export const START_GAME = 'START_GAME';
 
-// room info types
-
+// room stock types
+export const CALCULATE_STOCKS = 'CALCULATE_STOCKS';
 
 // common types
 export const SET_IS_LOADING = 'SET_IS_LOADING';

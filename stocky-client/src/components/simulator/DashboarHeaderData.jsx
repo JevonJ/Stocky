@@ -4,6 +4,9 @@ import { Row, Col, ListGroup, ListGroupItem, Badge } from 'reactstrap';
 class DashboardHeaderData extends Component {
   calculatePurchased(player) {
     const { playerStocks } = this.props;
+
+    if (Object.keys(playerStocks).length === 0) return 0;
+
     const stocks = playerStocks[player.name].purchased;
     const sum = stocks.reduce((total, stock) => {
       if (stock.initStockQty === 0) {

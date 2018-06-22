@@ -54,14 +54,16 @@ class Lobby extends Component {
           </Row>
           <Row>
             <Col sm="12">
-              <Button
-                outline
-                color="success"
-                size="lg"
-                onClick={(e) => this.onStart(e)}
-              >
+              {user.host &&
+                <Button
+                  outline
+                  color="success"
+                  size="lg"
+                  onClick={e => this.onStart(e)}
+                >
                   Start
-              </Button>
+                </Button>
+              }
             </Col>
           </Row>
         </Container>

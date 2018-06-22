@@ -155,7 +155,6 @@ class GameList extends Component {
                 name="roomName"
                 id="selectgame"
                 multiple
-                value={selectedRoom[0] || []}
                 bsSize="lg"
                 onChange={e => this.onSelectChange(e)}
               >

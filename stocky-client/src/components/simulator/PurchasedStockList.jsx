@@ -10,10 +10,10 @@ class PurchasedStockList extends Component {
       sellModal: false,
     };
   }
-
   toggleSellModal(sellStockData) {
+    const { toggleSellModal } = this.props;
+    toggleSellModal();
     this.setState({
-      sellModal: !this.state.sellModal,
       selectedSellStock: sellStockData,
     });
   }
@@ -50,13 +50,13 @@ class PurchasedStockList extends Component {
 
   render() {
     const {
-      socket, playerStocks, user, isOpen,
+      socket, playerStocks, user, isOpen, sellModalState,
     } = this.props;
 
     return (
       <Row>
         <SellShareModal
-          isOpen={this.state.sellModal}
+          isOpen={sellModalState}
           toggle={() => this.toggleSellModal()}
           sellStockData={this.state.selectedSellStock}
           socket={socket}

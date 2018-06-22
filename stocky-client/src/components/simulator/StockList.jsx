@@ -12,7 +12,7 @@ class StockList extends Component {
         <td>{info.stockName}</td>
         <td>{info.stockSymbol}</td>
         <td>{info.stockSector}</td>
-        <td>{pricesArr[pricesArr.length - 2] ? pricesArr[pricesArr.length - 1].toFixed(2) : '--'}</td>
+        <td>{pricesArr[pricesArr.length - 2] === undefined ? '--' : (pricesArr[pricesArr.length - 2].toFixed(2))}</td>
         <td>{(pricesArr[pricesArr.length - 1]).toFixed(2)}</td>
         <td><Button color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
       </tr>
