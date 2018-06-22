@@ -2,9 +2,11 @@
   "name": "stocky-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://JevonJ.github.io/Stocky/",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
+    "gh-pages": "^1.2.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-countdown-clock": "^2.4.0",
@@ -24,6 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

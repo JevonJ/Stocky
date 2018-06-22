@@ -12,7 +12,9 @@ import Simulator from './simulator/SimulatorMain';
 
 class Main extends Component {
   componentWillMount() {
-    const socket = socketIOClient('http://localhost:4001');
+    const { NODE_ENV, REACT_APP_PROD_SERVER, REACT_APP_DEV_SERVER } = process.env;
+    const url = NODE_ENV === 'development' ? REACT_APP_DEV_SERVER : REACT_APP_PROD_SERVER;
+    const socket = socketIOClient(url);
     listeners(socket, this.props);
 
     this.socket = socket;

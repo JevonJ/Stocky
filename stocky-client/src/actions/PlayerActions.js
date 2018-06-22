@@ -4,7 +4,10 @@ import http from 'axios/lib/adapters/http';
 import { SET_PLAYER, SET_IS_LOADING, SET_ROOMS, SET_ROOM_INFO, BUY_STOCK, SELL_STOCK } from './types';
 
 function getInitialData() {
-  return axios.get('http://localhost:4001/api/init-data', {
+  const { NODE_ENV, REACT_APP_PROD_SERVER, REACT_APP_DEV_SERVER } = process.env;
+  const baseUrl = NODE_ENV === 'development' ? REACT_APP_DEV_SERVER : REACT_APP_PROD_SERVER;
+
+  return axios.get(`${baseUrl}/api/init-data`, {
     adapter: http,
   });
 }
