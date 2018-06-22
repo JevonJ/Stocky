@@ -9,6 +9,7 @@ import { setRoom, setPlayer, initialize, setRoomInfo, setUser, setStartTime, set
 
 import LoginMain from '../components/login/Main';
 import Simulator from './simulator/SimulatorMain';
+import GameSummary from './gameSummary';
 
 class Main extends Component {
   componentWillMount() {
@@ -30,6 +31,7 @@ class Main extends Component {
         <Route exact path="/" component={() => <Redirect to="/login" />} />
         <Route path="/login" component={props => <LoginMain socket={this.socket} {...props} />} />
         <Route exact path="/simulator" component={props => <Simulator socket={this.socket} {...props} />} />
+        <Route exact path="/game-summary" component={GameSummary} />
       </Switch>
     );
   }
