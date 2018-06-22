@@ -9,6 +9,7 @@ import Host from './Host';
 import GameList from './GameList';
 import Lobby from './Lobby';
 import Loading from './Loading';
+import HowToPlay from './HowToPlay';
 
 import BGImage from '../../images/welcome.jpeg';
 import './Main.css';
@@ -65,10 +66,10 @@ class Main extends Component {
                   exact
                   className="loginMain-nav-link"
                   activeClassName="active"
-                  href="login/about"
-                  to="login/about"
+                  href="login/how-to-play"
+                  to="login/how-to-play"
                 >
-                  About
+                  How To Play
                 </NavLink>
               </nav>
             </div>
@@ -95,7 +96,7 @@ class Main extends Component {
                   path="/login/game-List"
                   component={({ history }) => <GameList history={history} socket={socket} />}
                 />
-                <Route exact path="/login/about" component={Welcome} />
+                <Route exact path="/login/how-to-play" component={HowToPlay} />
               </div>
           }
 
