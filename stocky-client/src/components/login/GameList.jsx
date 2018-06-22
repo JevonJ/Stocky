@@ -5,7 +5,7 @@ import { Button, Fade, Form, FormGroup, Input, Label, InputGroup, InputGroupAddo
 class GameList extends Component {
   static renderGameList(room) {
     return (
-      <option key={room}>{room}</option>
+      <option key={room} value={room}>{room}</option>
     );
   }
 
@@ -29,9 +29,7 @@ class GameList extends Component {
     newState[name] = value.replace(/\s/g, '');
     if (name === 'username') {
       const { players } = this.props;
-      const playerExist = players.filter((player) => {
-        return value === player.name;
-      });
+      const playerExist = players.filter(player => value === player.name);
 
       this.setState({
         ...newState,
@@ -73,7 +71,7 @@ class GameList extends Component {
       });
       return;
     }
-    
+
     const { roomInfo } = this.props;
     if (roomInfo[selectedRoom[0]].isPrivate &&
       ((roomInfo[selectedRoom[0]].password !== password) ||
@@ -85,7 +83,7 @@ class GameList extends Component {
     }
     if (roomInfo[selectedRoom[0]].isStarted) {
       this.setState({
-        roomError:'This room has started.',
+        roomError: 'This room has started.',
       });
       return;
     }
@@ -100,7 +98,6 @@ class GameList extends Component {
       e.target.setAttribute('disabled', 'disabled');
       this.props.socket.emit('join_room', data);
     }
-    return;
   }
 
   renderPasswordField() {
@@ -154,6 +151,7 @@ class GameList extends Component {
                 invalid={roomError !== ''}
                 name="roomName"
                 id="selectgame"
+                value={selectedRoom}
                 multiple
                 bsSize="lg"
                 onChange={e => this.onSelectChange(e)}
