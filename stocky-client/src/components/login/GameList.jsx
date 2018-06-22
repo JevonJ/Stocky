@@ -73,7 +73,7 @@ class GameList extends Component {
       });
       return;
     }
-
+    
     const { roomInfo } = this.props;
     if (roomInfo[selectedRoom[0]].isPrivate &&
       ((roomInfo[selectedRoom[0]].password !== password) ||
@@ -83,6 +83,13 @@ class GameList extends Component {
       });
       return;
     }
+    if (roomInfo[selectedRoom[0]].isStarted) {
+      this.setState({
+        roomError:'This room has started.',
+      });
+      return;
+    }
+
     const data = {
       room: selectedRoom[0],
       username,
