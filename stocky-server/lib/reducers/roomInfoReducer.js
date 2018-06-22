@@ -11,7 +11,7 @@ function removeRoomInfo(state, payload) {
 function createGame(state, payload) {
   let newState = { ...state };
   newState[payload.room] = {
-    rounds: 20,
+    rounds: payload.rounds,
     currentRound: 0,
     isPrivate: payload.isPrivate,
     password: payload.password,

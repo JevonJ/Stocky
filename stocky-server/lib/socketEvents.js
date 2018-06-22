@@ -1,11 +1,20 @@
-import { setPlayer, removeRoom, buyStock, sellStock, setPlayerStocks, createGame, removePlayer, startGame } from './actions';
+import { setPlayer, removeRoom, buyStock, sellStock, setPlayerStocks, createGame, removePlayer, startGame, calculateStocks } from './actions';
 
 export default function (io, { dispatch, getState }) {
+
   // Set socket.io listeners.
+
   io.on('connect', (socket) => {
     console.log('User connected: ', socket.id);
     io.origins((origin, callback) => {
-      if (origin !== 'http://localhost:3000') {
+      const { NODE_ENV, PROD_CLIENT } = process.env;
+      let clientURL = 'http://localhost:3000';
+
+      if(NODE_ENV && NODE_ENV === 'production') {
+        clientURL = PROD_CLIENT;
+      }
+
+      if (origin !== clientURL) {
         return callback('origin not allowed', false);
       }
 
@@ -19,7 +28,6 @@ export default function (io, { dispatch, getState }) {
         socket.gameHost = true;
         dispatch(createGame(data)). then(() => {
           const State = getState();
-          console.log(State.trendModel);
           io.emit('set_rooms', State.rooms);
           io.emit('set_room_info', State.roomInfo)
           io.to(data.room).emit('set_players', State.players[data.room]);
@@ -57,7 +65,7 @@ export default function (io, { dispatch, getState }) {
         const State = getState();        
         io.to(data).emit('set_start_timer', 5);
         io.emit('set_room_info', State.roomInfo);
-        socket.emit('go_to_simulator');              
+        io.to(data).emit('go_to_simulator');              
       });
     });
 
@@ -84,9 +92,9 @@ export default function (io, { dispatch, getState }) {
     });
 
     socket.on('calculate_stocks', (data) => {
-      console.log('Server', data);
       dispatch(calculateStocks(data)).then(() => {
-        
+        const State = getState();
+        socket.emit('set_room_stocks', State.roomStocks[data]);
       });
     });
 

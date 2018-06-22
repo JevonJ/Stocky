@@ -34,6 +34,7 @@ class Dashboard extends Component {
       collapse1: false,
       news: [],
       modal: false,
+      sellModal: false,
     };
   }
 
@@ -76,9 +77,21 @@ class Dashboard extends Component {
     });
   }
 
+  calculateStocks() {
+    const { user, socket } = this.props;
+
+    this.setState({
+      sellModal: false,
+      modal: false,
+    });
+
+    this.props.setStartTime(10);
+    socket.emit('calculate_stocks', user.room);
+  }
+
   render() {
     const {
-      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user, roomInfo, time, setStartTime,
+      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user, roomInfo, time,
     } = this.props;
     return (
       <Row>
@@ -100,7 +113,7 @@ class Dashboard extends Component {
                   color="#fff"
                   alpha={0.9}
                   size={100}
-                  onComplete={() => setStartTime(0)}
+                  onComplete={() => this.props.setStartTime(0)}
                 />
               </div>
             </div>
@@ -133,6 +146,8 @@ class Dashboard extends Component {
             playerStocks={playerStocks}
             roomStocks={roomStocks}
             user={user}
+            toggleSellModal={() => this.toggleSellModal()}
+            sellModalState={this.state.sellModal}
           />
           <Row>
             <Card
@@ -201,10 +216,11 @@ class Dashboard extends Component {
                 {
                   time.start_time === 0 &&
                     <CountDown
-                      seconds={60}
+                      seconds={5}
                       color="#000"
                       alpha={0.9}
                       size={100}
+                      onComplete={() => this.calculateStocks()}
                     />
                 }
               </Row>

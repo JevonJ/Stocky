@@ -16,13 +16,13 @@ class Host extends Component {
         username: '',
         isPrivate: false,
         password: '',
-        numberOfRounds: 0,
+        rounds: 15,
       },
       visibility: false,
       roomNameError: '',
       userNameError: '',
       passwordError: '',
-      numberOfRoundsError: '',
+      roundsError: '',
     };
   }
 
@@ -65,9 +65,16 @@ class Host extends Component {
       return;
     }
 
-    if (hostForm.numberOfRounds.length === 0) {
+    if (hostForm.rounds.length === 0) {
       this.setState({
-        numberOfRoundsError: 'Please enter number of rounds you want to play',
+        roundsError: 'Please enter number of rounds you want to play',
+      });
+      return;
+    }
+
+    if (hostForm.rounds < 15) {
+      this.setState({
+        roundsError: 'Rounds should be higher than 15',
       });
       return;
     }
@@ -94,17 +101,14 @@ class Host extends Component {
   render() {
     const {
       hostForm: {
-        room, username, isPrivate, password,
+        rounds, room, username, isPrivate, password,
       },
       roomNameError,
       userNameError,
       passwordError,
-      numberOfRounds,
-      numberOfRoundsError,
+      roundsError,
     } = this.state;
-
     const { history } = this.props;
-
     return (
       <Fade in tag="div" timeout={500}>
         <main role="main" className="inner loginHost-cover">
@@ -139,19 +143,19 @@ class Host extends Component {
               <FormFeedback>{userNameError}</FormFeedback>
             </FormGroup>
             <FormGroup row>
-              <Label for="numberOfRounds">Number of Rounds</Label>
+              <Label for="rounds">Number of Rounds</Label>
               <Input
                 type="number"
-                name="numberOfRounds"
-                id="numberOfRounds"
+                name="rounds"
+                id="rounds"
                 autoComplete="off"
-                invalid={numberOfRoundsError !== ''}
+                invalid={roundsError !== ''}
                 max={50}
                 min={15}
                 onChange={e => this.onInputChange(e)}
-                value={numberOfRounds}
+                value={rounds}
               />
-              <FormFeedback>{numberOfRoundsError}</FormFeedback>
+              <FormFeedback>{roundsError}</FormFeedback>
             </FormGroup>
             <FormGroup row>
               <CustomInput
