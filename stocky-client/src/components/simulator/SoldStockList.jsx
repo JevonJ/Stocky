@@ -7,6 +7,7 @@ class SoldStockList extends Component {
     return (
       <tr key={soldStocks.stockSymbol}>
         <td>{index + 1}</td>
+        <td style={{ textAlign: 'center' }}>{soldStocks.round}</td>
         <td>{soldStocks.stockSymbol}</td>
         <td>{totalQty}</td>
         <td>{soldStocks.unitPrice}</td>
@@ -26,6 +27,7 @@ class SoldStockList extends Component {
             <thead>
               <tr>
                 <th>#</th>
+                <th>Round</th>
                 <th>Symbol</th>
                 <th>Qty</th>
                 <th>Value</th>
