@@ -34,7 +34,7 @@ function reducePurchasedStock(state, payload){
   let room = { ...newState[payload.room] };
   let purchased = room[payload.username].purchased;
   
-  const purchaseExist = purchased.findIndex((({ stockSymbol, round }) => (stockSymbol === payload.stockSymbol && round === payload.round)));
+  const purchaseExist = purchased.findIndex((({ stockSymbol, round }) => (stockSymbol === payload.stockSymbol && round <= payload.round)));
 
     purchased[purchaseExist].soldStockQty = [...purchased[purchaseExist].soldStockQty ,payload.stockQty];
     room[payload.username].purchased = [...purchased];
