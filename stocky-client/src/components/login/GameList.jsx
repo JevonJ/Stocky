@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Fade, Form, FormGroup, Input, Label, InputGroup, InputGroupAddon, FormFeedback } from 'reactstrap';
+import FontAwesome from 'react-fontawesome';
+import { Button, Fade, Form, FormGroup, Input, Label, InputGroup, InputGroupAddon, FormFeedback, Class } from 'reactstrap';
 
 class GameList extends Component {
   static renderGameList(room) {
@@ -113,22 +114,32 @@ class GameList extends Component {
 
     return (
       <FormGroup row>
-        <Label for="password">Password</Label>
-        <InputGroup>
-          <Input
+        <div className="md-form input-group">
+          <input
+            className="form-control"
+            placeholder="Enter a Password"
             type={this.state.visibility ? 'text' : 'password'}
-            invalid={passwordError !== ''}
             name="password"
             id="password"
-            autoComplete="password"
             value={password}
+            invalid={passwordError ? 1 : 0}
+            autoComplete="password"
             onChange={e => this.onInputChange(e)}
           />
-          <InputGroupAddon addonType="append">
-            <Button color="secondary" onClick={() => this.changeVisibility()}>visibility</Button>
-          </InputGroupAddon>
-        </InputGroup>
-        <FormFeedback>{passwordError}</FormFeedback>
+          <div className="input-group-append">
+            <button
+              className="btn btn-mdb-color waves-effect m-0"
+              type="button"
+              onClick={(e) => this.changeVisibility(e)}
+            >
+              <FontAwesome
+                className="super-crazy-colors"
+                name={this.state.visibility ? 'eye' : 'eye-slash'}
+                size="2x"
+              />
+            </button>
+          </div>
+        </div>
       </FormGroup>
     );
   }
