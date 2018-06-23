@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Fade, Row, Col, Container, Table } from 'reactstrap';
+import { Button } from 'mdbreact';
 import PropTypes from 'prop-types';
+import { ToastContainer, toast } from 'react-toastify';
 
 class Lobby extends Component {
   static renderUsers(player, index) {
@@ -13,6 +14,12 @@ class Lobby extends Component {
     );
   }
 
+  static notify(type, message) {
+    toast.error(message, {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
+
   componentWillMount() {
     const { user, history } = this.props;
     if (user.constructor === Object && Object.keys(user).length === 0) {
@@ -21,53 +28,54 @@ class Lobby extends Component {
   }
 
   onStart(e) {
-    const { user } = this.props;
+    const { user, players } = this.props;
+    if (players.length < 2) {
+      Lobby.notify('error', 'Minimum Players to play is 3');
+      return;
+    }
     e.target.setAttribute('disabled', 'disabled');
-    this.props.socket.emit('start_game', user.room);
+    this.props.socket.emit('go_to_simulator', user.room);
   }
 
   render() {
     const { user, players } = this.props;
     return (
-      <Fade in tag="div" timeout={200}>
-        <main role="main" className="inner cover">
-          <h1 className="cover-heading">Lobby : {user && user.room}</h1>
-          <p className="lead">Connected Players</p>
-        </main>
-        <Container>
-          <Row>
-            <Col sm="12" md="{{ size: 8, offset: 2 }}">
-              <Table hover responsive>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Username</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    players && players.map((player, index) => Lobby.renderUsers(player, index))
-                  }
-                </tbody>
-              </Table>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="12">
-              {user.host &&
-                <Button
-                  outline
-                  color="success"
-                  size="lg"
-                  onClick={e => this.onStart(e)}
-                >
-                  Start
-                </Button>
-              }
-            </Col>
-          </Row>
-        </Container>
-      </Fade>
+      <div className="animated fadeIn">
+        <ToastContainer hideProgressBar pauseOnHover />
+        <h1 className="cover-heading">Lobby : {user && user.room}</h1>
+        <p className="lead">Connected Players</p>
+        <div className="row">
+          <div className="col col-sm-12 ml-auto">
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  players && players.map((player, index) => Lobby.renderUsers(player, index))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col col-sm-12 ml-auto">
+            {user.host &&
+              <Button
+                outline
+                color="success"
+                size="lg"
+                onClick={e => this.onStart(e)}
+              >
+                Start
+              </Button>
+            }
+          </div>
+        </div>
+      </div>
     );
   }
 }

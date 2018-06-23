@@ -201,32 +201,33 @@ class Host extends Component {
                 value={isPrivate}
               />
             </FormGroup>
-            { isPrivate &&
-              <FormGroup row>
-                <Label for="password">Password</Label>
-                <InputGroup>
-                  <Input
-                    type={this.state.visibility ? 'text' : 'password'}
-                    name="password"
-                    id="password"
-                    value={password}
-                    invalid={passwordError !== ''}
-                    autoComplete="password"
-                    onChange={e => this.onInputChange(e)}
-                  />
-
-                  <InputGroupAddon addonType="append">
-                    <Button color="secondary" onClick={() => this.changeVisibility()}>
-                      <FontAwesome
-                        className="super-crazy-colors"
-                        name={this.state.visibility ? 'eye' : 'eye-slash'}
-                        size="2x"
-                      />
-                    </Button>
-                  </InputGroupAddon>
-                </InputGroup>
-                <FormFeedback>{passwordError}</FormFeedback>
-              </FormGroup>
+            {isPrivate &&
+              <div className="md-form input-group">
+                <input
+                  className="form-control"
+                  placeholder="Enter a Password"
+                  type={this.state.visibility ? 'text' : 'password'}
+                  name="password"
+                  id="password"
+                  value={password}
+                  invalid={passwordError !== ''}
+                  autoComplete="password"
+                  onChange={e => this.onInputChange(e)}
+                />
+                <div className="input-group-append">
+                  <button
+                    className="btn btn-mdb-color waves-effect m-0"
+                    type="button"
+                    onClick={() => this.changeVisibility()}
+                  >
+                    <FontAwesome
+                      className="super-crazy-colors"
+                      name={this.state.visibility ? 'eye' : 'eye-slash'}
+                      size="2x"
+                    />
+                  </button>
+                </div>
+              </div>
             }
           </Form>
           <p className="lead">

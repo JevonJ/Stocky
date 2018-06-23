@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Popover, PopoverBody, PopoverHeader } from 'reactstrap';
+import { Container, Footer } from 'mdbreact';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ToastContainer } from 'react-toastify';
 
 import Welcome from './Welcome';
 import Host from './Host';
@@ -37,18 +38,14 @@ class Main extends Component {
     return this.props.isLoading !== nextProps.isLoading;
   }
 
-  togglePopover() {
-    this.setState({
-      popoverOpen: !this.state.popoverOpen,
-    });
-  }
-
   render() {
     const { socket } = this.props;
 
     return (
       <div style={styles.container}>
-        <div className="d-flex w-100 h-100 p-3 mx-auto flex-column text-center loginMain-container">
+        <ToastContainer hideProgressBar pauseOnHover />
+
+        <div className="d-flex w-100 h-100 mx-auto flex-column text-center loginMain-container">
           <header className="loginMain-masthead mb-auto">
             <div className="inner">
               <h3 className="loginMain-masthead-brand">Stocky</h3>
@@ -78,8 +75,8 @@ class Main extends Component {
           {
             this.props.isLoading ?
               <Loading />
-                :
-              <div>
+              :
+              <div style={{ overflow: 'auto' }}>
                 <Route exact path="/login" component={Welcome} />
                 <Route
                   exact
@@ -99,40 +96,14 @@ class Main extends Component {
                 <Route exact path="/login/how-to-play" component={HowToPlay} />
               </div>
           }
-
-          <footer className="loginMain-mastfoot mt-auto">
-            <div className="inner">
-              <p>
-                <a className="loginMain-a" href="https://github.com/JevonJ/Stocky">A Stock Market Simulator Game </a>  by
-                <button
-                  type="button"
-                  className="btn btn-link loginMain-btn-link"
-                  id="Popover1"
-                  onClick={() => this.togglePopover()}
-                >
-                    Team Titans.
-                </button>
-                <Popover
-                  placement="top"
-                  isOpen={this.state.popoverOpen}
-                  target="Popover1"
-                  toggle={() => this.togglePopover()}
-                >
-                  <PopoverHeader>Our Team</PopoverHeader>
-                  <PopoverBody>
-                    <ul>
-                      <li>Jevon Jansz - 15208469</li>
-                      <li>A.L. Alvis - 15208464</li>
-                      <li>I.J.Ginige - 15209285</li>
-                      <li>D.K.D.S.B.Gunawardhane - 16211242</li>
-                      <li>S.Tharaniya - 15209302</li>
-                      <li>N.G.Wickramadivakara - 15209308</li>
-                    </ul>
-                  </PopoverBody>
-                </Popover>
-              </p>
+          <Footer color="special-color-dark" className="mt-auto page-footer lighten-5 pt-0">
+            <div className="footer-copyright text-center">
+              <Container fluid>
+                <a href="https://github.com/JevonJ/Stocky">A Stock Market Simulator Game </a>
+                by <a href="https://github.com/JevonJ/Stocky"> Team Titans.</a>
+              </Container>
             </div>
-          </footer>
+          </Footer>
         </div>
       </div>
     );

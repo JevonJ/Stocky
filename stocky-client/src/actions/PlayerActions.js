@@ -1,4 +1,6 @@
+import React from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import http from 'axios/lib/adapters/http';
 import { SET_PLAYER, SET_IS_LOADING, SET_ROOMS, SET_ROOM_INFO, BUY_STOCK, SELL_STOCK } from './types';
@@ -13,17 +15,37 @@ function getInitialData() {
 }
 
 export const initialize = () => (dispatch) => {
-  getInitialData().then(
-    ({ data }) => {
-      dispatch({ type: SET_ROOMS, payload: data.rooms });
-      dispatch({ type: SET_ROOM_INFO, payload: data.roomInfo });
-      dispatch({ type: SET_IS_LOADING, payload: false });
-    },
-    (error) => {
-      if (!error.response) console.log('Network Error');
-      if (error.response) console.log(error.response);
-    },
-  );
+  let toastId = null;
+  const getData = (repetition = false) => {
+    getInitialData().then(
+      ({ data }) => {
+        toast.update(toastId, {
+          type: toast.TYPE.SUCCESS,
+          autoClose: 5000,
+          render: () => <div>Connected to server.</div>,
+        });
+        dispatch({ type: SET_ROOMS, payload: data.rooms });
+        dispatch({ type: SET_ROOM_INFO, payload: data.roomInfo });
+        dispatch({ type: SET_IS_LOADING, payload: false });
+      },
+      (error) => {
+        if (!error.response) {
+          setTimeout(() => {
+            if (repetition) {
+              toastId = toast.error('Network Error, Retrying To Connect', {
+                position: toast.POSITION.BOTTOM_CENTER,
+                autoClose: false,
+              });
+            }
+            getData();
+          }, 5000);
+        }
+        if (error.response) console.log(error.response);
+      },
+    );
+  };
+
+  getData(true);
 };
 
 export const setPlayer = players => ({
