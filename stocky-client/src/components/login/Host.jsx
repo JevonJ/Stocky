@@ -17,12 +17,14 @@ class Host extends Component {
         isPrivate: false,
         password: '',
         rounds: 15,
+        duration: 30,
       },
       visibility: false,
       roomNameError: '',
       userNameError: '',
       passwordError: '',
       roundsError: '',
+      roundDurationError: '',
     };
   }
 
@@ -72,9 +74,23 @@ class Host extends Component {
       return;
     }
 
+    if (hostForm.duration.length === 0) {
+      this.setState({
+        roundDurationError: 'Please enter a preffered round duration',
+      });
+      return;
+    }
+
     if (hostForm.rounds < 15) {
       this.setState({
         roundsError: 'Rounds should be higher than 15',
+      });
+      return;
+    }
+
+    if (hostForm.duration < 30) {
+      this.setState({
+        roundDurationError: 'Round duration should be higher than 30 seconds',
       });
       return;
     }
@@ -101,12 +117,13 @@ class Host extends Component {
   render() {
     const {
       hostForm: {
-        rounds, room, username, isPrivate, password,
+        rounds, room, username, isPrivate, password, duration,
       },
       roomNameError,
       userNameError,
       passwordError,
       roundsError,
+      roundDurationError,
     } = this.state;
     const { history } = this.props;
     return (
@@ -152,10 +169,27 @@ class Host extends Component {
                 invalid={roundsError !== ''}
                 max={50}
                 min={15}
+                placeHolder="Enter number of rounds"
                 onChange={e => this.onInputChange(e)}
                 value={rounds}
               />
               <FormFeedback>{roundsError}</FormFeedback>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="duration">Round duration in seconds</Label>
+              <Input
+                type="number"
+                name="duration"
+                id="duration"
+                autoComplete="off"
+                invalid={roundDurationError !== ''}
+                placeHolder="Enter round duration (seconds)"
+                max={90}
+                min={30}
+                onChange={e => this.onInputChange(e)}
+                value={duration}
+              />
+              <FormFeedback>{roundDurationError}</FormFeedback>
             </FormGroup>
             <FormGroup row>
               <CustomInput
