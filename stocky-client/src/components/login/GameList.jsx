@@ -95,10 +95,34 @@ class GameList extends Component {
       password,
     };
 
-    if (usernameError === '' && roomError === '') {
+    if (usernameError === '') {
       e.target.setAttribute('disabled', 'disabled');
       this.props.socket.emit('join_room', data);
     }
+  }
+
+  renderUsernameField() {
+
+    const { selectedRoom, usernameError, username } = this.state;
+
+    if (!selectedRoom[0])
+      return null;
+    return (
+      <FormGroup row>
+        <Label for="username">Username</Label>
+        <Input
+          type="text"
+          invalid={usernameError !== ''}
+          valid={username.length > 0 ? !usernameError : false}
+          name="username"
+          id="username"
+          value={this.state.username}
+          onChange={e => this.onInputChange(e)}
+        />
+        <FormFeedback valid>Sweet! that name is available</FormFeedback>
+        <FormFeedback>{usernameError}</FormFeedback>
+      </FormGroup>
+      );
   }
 
   renderPasswordField() {
@@ -173,20 +197,8 @@ class GameList extends Component {
               </Input>
               <FormFeedback>{roomError}</FormFeedback>
             </FormGroup>
-            <FormGroup row>
-              <Label for="username">Username</Label>
-              <Input
-                type="text"
-                invalid={usernameError !== ''}
-                valid={username.length > 0 ? !usernameError : false}
-                name="username"
-                id="username"
-                value={this.state.username}
-                onChange={e => this.onInputChange(e)}
-              />
-              <FormFeedback valid>Sweet! that name is available</FormFeedback>
-              <FormFeedback>{usernameError}</FormFeedback>
-            </FormGroup>
+            {this.renderUsernameField()}
+            
             {this.renderPasswordField()}
           </Form>
           <p className="lead">
