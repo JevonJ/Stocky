@@ -5,7 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import listeners from '../listeners';
-import { setRoom, setPlayer, initialize, setRoomInfo, setUser, setStartTime, setPlayerStocks, buyStock, sellStock, updateFeed, setRoomStocks } from '../actions';
+import { setRoom, setPlayer, initialize, setRoomInfo, setUser, setTime, setPlayerStocks, buyStock, sellStock, updateFeed, setRoomStocks } from '../actions';
 
 import LoginMain from '../components/login/Main';
 import Simulator from './simulator/SimulatorMain';
@@ -42,5 +42,5 @@ Main.propTypes = {
 };
 
 export default connect(null, {
-  setRoom, setPlayer, initialize, setRoomInfo, setUser, setStartTime, setPlayerStocks, buyStock, sellStock, updateFeed, setRoomStocks,
+  setRoom, setPlayer, initialize, setRoomInfo, setUser, setTime, setPlayerStocks, buyStock, sellStock, updateFeed, setRoomStocks,
 })(Main);

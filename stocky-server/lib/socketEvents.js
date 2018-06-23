@@ -18,7 +18,7 @@ export default function (io, { dispatch, getState }) {
         return callback('origin not allowed', false);
       }
 
-      callback(null, true);
+      return callback(null, true);
     });
 
     socket.on('create_game', (data) => {
@@ -26,10 +26,10 @@ export default function (io, { dispatch, getState }) {
         socket.room = data.room;
         socket.username = data.username;
         socket.gameHost = true;
-        dispatch(createGame(data)). then(() => {
+        dispatch(createGame(data)).then(() => {
           const State = getState();
           io.emit('set_rooms', State.rooms);
-          io.emit('set_room_info', State.roomInfo)
+          io.emit('set_room_info', State.roomInfo);
           io.to(data.room).emit('set_players', State.players[data.room]);
           socket.emit('set_user', { name: data.username, host: true, room: data.room, cash: 1000 });
           socket.emit('go_to_lobby');
@@ -60,21 +60,27 @@ export default function (io, { dispatch, getState }) {
       });
     });
 
-    socket.on('start_game', (data) => {
+    socket.on('go_to_simulator', (data) => {
       dispatch(startGame(data)).then(() => {
-        const State = getState();        
-        io.to(data).emit('set_start_timer', 5);
+        const State = getState();
+        io.to(data).emit('set_timer', { start_time: 10 });
         io.emit('set_room_info', State.roomInfo);
-        io.to(data).emit('go_to_simulator');              
+        io.to(data).emit('go_to_simulator');
       });
+    });
+
+    socket.on('start_game', (data) => {
+      const { roomInfo } = getState();
+      const { roundDuration } = roomInfo[data];
+      io.to(data).emit('set_timer', { round_time: roundDuration, start_time: 0 });
     });
 
     socket.on('purchase_stocks', (data) => {
       dispatch(buyStock(data)).then(() => {
         const State = getState();
         const playerStocks = State.playerStocks[data.room];
-        socket.emit('set_user', { cash: data.currentCashInHand - (data.initStockQty*data.unitPrice) });        
-        io.to(data.room).emit('buy_stock', { [data.username]: playerStocks[data.username]});
+        socket.emit('set_user', { cash: data.currentCashInHand - (data.initStockQty * data.unitPrice) });
+        io.to(data.room).emit('buy_stock', { [data.username]: playerStocks[data.username] });
         socket.to(data.room).emit('update_live_feed', data);
         io.to(data.room).emit('set_players', State.players[data.room]);
       });
@@ -84,33 +90,36 @@ export default function (io, { dispatch, getState }) {
       dispatch(sellStock(data)).then(() => {
         const State = getState();
         const playerStocks = State.playerStocks[data.room];
-        socket.emit('set_user', { cash: data.currentCashInHand + (data.stockQty*data.unitPrice) });        
-        io.to(data.room).emit('sell_stock', { [data.username]: playerStocks[data.username]});
+        socket.emit('set_user', { cash: data.currentCashInHand + (data.stockQty * data.unitPrice) });
+        io.to(data.room).emit('sell_stock', { [data.username]: playerStocks[data.username] });
         socket.to(data.room).emit('update_live_feed', data);
         io.to(data.room).emit('set_players', State.players[data.room]);
       });
     });
 
     socket.on('calculate_stocks', (data) => {
-      dispatch(calculateStocks(data)).then(() => {
+      const { trendModel, roomInfo } = getState();
+      dispatch(calculateStocks(data, trendModel[data], roomInfo[data])).then(() => {
         const State = getState();
-        socket.emit('set_room_stocks', State.roomStocks[data]);
+        const { roundDuration } = State.roomInfo[data];
+        io.to(data).emit('set_room_info', State.roomInfo);
+        io.to(data).emit('set_room_stocks', State.roomStocks[data]);
+        io.to(data).emit('set_timer', { round_time: roundDuration });
       });
     });
 
-    socket.on('disconnect', (data) => {
-      if(socket.room) {
+    socket.on('disconnect', () => {
+      if (socket.room) {
         const State = getState();
         const playersExist = State.players[socket.room].length > 1;
-        if(!playersExist) {
+        if (!playersExist) {
           dispatch(removeRoom(socket.room)).then(() => {
             const newState = getState();
             io.emit('set_rooms', newState.rooms);
           });
-          return;
         } else {
           const gameHasStarted = State.roomInfo[socket.room].isStarted;
-          if(!gameHasStarted && socket.gameHost) {
+          if (!gameHasStarted && socket.gameHost) {
             dispatch(removeRoom(socket.room)).then(() => {
               const newState = getState();
               io.emit('set_rooms', newState.rooms);
@@ -118,12 +127,19 @@ export default function (io, { dispatch, getState }) {
             });
           }
           if (!gameHasStarted && !socket.gameHost) {
-            dispatch(removePlayer({username: socket.username, room:socket.room})).then(() => {
+            dispatch(removePlayer({ username: socket.username, room: socket.room })).then(() => {
               const newState = getState();
               io.to(socket.room).emit('set_players', newState.players[socket.room]);
             });
           }
-        }      
+          if (gameHasStarted) {
+            dispatch(removePlayer({ username: socket.username, room: socket.room }));
+            // dispatch(removeRoom(socket.room)).then(() => {
+            //   const newState = getState();
+            //   io.emit('set_rooms', newState.rooms);
+            // });
+          }
+        }
       }
     });
   });
