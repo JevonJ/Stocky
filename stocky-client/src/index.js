@@ -1,7 +1,7 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

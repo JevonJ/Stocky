@@ -35,8 +35,8 @@ export default (socket, actions) => {
     actions.history.push('/simulator');
   });
 
-  socket.on('set_start_timer', (seconds) => {
-    actions.setStartTime(seconds);
+  socket.on('set_timer', (data) => {
+    actions.setTime(data);
   });
 
   socket.on('buy_stock', (data) => {

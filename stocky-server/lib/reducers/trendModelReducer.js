@@ -2,19 +2,13 @@ import { CREATE_GAME, REMOVE_ROOM } from '../actions/types';
 
 const InitialState = {};
 
-function setTrendArray(state, payload) {
-  const sectorTrends = getSectorTrends();
-  const marketTrends = getMarketTrends();
-  return { ...state, [payload.room]: { marketTrends, sectorTrends } };
-}
-
-function getMarketTrends() {
+function getMarketTrends(rounds) {
   const changeProbabilityArr = ['increase', 'decrease', 'none', 'none'];
   const max = 3;
   const min = 0;
   const trendArr = [];
-  
-  for (let i = 0; i < 20; i++) {
+
+  for (let i = 0; i < rounds; i++) {
     const change = changeProbabilityArr[Math.floor(Math.random() * (max - min + 1)) + min];
     // console.log(change);
 
@@ -45,29 +39,16 @@ function getMarketTrends() {
     }
   }
 
-  return trendArr;  
+  return trendArr;
 }
 
-function getSectorTrends() {
-  const sectors = ['FINANCE', 'ENERGY', 'HEALTH', 'REAL_ESTATE'];
-  const sectorTrends = { 'FINANCE': [], 'ENERGY': [], 'HEALTH': [], 'REAL_ESTATE': [] }
-
-  sectors.map((sector) => {
-    const values = calculateSectorTrend();
-    sectorTrends[sector] = values;
-    return null;
-  });
-
-  return sectorTrends;
-}
-
-function calculateSectorTrend() {
+function calculateSectorTrend(rounds) {
   const changeProbabilityArr = ['decrease', 'increase', 'none', 'none'];
   const max = 3;
   const min = 0;
   const trendArr = [];
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < rounds; i++) {
     const change = changeProbabilityArr[Math.floor(Math.random() * (max - min + 1)) + min];
     // console.log(change);
 
@@ -103,12 +84,33 @@ function calculateSectorTrend() {
   return trendArr;
 }
 
+function getSectorTrends(rounds) {
+  const sectors = ['FINANCE', 'ENERGY', 'HEALTH', 'REAL_ESTATE'];
+  const sectorTrends = {
+    FINANCE: [], ENERGY: [], HEALTH: [], REAL_ESTATE: [],
+  };
+
+  sectors.map((sector) => {
+    const values = calculateSectorTrend(rounds);
+    sectorTrends[sector] = values;
+    return null;
+  });
+
+  return sectorTrends;
+}
+
+function setTrendArray(state, { room, rounds }) {
+  const sectorTrends = getSectorTrends(rounds);
+  const marketTrends = getMarketTrends(rounds);
+  return { ...state, [room]: { marketTrends, sectorTrends } };
+}
+
 export default (state = InitialState, { type, payload }) => {
   switch (type) {
     case CREATE_GAME:
       return setTrendArray(state, payload);
     case REMOVE_ROOM:
-      const newState = [...state]
+      const newState = [...state];
       return newState.filter(e => e !== payload);
     default:
       return state;

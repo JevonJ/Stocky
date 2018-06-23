@@ -1,6 +1,6 @@
 import { CREATE_GAME, REMOVE_ROOM, CALCULATE_STOCKS } from '../actions/types';
 
-import { stockSymbols, sectorStocks } from '../stockResources';
+import { stockSymbols, stockInfo } from '../stockResources';
 
 const InitialState = {};
 
@@ -24,31 +24,47 @@ const defaultSet = {
 };
 
 function setRoomStocks(state, payload) {
-  return { ...state, [payload.room]: { ...defaultSet} };
+  return { ...state, [payload.room]: { ...defaultSet } };
 }
 
 function removeRoomStocks(state, payload) {
-  const newState = { ...state }
+  const newState = { ...state };
   delete newState[payload];
   return { ...newState };
 }
 
-function reCalculateStocks(state, payload) {
+function calculateStocks(sectorTrend, marketTrend, stockPrice) {
+  let stockChangePercentage = sectorTrend + marketTrend;
+  if (stockChangePercentage < 0) stockChangePercentage = 0;
+  const newStockPrice = stockPrice + (stockPrice * (stockChangePercentage / 100));
 
-  const newState = {...state};
-  const roomStocks = newState[payload];
-  
-  stockSymbols.map((symbol) => {
+  return parseFloat(newStockPrice.toFixed(2));
+}
 
-    const stockPrice = [ ...roomStocks[symbol] ];
-    stockPrice.push(roomStocks[symbol][roomStocks[symbol].length - 1] + 1);
-    
+function reCalculateStocks(state, { roomName, trendModal, roomInfo: { currentRound } }) {
+  const newState = { ...state };
+  const roomStocks = newState[roomName];
+
+  stockSymbols.map(async (symbol) => {
+    const stockPrice = [...roomStocks[symbol]];
+    const sector = stockInfo[symbol].stockSector;
+    const sectorTrend = trendModal.sectorTrends[sector];
+    const marketTrend = trendModal.marketTrends;
+
+    const newStockPrice = await calculateStocks(
+      sectorTrend[currentRound - 1],
+      marketTrend[currentRound - 1],
+      stockPrice[roomStocks[symbol].length - 1],
+    );
+
+    stockPrice.push(newStockPrice);
+
     roomStocks[symbol] = stockPrice;
     return null;
-  }); 
+  });
 
-  newState[payload] = roomStocks;
-  
+  newState[roomName] = roomStocks;
+
   return { ...newState };
 }
 

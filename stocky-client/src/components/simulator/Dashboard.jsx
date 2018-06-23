@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, ListGroup, ListGroupItem, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
+import ReactLoading from 'react-loading';
 
 import BuyModal from '../modals/BuyModalMain';
 import DashboardHeaderData from './DashboarHeaderData';
@@ -12,7 +13,7 @@ import SoldStockList from './SoldStockList';
 import PurchasedStockList from './PurchasedStockList';
 import RoundNumber from './RoundNumber';
 
-import { setStartTime } from '../../actions';
+import { setTime } from '../../actions';
 
 const styles = {
   overlay: {
@@ -23,6 +24,7 @@ const styles = {
     left: 0,
     backgroundColor: 'rgba(33,33,33 ,0.9)',
     zIndex: 99,
+    paddingTop: '35vh',
   },
 };
 
@@ -85,40 +87,58 @@ class Dashboard extends Component {
       modal: false,
     });
 
-    this.props.setStartTime(10);
-    socket.emit('calculate_stocks', user.room);
+    this.props.setTime({ round_time: 0 });
+
+    if (user.host) {
+      socket.emit('calculate_stocks', user.room);
+    }
   }
 
   render() {
     const {
-      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user, roomInfo, time,
+      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user, roomInfo, time
     } = this.props;
     return (
       <Row>
         {
           (time.start_time > 0) &&
           <div id="Overlay" style={styles.overlay}>
-            <div style={{ paddingTop: '18%' }}>
-              <Col
-                sm="12"
-                style={{
-                    color: '#8c98a5', fontWeight: 'bold', fontSize: '2em', textAlign: 'center', padding: '1em',
-                  }}
-              >
-                  Game starting in...
-              </Col>
-              <div style={{ paddingLeft: '45%' }}>
-                <CountDown
-                  seconds={time.start_time}
-                  color="#fff"
-                  alpha={0.9}
-                  size={100}
-                  onComplete={() => this.props.setStartTime(0)}
-                />
-              </div>
+            <Col
+              sm="12"
+              style={{
+                color: '#8c98a5', fontWeight: 'bold', fontSize: '2em', textAlign: 'center', padding: '1em',
+              }}
+            >
+              Game starting in...
+            </Col>
+            <div style={{ paddingLeft: '45%' }}>
+              <CountDown
+                seconds={time.start_time}
+                color="#fff"
+                alpha={0.9}
+                size={100}
+                onComplete={() => { this.props.setTime({ start_time: 0 }); socket.emit('start_game', user.room); }}
+              />
             </div>
           </div>
         }
+
+        {time.round_time === 0 && time.start_time === 0 &&
+          <div id="Overlay" style={styles.overlay}>
+            <Col
+              sm="12"
+              style={{
+                color: '#8c98a5', fontWeight: 'bold', fontSize: '2em', textAlign: 'center',
+              }}
+            >
+              Loading next round.
+            </Col>
+            <div style={{ paddingLeft: '46%' }}>
+              <ReactLoading type="bars" color="#fff" width={100} height={100} />
+            </div>
+          </div>
+        }
+
         <BuyModal
           isOpen={this.state.modal}
           toggle={() => this.toggleModal()}
@@ -213,15 +233,14 @@ class Dashboard extends Component {
                 <p><b>Time is Running!!!</b></p>
               </Row>
               <Row>
-                {
-                  time.start_time === 0 &&
-                    <CountDown
-                      seconds={5}
-                      color="#000"
-                      alpha={0.9}
-                      size={100}
-                      onComplete={() => this.calculateStocks()}
-                    />
+                {time.round_time && time.round_time > 0 &&
+                  <CountDown
+                    seconds={time.round_time}
+                    color="#000"
+                    alpha={0.9}
+                    size={100}
+                    onComplete={() => this.calculateStocks()}
+                  />
                 }
               </Row>
             </Col>
@@ -266,5 +285,5 @@ const mapStateToProps = ({
   time,
 });
 
-export default connect(mapStateToProps, { setStartTime })(Dashboard);
+export default connect(mapStateToProps, { setTime })(Dashboard);
 
