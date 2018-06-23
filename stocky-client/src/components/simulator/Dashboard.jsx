@@ -90,7 +90,9 @@ class Dashboard extends Component {
     this.props.setTime({ round_time: 0 });
 
     if (user.host) {
-      socket.emit('calculate_stocks', user.room);
+      setTimeout(() => {
+        socket.emit('calculate_stocks', user.room);
+      }, 3000);
     }
   }
 

@@ -70,15 +70,17 @@ export default function (io, { dispatch, getState }) {
     });
 
     socket.on('start_game', (data) => {
-      io.to(data).emit('set_timer', { round_time: 8, start_time: 0 });
+      const { roomInfo } = getState();
+      const { roundDuration } = roomInfo[data];
+      io.to(data).emit('set_timer', { round_time: roundDuration, start_time: 0 });
     });
 
     socket.on('purchase_stocks', (data) => {
       dispatch(buyStock(data)).then(() => {
         const State = getState();
         const playerStocks = State.playerStocks[data.room];
-        socket.emit('set_user', { cash: data.currentCashInHand - (data.initStockQty*data.unitPrice) });        
-        io.to(data.room).emit('buy_stock', { [data.username]: playerStocks[data.username]});
+        socket.emit('set_user', { cash: data.currentCashInHand - (data.initStockQty * data.unitPrice) });
+        io.to(data.room).emit('buy_stock', { [data.username]: playerStocks[data.username] });
         io.to(data.room).emit('update_live_feed', data);
         io.to(data.room).emit('set_players', State.players[data.room]);
       });
@@ -99,8 +101,10 @@ export default function (io, { dispatch, getState }) {
       const { trendModel, roomInfo } = getState();
       dispatch(calculateStocks(data, trendModel[data], roomInfo[data])).then(() => {
         const State = getState();
+        const { roundDuration } = State.roomInfo[data];
+        io.to(data).emit('set_room_info', State.roomInfo);
         io.to(data).emit('set_room_stocks', State.roomStocks[data]);
-        io.to(data).emit('set_timer', { round_time: 8 });
+        io.to(data).emit('set_timer', { round_time: roundDuration });
       });
     });
 
@@ -108,7 +112,6 @@ export default function (io, { dispatch, getState }) {
       if (socket.room) {
         const State = getState();
         const playersExist = State.players[socket.room].length > 1;
-        console.log('XXXXXXXXXXX', playersExist);
         if (!playersExist) {
           dispatch(removeRoom(socket.room)).then(() => {
             const newState = getState();

@@ -169,7 +169,7 @@ class Host extends Component {
                 invalid={roundsError !== ''}
                 max={50}
                 min={15}
-                placeHolder="Enter number of rounds"
+                placeholder="Enter number of rounds"
                 onChange={e => this.onInputChange(e)}
                 value={rounds}
               />
@@ -183,7 +183,7 @@ class Host extends Component {
                 id="duration"
                 autoComplete="off"
                 invalid={roundDurationError !== ''}
-                placeHolder="Enter round duration (seconds)"
+                placeholder="Enter round duration (seconds)"
                 max={90}
                 min={30}
                 onChange={e => this.onInputChange(e)}
