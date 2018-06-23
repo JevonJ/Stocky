@@ -23,11 +23,14 @@ class PurchasedStockList extends Component {
     const stockPriceArr = roomStocks[purchasedStocks.stockSymbol];
     const stockPrice = stockPriceArr[stockPriceArr.length - 1];
     const totalSoldQty = purchasedStocks.soldStockQty.reduce((a, b) => a + b, 0);
+    const remainingStocks = purchasedStocks.initStockQty - totalSoldQty;
+    
+    if (remainingStocks > 0){
     return (
       <tr key={purchasedStocks.stockSymbol}>
         <td>{index + 1}</td>
         <td>{purchasedStocks.stockSymbol}</td>
-        <td>{purchasedStocks.initStockQty - totalSoldQty}</td>
+        <td>{remainingStocks}</td>
         <td>{purchasedStocks.unitPrice}</td>
         <td>{stockPrice}</td>
 
@@ -46,6 +49,7 @@ class PurchasedStockList extends Component {
         </td>
       </tr>
     );
+  }
   }
 
   render() {
