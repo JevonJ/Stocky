@@ -23,7 +23,7 @@ const styles = {
     backgroundImage: `url(${BGImage})`,
     boxShadow: 'inset 0 0 5rem rgba(0, 0, 0, 1)',
     textShadow: '0 .05rem .1rem rgba(0, 0, 0, .5)',
-  },
+    },
 };
 
 class Main extends Component {
@@ -63,8 +63,8 @@ class Main extends Component {
                   exact
                   className="loginMain-nav-link"
                   activeClassName="active"
-                  href="login/how-to-play"
-                  to="login/how-to-play"
+                  href="/login/how-to-play"
+                  to="/login/how-to-play"
                 >
                   How To Play
                 </NavLink>
@@ -76,7 +76,7 @@ class Main extends Component {
             this.props.isLoading ?
               <Loading />
               :
-              <div style={{ overflow: 'auto' }}>
+              <div style={{ overflow: 'auto','overflow-x': 'hidden', }}>
                 <Route exact path="/login" component={Welcome} />
                 <Route
                   exact
