@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DashboardHeaderData renders correctly 1`] = `
+<Row
+  tag="div"
+>
+  <Col
+    tag="div"
+    widths={
+      Array [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+      ]
+    }
+  >
+    <ListGroup
+      tag="ul"
+    >
+      <ListGroupItem
+        className="justify-content-between"
+        color="danger"
+        tag="li"
+      >
+        <h4>
+          Cash Remaining
+        </h4>
+        <h5>
+          <Badge
+            color="secondary"
+            pill={true}
+            tag="span"
+          >
+            LKR 
+          </Badge>
+        </h5>
+      </ListGroupItem>
+    </ListGroup>
+  </Col>
+  <Col
+    tag="div"
+    widths={
+      Array [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+      ]
+    }
+  >
+    <ListGroup
+      tag="ul"
+    >
+      <ListGroupItem
+        className="justify-content-between"
+        color="warning"
+        tag="li"
+      >
+        <h4>
+          Stock Value
+        </h4>
+        <h5>
+          <Badge
+            color="secondary"
+            pill={true}
+            tag="span"
+          >
+            LKR 
+            0
+          </Badge>
+        </h5>
+      </ListGroupItem>
+    </ListGroup>
+  </Col>
+  <Col
+    tag="div"
+    widths={
+      Array [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+      ]
+    }
+  >
+    <ListGroup
+      tag="ul"
+    >
+      <ListGroupItem
+        className="justify-content-between"
+        color="info"
+        tag="li"
+      >
+        <h4>
+          Total Asset Value
+        </h4>
+        <h5>
+          <Badge
+            color="secondary"
+            pill={true}
+            tag="span"
+          >
+            LKR 
+            NaN
+          </Badge>
+        </h5>
+      </ListGroupItem>
+    </ListGroup>
+  </Col>
+</Row>
+`;
+
+exports[`Header renders correctly 1`] = `
+<nav
+  className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0"
+>
+  <a
+    className="navbar-brand col-sm-3 col-md-2 mr-0"
+    href="#"
+  >
+    Stocky
+  </a>
+  <ul
+    className="navbar-nav px-3"
+  >
+    <li
+      className="nav-item text-nowrap"
+    >
+      <a
+        className="nav-link"
+        href="#"
+      >
+        Sign out
+      </a>
+    </li>
+  </ul>
+</nav>
+`;

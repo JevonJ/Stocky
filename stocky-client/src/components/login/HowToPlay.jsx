@@ -20,7 +20,7 @@ class HowToPlay extends Component {
           <li>If you not interest in hosting a game You can join to a game room which is not started playing yet.</li><br />
           <li>Hang on at least with three players to start a game.</li><br />
           <li>Host of the game can decide the number of rounds they going to play in the game.</li><br />
-          <li>Host of the game can decide how much time will it takes for a round in the game.</li>
+          <li>Host of the game can decide how much time will it takes for a round in the game.</li><br />
           <li>We give LKR.1000 to every player in the game at the starting point.</li><br />
           <li>You can pay your attention on live feed and game room members asset levels and give them a competitive experience while you are enjoying the game.</li><br />
           <li>Highest valued asset holder of all rounds in the game will be the WINNER OF THE GAME!!!</li><br />
