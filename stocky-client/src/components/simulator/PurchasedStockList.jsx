@@ -54,7 +54,7 @@ class PurchasedStockList extends Component {
 
   render() {
     const {
-      socket, playerStocks, user, isOpen, sellModalState,
+      socket, playerStocks, user, isOpen, sellModalState, roomInfo,
     } = this.props;
 
     return (
@@ -64,6 +64,9 @@ class PurchasedStockList extends Component {
           toggle={() => this.toggleSellModal()}
           sellStockData={this.state.selectedSellStock}
           socket={socket}
+          user={user}
+          playerStocks={playerStocks}
+          roomInfo={roomInfo}
         />
         <Collapse isOpen={isOpen}>
           <Table striped responsive size="sm">

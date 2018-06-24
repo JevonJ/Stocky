@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`App renders correctly 1`] = `
 <Provider
   store={
     Object {
@@ -12,6 +12,11 @@ exports[`renders correctly 1`] = `
     }
   }
 >
-  <Connect(App) />
+  <HashRouter>
+    <Route
+      component={[Function]}
+      path="/"
+    />
+  </HashRouter>
 </Provider>
 `;

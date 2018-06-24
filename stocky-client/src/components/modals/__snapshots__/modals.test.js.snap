@@ -1,0 +1,216 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BuyModalMain renders correctly 1`] = `
+<Modal
+  autoFocus={true}
+  backdrop={true}
+  backdropTransition={
+    Object {
+      "mountOnEnter": true,
+      "timeout": 150,
+    }
+  }
+  centered={false}
+  fade={true}
+  id="BuyModal"
+  isOpen={false}
+  keyboard={true}
+  modalTransition={
+    Object {
+      "timeout": 300,
+    }
+  }
+  onClosed={[Function]}
+  onOpened={[Function]}
+  role="dialog"
+  toggle={[Function]}
+  zIndex={1050}
+>
+  <ModalHeader
+    closeAriaLabel="Close"
+    style={
+      Object {
+        "color": "black",
+      }
+    }
+    tag="h5"
+    wrapTag="div"
+  >
+    You are going to buy
+  </ModalHeader>
+  <ModalBody
+    className="mbody"
+    style={
+      Object {
+        "color": "black",
+      }
+    }
+    tag="div"
+  >
+    <ListGroup
+      tag="ul"
+    >
+      <ListGroupItem
+        tag="li"
+      >
+        Company Symbol: 
+        LFIN
+      </ListGroupItem>
+      <ListGroupItem
+        tag="li"
+      >
+        Unit Price: 
+        10
+      </ListGroupItem>
+      <ListGroupItem
+        tag="li"
+      >
+        <FormGroup
+          tag="div"
+        >
+          Number of Stocks
+          <Input
+            max={100}
+            min={1}
+            name="qauntity"
+            onChange={[Function]}
+            placeholder="Number of Stocks"
+            type="number"
+            value="1"
+          />
+        </FormGroup>
+      </ListGroupItem>
+      <ListGroupItem
+        tag="li"
+      >
+        Price: 
+        10
+      </ListGroupItem>
+    </ListGroup>
+  </ModalBody>
+  <ModalFooter
+    tag="div"
+  >
+    <Button
+      color="success"
+      onClick={[Function]}
+      tag="button"
+    >
+      Buy
+    </Button>
+    <Button
+      color="danger "
+      onClick={[Function]}
+      tag="button"
+    >
+      Not interested
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
+
+exports[`SellSharesModal renders correctly 1`] = `
+<Modal
+  autoFocus={true}
+  backdrop={true}
+  backdropTransition={
+    Object {
+      "mountOnEnter": true,
+      "timeout": 150,
+    }
+  }
+  centered={false}
+  fade={true}
+  id="SellModal"
+  isOpen={false}
+  keyboard={true}
+  modalTransition={
+    Object {
+      "timeout": 300,
+    }
+  }
+  onClosed={[Function]}
+  onOpened={[Function]}
+  role="dialog"
+  toggle={[Function]}
+  zIndex={1050}
+>
+  <ModalHeader
+    closeAriaLabel="Close"
+    style={
+      Object {
+        "color": "black",
+      }
+    }
+    tag="h5"
+    wrapTag="div"
+  >
+    You are going to sell
+  </ModalHeader>
+  <ModalBody
+    className="mbody"
+    style={
+      Object {
+        "color": "black",
+      }
+    }
+    tag="div"
+  >
+    <ListGroup
+      tag="ul"
+    >
+      <ListGroupItem
+        tag="li"
+      >
+        Company Symbol: 
+      </ListGroupItem>
+      <ListGroupItem
+        tag="li"
+      >
+        <FormGroup
+          tag="div"
+        >
+          Number of Stocks
+          <Input
+            min={1}
+            name="qauntity"
+            onChange={[Function]}
+            placeholder="Number of Stocks"
+            type="number"
+            value="1"
+          />
+        </FormGroup>
+      </ListGroupItem>
+      <ListGroupItem
+        tag="li"
+      >
+        Price: 
+      </ListGroupItem>
+      <ListGroupItem
+        tag="li"
+      >
+        Profit/Loss:
+         
+      </ListGroupItem>
+    </ListGroup>
+  </ModalBody>
+  <ModalFooter
+    tag="div"
+  >
+    <Button
+      color="success"
+      onClick={[Function]}
+      tag="button"
+    >
+      Sell
+    </Button>
+    <Button
+      color="danger "
+      onClick={[Function]}
+      tag="button"
+    >
+      Not interested
+    </Button>
+  </ModalFooter>
+</Modal>
+`;

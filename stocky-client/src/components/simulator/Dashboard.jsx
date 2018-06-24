@@ -149,6 +149,8 @@ class Dashboard extends Component {
           roomStocks={roomStocks}
           roomInfo={roomInfo}
           socket={socket}
+          user={user}
+          playerStocks={playerStocks}
         />
 
         <Col xs="3">
@@ -169,6 +171,7 @@ class Dashboard extends Component {
             playerStocks={playerStocks}
             roomStocks={roomStocks}
             user={user}
+            roomInfo={roomInfo}
             toggleSellModal={() => this.toggleSellModal()}
             sellModalState={this.state.sellModal}
           />

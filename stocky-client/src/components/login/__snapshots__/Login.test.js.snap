@@ -1,0 +1,352 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GameList renders correctly 1`] = `
+<GameList
+  dispatch={[Function]}
+  players={Array []}
+  rooms={Array []}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+  storeSubscription={
+    Subscription {
+      "listeners": Object {
+        "clear": [Function],
+        "get": [Function],
+        "notify": [Function],
+        "subscribe": [Function],
+      },
+      "onStateChange": [Function],
+      "parentSub": undefined,
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "unsubscribe": [Function],
+    }
+  }
+/>
+`;
+
+exports[`Host renders correctly 1`] = `
+<Fade
+  appear={true}
+  baseClass="fade"
+  baseClassActive="show"
+  enter={true}
+  exit={true}
+  in={true}
+  mountOnEnter={false}
+  onEnter={[Function]}
+  onEntered={[Function]}
+  onEntering={[Function]}
+  onExit={[Function]}
+  onExited={[Function]}
+  onExiting={[Function]}
+  tag="div"
+  timeout={500}
+  unmountOnExit={false}
+>
+  <main
+    className="inner loginHost-cover"
+    role="main"
+  >
+    <h1
+      className="loginHost-cover-heading"
+    >
+      Host A Game
+    </h1>
+    <Form
+      tag="form"
+    >
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="room"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Game Room Name
+        </Label>
+        <Input
+          autoComplete="off"
+          id="room"
+          invalid={false}
+          name="room"
+          onChange={[Function]}
+          type="text"
+          valid={false}
+          value=""
+        />
+        <FormFeedback
+          tag="div"
+          valid={true}
+        >
+          Sweet! that name is available
+        </FormFeedback>
+        <FormFeedback
+          tag="div"
+        />
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="username"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          User name
+        </Label>
+        <Input
+          autoComplete="off"
+          id="username"
+          invalid={false}
+          name="username"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+        <FormFeedback
+          tag="div"
+        />
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="rounds"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Number of Rounds
+        </Label>
+        <Input
+          autoComplete="off"
+          id="rounds"
+          invalid={false}
+          max={50}
+          min={15}
+          name="rounds"
+          onChange={[Function]}
+          placeholder="Enter number of rounds"
+          type="number"
+          value={15}
+        />
+        <FormFeedback
+          tag="div"
+        />
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="duration"
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Round duration in seconds
+        </Label>
+        <Input
+          autoComplete="off"
+          id="duration"
+          invalid={false}
+          max={90}
+          min={30}
+          name="duration"
+          onChange={[Function]}
+          placeholder="Enter round duration (seconds)"
+          type="number"
+          value={30}
+        />
+        <FormFeedback
+          tag="div"
+        />
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <CustomInput
+          id="isPrivate"
+          label="Private Game"
+          name="isPrivate"
+          onChange={[Function]}
+          type="checkbox"
+          value={false}
+        />
+      </FormGroup>
+    </Form>
+    <p
+      className="lead"
+    >
+      <Button
+        color="success"
+        onClick={[Function]}
+        outline={true}
+        size="lg"
+        tag="button"
+      >
+        Create Game
+      </Button>
+      <Button
+        color="secondary"
+        onClick={[Function]}
+        outline={true}
+        size="lg"
+        tag="button"
+      >
+        Cancel
+      </Button>
+    </p>
+  </main>
+</Fade>
+`;
+
+exports[`Loading renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "paddingLeft": "46%",
+    }
+  }
+>
+  <Loading
+    color="#fff"
+    delay={0}
+    height={100}
+    type="bars"
+    width={100}
+  />
+</div>
+`;
+
+exports[`Lobby renders correctly 1`] = `
+<div
+  className="animated fadeIn"
+>
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName={null}
+    className={null}
+    closeButton={
+      <CloseButton
+        ariaLabel="close"
+      />
+    }
+    closeOnClick={true}
+    draggable={true}
+    draggablePercent={80}
+    hideProgressBar={true}
+    newestOnTop={false}
+    pauseOnHover={true}
+    pauseOnVisibilityChange={true}
+    position="top-right"
+    progressClassName={null}
+    rtl={false}
+    style={null}
+    toastClassName={null}
+    transition={[Function]}
+  />
+  <h1
+    className="cover-heading"
+  >
+    Lobby : 
+  </h1>
+  <p
+    className="lead"
+  >
+    Connected Players
+  </p>
+  <div
+    className="row"
+  >
+    <div
+      className="col col-sm-12 ml-auto"
+    >
+      <table
+        className="table table-hover"
+      >
+        <thead>
+          <tr>
+            <th>
+              #
+            </th>
+            <th>
+              Username
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col col-sm-12 ml-auto"
+    />
+  </div>
+</div>
+`;
+
+exports[`Main renders correctly 1`] = `
+<Route
+  render={[Function]}
+/>
+`;
+
+exports[`Welcome renders correctly 1`] = `
+<Route
+  render={[Function]}
+/>
+`;

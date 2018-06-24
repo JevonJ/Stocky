@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, FormGroup, Input } from 'reactstrap';
 
 class BuyModalMain extends Component {
@@ -112,11 +111,4 @@ class BuyModalMain extends Component {
   }
 }
 
-
-const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
-  user,
-  roomInfo,
-  playerStocks,
-});
-
-export default connect(mapStateToProps)(BuyModalMain);
+export default BuyModalMain;
