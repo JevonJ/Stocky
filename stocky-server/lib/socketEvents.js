@@ -1,4 +1,6 @@
-import { setPlayer, removeRoom, buyStock, sellStock, setPlayerStocks, createGame, removePlayer, startGame, calculateStocks } from './actions';
+import {
+  setPlayer, removeRoom, buyStock, sellStock, createGame, removePlayer, startGame, calculateStocks,
+} from './actions';
 
 export default function (io, { dispatch, getState }) {
 
@@ -10,7 +12,7 @@ export default function (io, { dispatch, getState }) {
       const { NODE_ENV, PROD_CLIENT } = process.env;
       let clientURL = 'http://localhost:3000';
 
-      if(NODE_ENV && NODE_ENV === 'production') {
+      if (NODE_ENV && NODE_ENV === 'production') {
         clientURL = PROD_CLIENT;
       }
 
@@ -31,7 +33,9 @@ export default function (io, { dispatch, getState }) {
           io.emit('set_rooms', State.rooms);
           io.emit('set_room_info', State.roomInfo);
           io.to(data.room).emit('set_players', State.players[data.room]);
-          socket.emit('set_user', { name: data.username, host: true, room: data.room, cash: 1000 });
+          socket.emit('set_user', {
+            name: data.username, host: true, room: data.room, cash: 1000,
+          });
           socket.emit('go_to_lobby');
           io.to(data.room).emit('set_player_stocks', State.playerStocks[data.room]);
           socket.emit('set_room_stocks', State.roomStocks[data.room]);
@@ -51,7 +55,9 @@ export default function (io, { dispatch, getState }) {
         socket.gameHost = false;
         dispatch(setPlayer(data)).then(() => {
           const State = getState();
-          socket.emit('set_user', { name: data.username, host: false, room: data.room, cash: 1000 });          
+          socket.emit('set_user', {
+            name: data.username, host: false, room: data.room, cash: 1000,
+          });
           io.to(data.room).emit('set_players', State.players[data.room]);
           io.to(data.room).emit('set_player_stocks', State.playerStocks[data.room]);
           socket.emit('go_to_lobby');
@@ -99,11 +105,17 @@ export default function (io, { dispatch, getState }) {
 
     socket.on('calculate_stocks', (data) => {
       const { trendModel, roomInfo } = getState();
+
       dispatch(calculateStocks(data, trendModel[data], roomInfo[data])).then(() => {
         const State = getState();
+        const { currentRound } = roomInfo[data];
+        const { eventTrends } = trendModel[data];
+        const sectorEvents = eventTrends.sectorEvents[currentRound];
+        const stockEvents = eventTrends.stockEvents[currentRound];
         const { roundDuration } = State.roomInfo[data];
         io.to(data).emit('set_room_info', State.roomInfo);
         io.to(data).emit('set_room_stocks', State.roomStocks[data]);
+        io.to(data).emit('update_current_events', { sectorEvents, stockEvents });
         io.to(data).emit('set_timer', { round_time: roundDuration });
       });
     });

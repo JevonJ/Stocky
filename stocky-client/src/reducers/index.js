@@ -13,6 +13,7 @@ import user from './userReducer';
 import time from './timeReducer';
 import liveFeed from './liveFeedReducer';
 import roomStocks from './roomStocksReducer';
+import events from './eventsReducer';
 
 export default combineReducers({
   rooms,
@@ -28,4 +29,5 @@ export default combineReducers({
   time,
   liveFeed,
   roomStocks,
+  events,
 });

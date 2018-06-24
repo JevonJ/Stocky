@@ -1,3 +1,5 @@
+export const sectors = ['FINANCE', 'ENERGY', 'HEALTH', 'REAL_ESTATE'];
+
 export const stockSymbols = ['LFIN', 'VANI', 'CINS', 'AFSL', 'HPFL', 'LGL', 'PAP', 'VLL', 'SINH', 'NHL', 'AMSL', 'CHL', 'SLND', 'TWOD', 'KDL', 'CTLD'];
 
 export const sectorStocks = {

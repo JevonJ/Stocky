@@ -50,4 +50,8 @@ export default (socket, actions) => {
   socket.on('update_live_feed', (data) => {
     actions.updateFeed(data);
   });
+
+  socket.on('update_current_events', (data) => {
+    actions.updateEvents(data);
+  });
 };
