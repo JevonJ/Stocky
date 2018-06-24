@@ -17,7 +17,7 @@ class Host extends Component {
         isPrivate: false,
         password: '',
         rounds: 15,
-        duration: 10,
+        duration: 30,
       },
       visibility: false,
       roomNameError: '',
@@ -88,12 +88,12 @@ class Host extends Component {
       return;
     }
 
-    // if (hostForm.duration < 30) {
-    //   this.setState({
-    //     roundDurationError: 'Round duration should be higher than 30 seconds',
-    //   });
-    //   return;
-    // }
+    if (hostForm.duration < 30) {
+      this.setState({
+        roundDurationError: 'Round duration should be higher than 30 seconds',
+      });
+      return;
+    }
 
     if (hostForm.isPrivate && hostForm.password.length === 0) {
       this.setState({
