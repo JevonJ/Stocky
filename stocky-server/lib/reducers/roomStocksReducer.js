@@ -33,27 +33,63 @@ function removeRoomStocks(state, payload) {
   return { ...newState };
 }
 
-function calculateStocks(sectorTrend, marketTrend, stockPrice) {
-  let stockChangePercentage = sectorTrend + marketTrend;
+function calculateStocks(
+  sectorTrend, marketTrend, randomMarketTrend, stockEvents, sectorEvents, stockPrice,
+) {
+  let stockChangePercentage = sectorTrend + marketTrend + randomMarketTrend + stockEvents + sectorEvents;
   if (stockChangePercentage < 0) stockChangePercentage = 0;
   const newStockPrice = stockPrice + (stockPrice * (stockChangePercentage / 100));
 
   return parseFloat(newStockPrice.toFixed(2));
 }
 
-function reCalculateStocks(state, { roomName, trendModal, roomInfo: { currentRound } }) {
+function calculateRandomMarketTrend() {
+  const increaseMax = 2;
+  const increaseMin = -2;
+  const randChangeValue = Math.floor(Math.random() * (increaseMax - increaseMin + 1)) + increaseMin;
+
+  return randChangeValue;
+}
+
+function calculateStockEventsValue(currentRoundStockEvents, symbol) {
+  const stockRelevantEvents = currentRoundStockEvents.filter(event => event.stock === symbol);
+  const totalStockEventsValue = stockRelevantEvents.reduce((value, event) => event.value + value, 0);
+  return totalStockEventsValue;
+}
+
+function calculateSectorEventsValue(currentRoundSectorEvents, sector) {
+  const stockRelevantEvents = currentRoundSectorEvents.filter(event => event.sector === sector);
+  const totalSectorEventsValue = stockRelevantEvents.reduce((value, event) => event.value + value, 0);
+  return totalSectorEventsValue;
+}
+
+function reCalculateStocks(
+  state,
+  {
+    roomName, trendModal: { sectorTrends, marketTrends, eventTrends: { stockEvents, sectorEvents } },
+    roomInfo: { currentRound },
+  },
+) {
   const newState = { ...state };
   const roomStocks = newState[roomName];
+  const currentRoundStockEvents = stockEvents[currentRound];
+  const currentRoundSectorEvents = sectorEvents[currentRound];
 
   stockSymbols.map(async (symbol) => {
     const stockPrice = [...roomStocks[symbol]];
     const sector = stockInfo[symbol].stockSector;
-    const sectorTrend = trendModal.sectorTrends[sector];
-    const marketTrend = trendModal.marketTrends;
+    const sectorTrend = sectorTrends[sector];
+    const marketTrend = marketTrends;
+    const randomMarketTrend = calculateRandomMarketTrend();
+    const totalStockEventsValue = calculateStockEventsValue(currentRoundStockEvents, symbol);
+    const totalSectorEventsValue = calculateSectorEventsValue(currentRoundSectorEvents, sector);
 
     const newStockPrice = await calculateStocks(
       sectorTrend[currentRound - 1],
       marketTrend[currentRound - 1],
+      randomMarketTrend,
+      totalStockEventsValue,
+      totalSectorEventsValue,
       stockPrice[roomStocks[symbol].length - 1],
     );
 

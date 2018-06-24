@@ -6,3 +6,4 @@ export * from './TimeActions';
 export * from './PlayerStockActions';
 export * from './LiveFeedActions';
 export * from './RoomStocksActions';
+export * from './EventActions';

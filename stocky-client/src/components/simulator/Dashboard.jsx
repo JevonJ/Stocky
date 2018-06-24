@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, ListGroup, ListGroupItem, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
+import { Row, Col, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 import ReactLoading from 'react-loading';
 
@@ -12,6 +12,7 @@ import StockList from './StockList';
 import SoldStockList from './SoldStockList';
 import PurchasedStockList from './PurchasedStockList';
 import RoundNumber from './RoundNumber';
+import CurrentEvets from './CurrentEvents';
 
 import { setTime } from '../../actions';
 
@@ -98,7 +99,7 @@ class Dashboard extends Component {
 
   render() {
     const {
-      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user, roomInfo, time
+      socket, players, playerStocks, stocks, sectors, sectorStocks, stockInfo, liveFeed, roomStocks, user, roomInfo, time, events,
     } = this.props;
     return (
       <Row>
@@ -253,18 +254,7 @@ class Dashboard extends Component {
           <Row>
             <LiveFeed liveFeed={liveFeed} />
           </Row>
-          <Row>
-            <Card body outline color="warning">
-              <CardTitle>Current Events</CardTitle>
-              <CardBody>
-                <ListGroup>
-                  <ListGroupItem>Engineering sector is having a boom of/... </ListGroupItem>
-                  <ListGroupItem>ETI Group is undergoing a scandal...</ListGroupItem>
-                </ListGroup>
-              </CardBody>
-              <Button outline color="secondary">Clear</Button>
-            </Card>
-          </Row>
+          <CurrentEvets events={events} />
         </Col>
       </Row>
     );
@@ -272,7 +262,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = ({
-  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo, roomStocks, user, roomInfo, time,
+  stocks, sectors, sectorStocks, liveFeed, players, playerStocks, stockInfo, roomStocks, user, roomInfo, time, events,
 }) => ({
   players,
   stocks,
@@ -285,6 +275,7 @@ const mapStateToProps = ({
   roomStocks,
   user,
   time,
+  events,
 });
 
 export default connect(mapStateToProps, { setTime })(Dashboard);
