@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'mdbreact';
+import FontAwesome from 'react-fontawesome';
 
 class StockList extends Component {
   renderStocks(stock) {
@@ -7,13 +8,32 @@ class StockList extends Component {
     const info = stockInfo[stock];
     const pricesArr = roomStocks[stock];
 
+    const lastPrice = pricesArr[pricesArr.length - 2] === undefined ? '--' : (pricesArr[pricesArr.length - 2].toFixed(2));
+    const currentPrice = (pricesArr[pricesArr.length - 1]).toFixed(2);
+
+    let color = 'grey';
+    let type = 'minus';
+
+    if (pricesArr[pricesArr.length - 2] !== undefined && lastPrice < currentPrice) {
+      color = 'green';
+      type = 'arrow-up';
+    }
+
     return (
       <tr key={info.stockName}>
         <td className="align-middle">{info.stockName}</td>
         <td className="align-middle">{info.stockSymbol}</td>
         <td className="align-middle">{info.stockSector}</td>
-        <td className="align-middle">{pricesArr[pricesArr.length - 2] === undefined ? '--' : (pricesArr[pricesArr.length - 2].toFixed(2))}</td>
-        <td className="align-middle">{(pricesArr[pricesArr.length - 1]).toFixed(2)}</td>
+        <td className="align-middle">{lastPrice}</td>
+        <td className="align-middle">
+          {`${currentPrice} `}
+          <FontAwesome
+            className="super-crazy-colors"
+            name={type}
+            size="1x"
+            style={{ color }}
+          />
+        </td>
         <td className="align-middle"><Button size="sm" color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
       </tr>
     );

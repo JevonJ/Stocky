@@ -9,7 +9,8 @@ export default (state = InitialState, { type, payload }) => {
         username: payload.username,
         symbol: payload.stockSymbol,
         unitPrice: payload.unitPrice,
-        qauntity: payload.initStockQty,
+        qauntity: payload.initStockQty || payload.stockQty,
+        type: payload.initStockQty ? 'bought' : 'sold',
       };
       return [...state, data];
     }
