@@ -81,20 +81,26 @@ class Dashboard extends Component {
   }
 
   calculateStocks() {
-    const { user, socket } = this.props;
+    const { user, socket, roomInfo } = this.props;
 
     this.setState({
       sellModal: false,
       modal: false,
     });
-
+    
     this.props.setTime({ round_time: 0 });
-
+   
     if (user.host) {
       setTimeout(() => {
         socket.emit('calculate_stocks', user.room);
       }, 3000);
     }
+
+    if (roomInfo[user.room].currentRound + 1 ==  roomInfo[user.room].rounds){
+      this.props.socket.emit('go_to_game_summary', user.room);
+      return;
+    }
+
   }
 
   render() {

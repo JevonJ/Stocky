@@ -54,4 +54,8 @@ export default (socket, actions) => {
   socket.on('update_current_events', (data) => {
     actions.updateEvents(data);
   });
+
+  socket.on('go_to_game_summary', (data) => {
+    actions.history.replace('/game-summary');
+  });
 };
