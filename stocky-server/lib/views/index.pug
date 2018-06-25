@@ -1,0 +1,159 @@
+html
+    body
+        h1 Stocky Server
+        h4 Game by Team Titans
+
+        table(style={border: '1px solid black'})
+            tr
+                th Rooms       
+                for room in rooms
+                    tr
+                        th ------------------------
+                    tr
+                        th Name :
+                            td #{room}
+                        
+        table(style={border: '1px solid black'})
+            tr
+                th Room Info
+                for rmInfo in roomInfo
+                    tr
+                        th ------------------------
+                    tr
+                        th Room :
+                            td #{rmInfo.name}
+                        th Is_Private :
+                            td #{rmInfo.isPrivate}
+                        th Is_Started :
+                            td #{rmInfo.isStarted}
+                        th Password :
+                            td #{rmInfo.password}
+                        th Rounds :
+                            td #{rmInfo.rounds}
+                        th Current_Round :
+                            td #{rmInfo.currentRound}
+                        th Round_Duration :
+                            td #{rmInfo.roundDuration}                                 
+
+        table(style={border: '1px solid black'})
+            tr
+                th Players  
+                for room in rooms
+                    tr
+                        th ------------------------
+                    tr 
+                        th Room :
+                            td #{room}
+                    for player in players[room]
+                        tr
+                            th Name :
+                                td #{player.name}
+                            th Cash :
+                                td #{player.cash}
+
+
+        table(style={border: '1px solid black'})
+            tr
+                th Player Stocks
+                for room in rooms
+                    tr
+                        th ------------------------
+                    tr 
+                        th Room :
+                            td #{room}
+                    for player in players[room]
+                        tr
+                            th Player :
+                                td #{player.name}
+                        tr
+                            th Purchased :
+                            for playerStock in playerStocks[room][player.name].purchased
+                                tr
+                                    th Symbol :
+                                        td #{playerStock.stockSymbol}
+                                    th Initial Quantity :
+                                        td #{playerStock.initStockQty}
+                                    th Sold Stock Quantity :
+                                        td #{playerStock.soldStockQty}
+                                    th Unit Price :
+                                        td #{playerStock.unitPrice}
+                                    th Round :
+                                        td #{playerStock.round}
+                        tr
+                            th Sold :
+                            for playerStock in playerStocks[room][player.name].sold
+                                tr
+                                    th Symbol :
+                                        td #{playerStock.stockSymbol}
+                                    th Quantity :
+                                        td #{playerStock.stockQty}
+                                    th Unit Price :
+                                        td #{playerStock.unitPrice}
+                                    th Round :
+                                        td #{playerStock.round}
+                    
+
+        table(style={border: '1px solid black'})
+            tr
+                th Trend Model
+                for room in rooms      
+                    tr
+                        th ------------------------
+                    tr
+                        th Room :
+                            td #{room}
+                    tr    
+                        th Market Trends :
+                                for trndModel in trendModel[room].marketTrends        
+                                        td #{trndModel}
+                    tr    
+                        th Sector Trends :
+                            tr
+                                th Finance :
+                                        for trndModel in trendModel[room].sectorTrends.FINANCE
+                                                td #{trndModel}
+                            tr
+                                th Energy :
+                                        for trndModel in trendModel[room].sectorTrends.ENERGY
+                                                td #{trndModel}
+                            tr
+                                th Health :
+                                        for trndModel in trendModel[room].sectorTrends.HEALTH
+                                                td #{trndModel}
+                            tr
+                                th Real Estate :
+                                        for trndModel in trendModel[room].sectorTrends.REAL_ESTATE
+                                                td #{trndModel}
+                    tr    
+                        th Event Trends :
+                            
+                            tr
+                                th Stock Events :
+                                        for trndModel in trendModel[room].eventTrends.stockEvents
+                                                for trdMod in trndModel
+                                                    tr
+                                                        th Type :
+                                                            td #{trdMod.type}
+                                                        th Value :
+                                                            td #{trdMod.value}
+                                                        th Event Round :
+                                                            td #{trdMod.eventRound}
+                                                        th Event Duration :
+                                                            td #{trdMod.eventDuration}
+                                                        th Stock :
+                                                            td #{trdMod.stock}                                     
+                            tr
+                                th Sector Events :
+                                        for trndModel in trendModel[room].eventTrends.sectorEvents
+                                                for trdMod in trndModel
+                                                    tr
+                                                        th Type :
+                                                            td #{trdMod.type}
+                                                        th Value :
+                                                            td #{trdMod.value}
+                                                        th Event Round :
+                                                            td #{trdMod.eventRound}
+                                                        th Event Duration :
+                                                            td #{trdMod.eventDuration}
+                                                        th Sector :
+                                                            td #{trdMod.sector}

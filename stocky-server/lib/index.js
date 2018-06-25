@@ -9,7 +9,7 @@ import Compression from 'compression';
 import { config } from 'dotenv'
 
 import store from './store';
-
+import path from 'path';
 import SocketEvents from './socketEvents';
 
 config();
@@ -20,10 +20,19 @@ const app = Express(),
   //our server instance
   server = Http.createServer(app);
 
+  app.set("view engine", "pug");
+  app.set("views", path.join(__dirname, "views"));
+
 // Set public folder
-app.use(Express.static('public'));
+//app.use(Express.static('public'));
 app.use(cors());
 app.use(Compression());
+
+app.get("/", (req, res) => {
+  const { rooms, roomInfo, roomStocks, players, playerStocks, trendModel } = store.getState();
+  res.render("index", { rooms, roomInfo, roomStocks, players, playerStocks, trendModel }
+);
+});
 
 app.get('/api/check-status', (req, res) => res.status(200).json({ Connected: true }));
 app.get('/api/init-data', (req, res) => {
