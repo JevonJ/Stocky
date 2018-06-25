@@ -210,7 +210,7 @@ class Dashboard extends Component {
           </Row>
         </Col>
         <Col xs="6">
-          <DashboardHeaderData user={user} playerStocks={playerStocks} />
+          <DashboardHeaderData user={user} playerStocks={playerStocks} roomStocks={roomStocks} />
           <Row>
             <h2>Currently in Market {'>>>'}</h2>
           </Row>

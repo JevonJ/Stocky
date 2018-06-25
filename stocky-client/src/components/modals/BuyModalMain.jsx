@@ -48,7 +48,7 @@ class BuyModalMain extends Component {
       currentCashInHand: cash,
       stockSymbol: stock,
       initStockQty: parseInt(this.state.quantity, 10),
-      unitPrice: parseInt(stockDataArr[stockDataArr.length - 1], 10),
+      unitPrice: parseFloat(stockDataArr[stockDataArr.length - 1]),
       round: roomInfo[room].currentRound + 1,
     };
 
