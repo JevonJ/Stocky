@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { LineChart } from 'react-chartkick';
-import { Row, Col, Card, CardText, CardTitle,Container } from 'reactstrap';
+import { Row, Col, Card, CardText, CardTitle, Container } from 'reactstrap';
 import { Button } from 'mdbreact';
+import PurchaseSummary from './PurchaseSummary';
+import SoldSummary from './SoldSummary';
+import StockChart from './StockChart';
 
 import 'chart.js';
 import PlayerSummaryTable from './PlayerSummaryTable';
@@ -16,45 +18,15 @@ class GameSummary extends Component {
   }
 
   render() {
-    const chartData = [
-      {
-        name: 'LFIN',
-        data: {
-          R1: 122,
-          R2: 120,
-          R3: 119,
-          R4: 110,
-          R5: 122,
-          R6: 128,
-          R7: 100,
-          R8: 95,
-          R9: 75,
-          R10: 100,
-          R11: 120,
-          R12: 122,
-          R13: 122,
-          R14: 135,
-          R15: 120,
-        },
-      },
-    ];
-
-    const { playerStocks, user, roomInfo, players } = this.props;
+    const { playerStocks, user, roomInfo, roomStocks, stocks, players } = this.props;
     return (
       <Container fluid>
         <Row>
           <h1>XXX Won the Game!!!</h1>
         </Row>
-        <Row>
-          <LineChart
-            data={chartData}
-            id="users-chart"
-            colors={['#666']}
-            xtitle="Round Number"
-            ytitle="Price"
-            legend="right"
-          />
-        </Row>
+        {roomInfo &&
+          <StockChart roomStocks={roomStocks} roomInfo={roomInfo} stocks={stocks} user={user}/>
+        }
         <Row>
          <PlayerSummaryTable
           toggle={() => this.toggle()}
@@ -86,10 +58,12 @@ class GameSummary extends Component {
   }
 }
 
-const mapStateToProps = ({ user, roomInfo, playerStocks, players }) => ({
+const mapStateToProps = ({ user, roomInfo, playerStocks, stocks, players, roomStocks }) => ({
   user,
   roomInfo,
+  roomStocks,
   playerStocks,
   players,
+  stocks,
 });
 export default connect(mapStateToProps)(GameSummary);
