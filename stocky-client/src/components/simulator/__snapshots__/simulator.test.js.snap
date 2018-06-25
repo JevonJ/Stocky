@@ -1,5 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Dashboard renders correctly 1`] = `
+<Dashboard
+  players={Array []}
+  setTime={[Function]}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+  storeSubscription={
+    Subscription {
+      "listeners": Object {
+        "clear": [Function],
+        "get": [Function],
+        "notify": [Function],
+        "subscribe": [Function],
+      },
+      "onStateChange": [Function],
+      "parentSub": undefined,
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "unsubscribe": [Function],
+    }
+  }
+  user={Object {}}
+/>
+`;
+
 exports[`DashboardHeaderData renders correctly 1`] = `
 <Row
   tag="div"
@@ -139,4 +178,268 @@ exports[`Header renders correctly 1`] = `
     </li>
   </ul>
 </nav>
+`;
+
+exports[`Header renders correctly 2`] = `
+<nav
+  className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0"
+>
+  <a
+    className="navbar-brand col-sm-3 col-md-2 mr-0"
+    href="#"
+  >
+    Stocky
+  </a>
+  <ul
+    className="navbar-nav px-3"
+  >
+    <li
+      className="nav-item text-nowrap"
+    >
+      <a
+        className="nav-link"
+        href="#"
+      >
+        Sign out
+      </a>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`LiveFeed renders correctly 1`] = `
+<liveFeed
+  LiveFeed={Array []}
+/>
+`;
+
+exports[`PlayerList renders correctly 1`] = `
+<Card
+  body={true}
+  color="danger"
+  outline={true}
+  tag="div"
+>
+  <CardTitle
+    tag="h5"
+  >
+    Room name: Team Titans
+  </CardTitle>
+  <CardBody
+    tag="div"
+  >
+    <Table
+      borderless={true}
+      responsiveTag="div"
+      tag="table"
+    >
+      <thead>
+        <tr>
+          <th>
+            Rank 
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Assets
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </Table>
+  </CardBody>
+</Card>
+`;
+
+exports[`PurchasedStockList renders correctly 1`] = `
+<Row
+  tag="div"
+>
+  <SellSharesModal
+    playerStocks={
+      Object {
+        "Inuri": Object {
+          "purchased": Array [],
+        },
+      }
+    }
+    toggle={[Function]}
+    user={
+      Object {
+        "name": "Inuri",
+      }
+    }
+  />
+  <Collapse
+    appear={false}
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={false}
+    mountOnEnter={false}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
+    unmountOnExit={false}
+  >
+    <Table
+      responsive={true}
+      responsiveTag="div"
+      size="sm"
+      striped={true}
+      tag="table"
+    >
+      <thead>
+        <tr>
+          <th>
+            #
+          </th>
+          <th>
+            Symbol
+          </th>
+          <th>
+            Qty
+          </th>
+          <th>
+            Value
+          </th>
+          <th>
+            Current
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </Table>
+  </Collapse>
+</Row>
+`;
+
+exports[`RoundNumber renders correctly 1`] = `
+<Card
+  body={true}
+  color="primary"
+  outline={true}
+  tag="div"
+>
+  <CardTitle
+    tag="h5"
+  >
+    RoundNumber
+  </CardTitle>
+  <CardText
+    tag="p"
+  >
+    1
+     / 
+  </CardText>
+</Card>
+`;
+
+exports[`SimulatorMain renders correctly 1`] = `
+<Container
+  fluid={true}
+  tag="div"
+>
+  <Connect(Dashboard) />
+</Container>
+`;
+
+exports[`SimulatorMain renders correctly 2`] = `
+<Container
+  fluid={true}
+  tag="div"
+>
+  <Connect(Dashboard) />
+</Container>
+`;
+
+exports[`SoldStockList renders correctly 1`] = `
+<Row
+  tag="div"
+>
+  <Collapse
+    appear={false}
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={false}
+    mountOnEnter={false}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
+    unmountOnExit={false}
+  >
+    <Table
+      responsive={true}
+      responsiveTag="div"
+      size="sm"
+      striped={true}
+      tag="table"
+    >
+      <thead>
+        <tr>
+          <th>
+            #
+          </th>
+          <th>
+            Round
+          </th>
+          <th>
+            Symbol
+          </th>
+          <th>
+            Qty
+          </th>
+          <th>
+            Value
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </Table>
+  </Collapse>
+</Row>
+`;
+
+exports[`StockList renders correctly 1`] = `
+<Table
+  responsive={true}
+  responsiveTag="div"
+  size="xs"
+  striped={true}
+  tag="table"
+>
+  <thead>
+    <tr>
+      <th>
+        Company name
+      </th>
+      <th>
+        Symbol
+      </th>
+      <th>
+        Sector
+      </th>
+      <th>
+        Last
+      </th>
+      <th>
+        Current
+      </th>
+      <th />
+    </tr>
+  </thead>
+  <tbody />
+</Table>
 `;
