@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, CardText, CardTitle, Table, Modal, ModalHeader, ModalBody, ModalFooter, Container } from 'reactstrap';
-import { Button } from 'mdbreact';
+import { Table } from 'reactstrap';
 
 class PurchaseSummary extends Component {
   renderPurchasedStocks(purchasedStock) {
