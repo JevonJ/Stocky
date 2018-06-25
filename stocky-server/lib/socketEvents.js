@@ -120,6 +120,10 @@ export default function (io, { dispatch, getState }) {
       });
     });
 
+    socket.on('go_to_game_summary', (data) => {
+      io.to(data).emit('go_to_game_summary');
+    });
+
     socket.on('disconnect', () => {
       if (socket.room) {
         const State = getState();
