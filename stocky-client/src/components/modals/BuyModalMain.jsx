@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, FormGroup, Input } from 'reactstrap';
 
 class BuyModalMain extends Component {
@@ -50,7 +49,7 @@ class BuyModalMain extends Component {
       stockSymbol: stock,
       initStockQty: parseInt(this.state.quantity, 10),
       unitPrice: parseInt(stockDataArr[stockDataArr.length - 1], 10),
-      round: roomInfo[room].currentRound,
+      round: roomInfo[room].currentRound + 1,
     };
 
     this.props.socket.emit('purchase_stocks', data);
@@ -112,11 +111,4 @@ class BuyModalMain extends Component {
   }
 }
 
-
-const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
-  user,
-  roomInfo,
-  playerStocks,
-});
-
-export default connect(mapStateToProps)(BuyModalMain);
+export default BuyModalMain;

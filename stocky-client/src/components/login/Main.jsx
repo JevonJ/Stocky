@@ -23,7 +23,7 @@ const styles = {
     backgroundImage: `url(${BGImage})`,
     boxShadow: 'inset 0 0 5rem rgba(0, 0, 0, 1)',
     textShadow: '0 .05rem .1rem rgba(0, 0, 0, .5)',
-    },
+  },
 };
 
 class Main extends Component {

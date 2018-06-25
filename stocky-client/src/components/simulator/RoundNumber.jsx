@@ -7,7 +7,7 @@ class RoundNumber extends Component {
     return (
       <Card body outline color="primary">
         <CardTitle>RoundNumber</CardTitle>
-        <CardText>{roomInfo[user.room].currentRound} / {roomInfo[user.room].rounds}</CardText>
+        <CardText>{roomInfo[user.room].currentRound + 1} / {roomInfo[user.room].rounds}</CardText>
       </Card>
     );
   }

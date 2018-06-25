@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { LineChart } from 'react-chartkick';
 import { Row, Col, Card, CardText, CardTitle, Table, Modal, ModalHeader, ModalBody, ModalFooter, Container } from 'reactstrap';
 import { Button } from 'mdbreact';
+import PurchaseSummary from '../gameSummary/PurchaseSummary';
+import SoldSummary from '../gameSummary/SoldSummary';
+
 import 'chart.js';
 
 class GameSummary extends Component {
@@ -13,7 +17,15 @@ class GameSummary extends Component {
     };
   }
 
+  componentWillMount() {
+    const { user, history } = this.props;
+    if (user.constructor === Object && Object.keys(user).length === 0) {
+      history.replace('/');
+    }
+  }
+
   toggle() {
+
     this.setState({
       modal: !this.state.modal,
     });
@@ -42,121 +54,17 @@ class GameSummary extends Component {
         },
       },
     ];
+
+    const { playerStocks, user, roomInfo } = this.props;
     return (
       <Container fluid>
         <Modal isOpen={this.state.modal} toggle={() => this.toggle()}>
-          <ModalHeader toggle={() => this.toggle()}><h3>Mark{"'"}s game history</h3></ModalHeader>
-          <ModalBody>
+          <ModalHeader toggle={() => this.toggle()}>Mark{"'"}s game history</ModalHeader>
+          <ModalBody >
             <h4>Bought</h4>
-            <Table dark striped>
-              <thead>
-                <tr>
-                  <th>Symbol</th>
-                  <th>Round</th>
-                  <th>Price</th>
-                  <th>Qty</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>LFIN</td>
-                  <td>1</td>
-                  <td>LKR.12</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td>LFIN</td>
-                  <td>1</td>
-                  <td>LKR.12</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td>LFIN</td>
-                  <td>1</td>
-                  <td>LKR.12</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td>LFIN</td>
-                  <td>1</td>
-                  <td>LKR.12</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td>LFIN</td>
-                  <td>1</td>
-                  <td>LKR.12</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td>LFIN</td>
-                  <td>1</td>
-                  <td>LKR.12</td>
-                  <td>5</td>
-                </tr>
-              </tbody>
-            </Table>
+            <PurchaseSummary playerStocks={playerStocks} user={user} roomInfo={roomInfo} />
             <h4>Sold</h4>
-            <Table dark striped>
-              <thead>
-                <tr>
-                  <th>Symbol</th>
-                  <th>Round</th>
-                  <th>Price</th>
-                  <th>Qty</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>LFIN</th>
-                  <td>1</td>
-                  <td>LKR.11</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <th>LFIN</th>
-                  <td>1</td>
-                  <td>LKR.11</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <th>LFIN</th>
-                  <td>1</td>
-                  <td>LKR.11</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <th>LFIN</th>
-                  <td>1</td>
-                  <td>LKR.11</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <th>LFIN</th>
-                  <td>1</td>
-                  <td>LKR.11</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <th>LFIN</th>
-                  <td>1</td>
-                  <td>LKR.11</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <th>LFIN</th>
-                  <td>1</td>
-                  <td>LKR.11</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <th>LFIN</th>
-                  <td>1</td>
-                  <td>LKR.11</td>
-                  <td>2</td>
-                </tr>
-              </tbody>
-            </Table>
+           <SoldSummary  playerStocks={playerStocks} user={user} roomInfo={roomInfo}/>
           </ModalBody>
           <ModalFooter>
             <Button outline color="blue-grey" onClick={() => this.toggle()}>Exit</Button>{' '}
@@ -231,4 +139,9 @@ class GameSummary extends Component {
   }
 }
 
-export default GameSummary;
+const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
+  user,
+  roomInfo,
+  playerStocks,
+});
+export default connect(mapStateToProps)(GameSummary);

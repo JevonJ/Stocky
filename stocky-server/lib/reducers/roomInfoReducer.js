@@ -26,7 +26,6 @@ function createGame(state, payload) {
 
 function startGame(state, payload) {
   const newState = { ...state };
-  newState[payload].currentRound = 1;
   newState[payload].isStarted = true;
 
   return { ...newState };
