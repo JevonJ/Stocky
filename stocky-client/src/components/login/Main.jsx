@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Footer } from 'mdbreact';
+import { Container, Footer, Button } from 'mdbreact';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ToastContainer } from 'react-toastify';
@@ -31,20 +31,30 @@ class Main extends Component {
     super();
     this.state = {
       popoverOpen: false,
+      howToPlayModal: false,
     };
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.isLoading !== nextProps.isLoading;
+  shouldComponentUpdate(nextProps, nextState) {
+
+    return this.props.isLoading !== nextProps.isLoading ||
+    this.state.howToPlayModal !== nextState.howToPlayModal;
+  }
+
+  toggle() {
+    this.setState({
+      howToPlayModal: !this.state.howToPlayModal,
+    });
   }
 
   render() {
     const { socket } = this.props;
+    const { howToPlayModal } = this.state;
 
     return (
       <div style={styles.container}>
         <ToastContainer hideProgressBar pauseOnHover />
-
+        <HowToPlay howToPlayModal={howToPlayModal} toggle={() => this.toggle()}/>
         <div className="d-flex w-100 h-100 mx-auto flex-column text-center loginMain-container">
           <header className="loginMain-masthead mb-auto">
             <div className="inner">
@@ -59,15 +69,7 @@ class Main extends Component {
                 >
                   Home
                 </NavLink>
-                <NavLink
-                  exact
-                  className="loginMain-nav-link"
-                  activeClassName="active"
-                  href="/login/how-to-play"
-                  to="/login/how-to-play"
-                >
-                  How To Play
-                </NavLink>
+                <a className="loginMain-nav-link" onClick={() => this.toggle()}>How To Play</a>
               </nav>
             </div>
           </header>
@@ -93,7 +95,6 @@ class Main extends Component {
                   path="/login/game-List"
                   component={({ history }) => <GameList history={history} socket={socket} />}
                 />
-                <Route exact path="/login/how-to-play" component={HowToPlay} />
               </div>
           }
           <Footer color="special-color-dark" className="mt-auto page-footer lighten-5 pt-0">

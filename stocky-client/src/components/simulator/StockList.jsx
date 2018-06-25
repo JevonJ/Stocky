@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table } from 'reactstrap';
+import { Button } from 'mdbreact';
 
 class StockList extends Component {
   renderStocks(stock) {
@@ -9,12 +9,12 @@ class StockList extends Component {
 
     return (
       <tr key={info.stockName}>
-        <td>{info.stockName}</td>
-        <td>{info.stockSymbol}</td>
-        <td>{info.stockSector}</td>
-        <td>{pricesArr[pricesArr.length - 2] === undefined ? '--' : (pricesArr[pricesArr.length - 2].toFixed(2))}</td>
-        <td>{(pricesArr[pricesArr.length - 1]).toFixed(2)}</td>
-        <td><Button color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
+        <td className="align-middle">{info.stockName}</td>
+        <td className="align-middle">{info.stockSymbol}</td>
+        <td className="align-middle">{info.stockSector}</td>
+        <td className="align-middle">{pricesArr[pricesArr.length - 2] === undefined ? '--' : (pricesArr[pricesArr.length - 2].toFixed(2))}</td>
+        <td className="align-middle">{(pricesArr[pricesArr.length - 1]).toFixed(2)}</td>
+        <td className="align-middle"><Button size="sm" color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
       </tr>
     );
   }
@@ -22,7 +22,7 @@ class StockList extends Component {
   render() {
     const { stocks, stockInfo } = this.props;
     return (
-      <Table striped responsive size="xs">
+      <table class="table table-striped table-responsive-xs">
         <thead>
           <tr>
             <th>Company name</th>
@@ -40,7 +40,7 @@ class StockList extends Component {
             stocks.map(stock => this.renderStocks(stock))
           }
         </tbody>
-      </Table>
+      </table>
     );
   }
 }
