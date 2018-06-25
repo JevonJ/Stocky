@@ -8,6 +8,13 @@ export default function (io, { dispatch, getState }) {
 
   io.on('connect', (socket) => {
     console.log('User connected: ', socket.id);
+    socket.emit('go_to_login');
+    socket.to(socket.room).emit('notification', {
+      type: 'error',
+      message: 'Server encountered an error',
+      position: 'TOP_CENTER',
+    });
+
     io.origins((origin, callback) => {
       const { NODE_ENV, PROD_CLIENT } = process.env;
       let clientURL = 'http://localhost:3000';
@@ -63,6 +70,14 @@ export default function (io, { dispatch, getState }) {
           socket.emit('go_to_lobby');
           socket.emit('set_room_stocks', State.roomStocks[data.room]);
         });
+      });
+    });
+
+    socket.on('set_computer_player', (data) => {
+      dispatch(setPlayer(data)).then(() => {
+        const State = getState();
+        io.to(data.room).emit('set_players', State.players[data.room]);
+        io.to(data.room).emit('set_player_stocks', State.playerStocks[data.room]);
       });
     });
 
@@ -126,20 +141,30 @@ export default function (io, { dispatch, getState }) {
 
     socket.on('disconnect', () => {
       if (socket.room) {
-        const State = getState();
-        const playersExist = State.players[socket.room].length > 1;
-        if (!playersExist) {
+        const { players, roomInfo } = getState();
+
+        if (!players[socket.room]) return;
+
+        const playersExist = players[socket.room]
+          .filter(player => player.isComputer !== true);
+
+        if (!(playersExist.length > 1)) {
           dispatch(removeRoom(socket.room)).then(() => {
             const newState = getState();
             io.emit('set_rooms', newState.rooms);
           });
         } else {
-          const gameHasStarted = State.roomInfo[socket.room].isStarted;
+          const gameHasStarted = roomInfo[socket.room].isStarted;
           if (!gameHasStarted && socket.gameHost) {
             dispatch(removeRoom(socket.room)).then(() => {
               const newState = getState();
               io.emit('set_rooms', newState.rooms);
               io.to(socket.room).emit('go_to_login');
+              io.to(socket.room).emit('notification', {
+                type: 'error',
+                message: 'Host cancelled the game',
+                position: 'TOP_CENTER',
+              });
             });
           }
           if (!gameHasStarted && !socket.gameHost) {
@@ -150,6 +175,11 @@ export default function (io, { dispatch, getState }) {
           }
           if (gameHasStarted) {
             dispatch(removePlayer({ username: socket.username, room: socket.room }));
+            io.to(socket.room).emit('notification', {
+              type: 'info',
+              message: `${socket.username} has left the game`,
+              position: 'BOTTOM_RIGHT',
+            });
             // dispatch(removeRoom(socket.room)).then(() => {
             //   const newState = getState();
             //   io.emit('set_rooms', newState.rooms);

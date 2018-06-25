@@ -33,6 +33,10 @@ app.get('/api/init-data', (req, res) => {
     roomInfo,
   });
 });
+app.get('/api/sectortrends', (req, res) => {
+  const { trendModel } = store.getState();
+  res.status(200).json(trendModel);
+});
 
 //this creates a socket using the server instance
 const io = SocketIO(server);

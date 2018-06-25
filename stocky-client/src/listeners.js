@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 export default (socket, actions) => {
   socket.on('set_rooms', (rooms) => {
     actions.setRoom(rooms);
@@ -55,7 +57,17 @@ export default (socket, actions) => {
     actions.updateEvents(data);
   });
 
-  socket.on('go_to_game_summary', (data) => {
+  socket.on('go_to_game_summary', () => {
     actions.history.replace('/game-summary');
+  });
+
+  socket.on('notification', ({ type, message, position }) => {
+    toast(
+      message,
+      {
+        position: toast.POSITION[position],
+        type,
+      },
+    );
   });
 };

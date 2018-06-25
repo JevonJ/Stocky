@@ -239,8 +239,9 @@ function setTrendArray(state, { room, rounds }) {
 }
 
 function removeRoom(state, payload) {
-  const newState = [...state];
-  return newState.filter(e => e !== payload);
+  const newState = { ...state };
+  delete newState[payload];
+  return { ...newState };
 }
 
 export default (state = InitialState, { type, payload }) => {

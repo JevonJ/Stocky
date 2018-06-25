@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { Button } from 'mdbreact';
 import PropTypes from 'prop-types';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 class Lobby extends Component {
   static renderUsers(player, index) {
@@ -37,11 +37,31 @@ class Lobby extends Component {
     this.props.socket.emit('go_to_simulator', user.room);
   }
 
+  onAddComputerPlayer() {
+    const { user, players } = this.props;
+
+    const computerPlayers = players.filter((player) => {
+      return player.isComputer === true;
+    });
+
+    if (computerPlayers.length > 1) {
+      Lobby.notify('error', 'Maximum Computer Player Number Reached');
+      return;
+    }
+
+    const data = {
+      room: user.room,
+      isComputer: true,
+      username: `computerPlayer${computerPlayers.length + 1}`,
+    };
+
+    this.props.socket.emit('set_computer_player', data);
+  }
+
   render() {
     const { user, players } = this.props;
     return (
       <div className="animated fadeIn">
-        <ToastContainer hideProgressBar pauseOnHover />
         <h1 className="cover-heading">Lobby : {user && user.room}</h1>
         <p className="lead">Connected Players</p>
         <div className="row">
@@ -60,6 +80,18 @@ class Lobby extends Component {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className="col col-sm-12 ml-auto">
+          {user.host &&
+            <Button
+              outline
+              color="secondary"
+              size="lg"
+              onClick={() => this.onAddComputerPlayer()}
+            >
+              Add Computer Player
+            </Button>
+          }
         </div>
         <div className="row">
           <div className="col col-sm-12 ml-auto">

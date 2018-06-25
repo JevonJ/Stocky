@@ -46,7 +46,7 @@ class SellSharesModal extends Component {
       stockSymbol: sellStockData.symbol,
       stockQty: parseInt(this.state.quantity, 10),
       unitPrice: sellStockData.curPrice,
-      round: roomInfo[user.room].currentRound,
+      round: roomInfo[user.room].currentRound + 1,
     };
 
     socket.emit('sell_stocks', data);
