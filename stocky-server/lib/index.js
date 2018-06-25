@@ -24,7 +24,6 @@ const app = Express(),
   app.set("views", path.join(__dirname, "views"));
 
 // Set public folder
-//app.use(Express.static('public'));
 app.use(cors());
 app.use(Compression());
 
