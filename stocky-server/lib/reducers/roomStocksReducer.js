@@ -5,22 +5,22 @@ import { stockSymbols, stockInfo } from '../stockResources';
 const InitialState = {};
 
 const defaultSet = {
-  LFIN: [50],
-  VANI: [34],
-  CINS: [3],
-  AFSL: [21],
-  HPFL: [5],
-  LGL: [20],
-  PAP: [3],
-  VLL: [4],
-  SINH: [2],
-  NHL: [4],
-  AMSL: [10],
-  CHL: [2],
-  SLND: [10],
-  TWOD: [18],
-  KDL: [23],
-  CTLD: [28],
+  LFIN: [20],
+  VANI: [25],
+  CINS: [22],
+  AFSL: [15],
+  HPFL: [18],
+  LGL: [23],
+  PAP: [19],
+  VLL: [28],
+  SINH: [15],
+  NHL: [17],
+  AMSL: [20],
+  CHL: [25],
+  SLND: [26],
+  TWOD: [19],
+  KDL: [29],
+  CTLD: [21],
 };
 
 function setRoomStocks(state, payload) {
