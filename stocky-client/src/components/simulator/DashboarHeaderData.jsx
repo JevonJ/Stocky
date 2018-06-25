@@ -3,7 +3,7 @@ import { Row, Col, ListGroup, ListGroupItem, Badge } from 'reactstrap';
 
 class DashboardHeaderData extends Component {
   calculatePurchased(player) {
-    const { playerStocks } = this.props;
+    const { playerStocks, roomStocks } = this.props;
 
     if (Object.keys(playerStocks).length === 0) return 0;
 
@@ -13,8 +13,10 @@ class DashboardHeaderData extends Component {
         return total;
       }
       const remainingStocks = (stock.initStockQty - stock.soldStockQty.reduce((a, b) => a + b, 0));
+      const stockPriceArr = roomStocks[stock.stockSymbol];
+      const stockPrice = stockPriceArr[stockPriceArr.length - 1];
 
-      return total + (stock.unitPrice * remainingStocks);
+      return total + (stockPrice * remainingStocks);
     }, 0);
 
     return sum;
