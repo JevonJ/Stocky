@@ -49,7 +49,7 @@ class BuyModalMain extends Component {
       stockSymbol: stock,
       initStockQty: parseInt(this.state.quantity, 10),
       unitPrice: parseInt(stockDataArr[stockDataArr.length - 1], 10),
-      round: roomInfo[room].currentRound,
+      round: roomInfo[room].currentRound + 1,
     };
 
     this.props.socket.emit('purchase_stocks', data);

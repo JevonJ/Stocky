@@ -32,9 +32,11 @@ export const initialize = () => (dispatch) => {
         if (!error.response) {
           setTimeout(() => {
             if (repetition) {
-              toastId = toast.error('Network Error, Retrying To Connect', {
+              toastId = toast.error('Network Error, Trying to Reconnect', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 autoClose: false,
+                closeOnClick: false,
+                closeButton: false,
               });
             }
             getData();

@@ -85,8 +85,8 @@ function reCalculateStocks(
     const totalSectorEventsValue = calculateSectorEventsValue(currentRoundSectorEvents, sector);
 
     const newStockPrice = await calculateStocks(
-      sectorTrend[currentRound - 1],
-      marketTrend[currentRound - 1],
+      sectorTrend[currentRound],
+      marketTrend[currentRound],
       randomMarketTrend,
       totalStockEventsValue,
       totalSectorEventsValue,

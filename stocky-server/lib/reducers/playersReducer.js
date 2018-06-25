@@ -35,9 +35,16 @@ function updateSellCashAmount(state, payload) {
 function setPlayer(state, payload) {
   const newState = { ...state };
   if (newState[payload.room] && newState[payload.room].length > 0) {
-    newState[payload.room] = [...newState[payload.room], { name: payload.username, cash: 1000 }];
+    newState[payload.room] = [
+      ...newState[payload.room],
+      { name: payload.username, cash: 1000, isComputer: payload.isComputer || false },
+    ];
   } else {
-    newState[payload.room] = [{ name: payload.username, cash: 1000 }];
+    newState[payload.room] = [{
+      name: payload.username,
+      cash: 1000,
+      isComputer: payload.isComputer || false,
+    }];
   }
   return newState;
 }
