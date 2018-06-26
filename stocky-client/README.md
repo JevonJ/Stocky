@@ -1,8 +1,7 @@
-# stocky-server
+# stocky-client
 
 ## Technologies used
 
-* [NodeJs](https://nodejs.org/en/)
-* [ExpressJs](https://expressjs.com/)
+* [RectJs](https://reactjs.org/)
 * [SocketIO](https://socket.io/)
 * [Redux](https://redux.js.org/)
