@@ -104,7 +104,7 @@ class BuyModalMain extends Component {
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={() => this.buyStock()}>Buy</Button>
-          <Button color="danger " onClick={() => this.closeModal()}>Not interested</Button>
+          <Button color="blue-grey" onClick={() => this.closeModal()}>Not interested</Button>
         </ModalFooter>
       </Modal>
     );

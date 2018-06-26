@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
+import { Row, Col, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody, Container } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 import ReactLoading from 'react-loading';
 
@@ -87,7 +87,7 @@ class Dashboard extends Component {
       sellModal: false,
       modal: false,
     });
-    
+
     this.props.setTime({ round_time: 0 });
    
   
@@ -160,80 +160,78 @@ class Dashboard extends Component {
         />
 
         <Col xs="3">
-          <Row>
-            <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
-          </Row>
-          <SoldStockList
-            isOpen={this.state.collapse}
-            playerStocks={playerStocks}
-            user={user}
-          />
-          <Row>
-            <Button outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
-          </Row>
-          <PurchasedStockList
-            isOpen={this.state.collapse1}
-            socket={socket}
-            playerStocks={playerStocks}
-            roomStocks={roomStocks}
-            user={user}
-            roomInfo={roomInfo}
-            toggleSellModal={() => this.toggleSellModal()}
-            sellModalState={this.state.sellModal}
-          />
-          <Row>
-            <Card
-              body
-              inverse
-              style={{
+          <Container>
+            <Row>
+              <Button className="align-middle" size="sm" outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
+            </Row>
+            <SoldStockList
+              className="align-middle"
+              isOpen={this.state.collapse}
+              playerStocks={playerStocks}
+              user={user}
+            />
+            <Row>
+              <Button className="align-middle" size="sm" outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
+            </Row>
+            <PurchasedStockList
+              className="align-middle"
+              isOpen={this.state.collapse1}
+              socket={socket}
+              playerStocks={playerStocks}
+              roomStocks={roomStocks}
+              user={user}
+              roomInfo={roomInfo}
+              toggleSellModal={() => this.toggleSellModal()}
+              sellModalState={this.state.sellModal}
+            />
+            <Row>
+              <Card
+                body
+                inverse
+                style={{
                   backgroundColor: '#333', borderColor: '#333', padding: '0.5rem', alignItems: 'center',
                 }}
-            >
-              <CardTitle>Symbol lookup</CardTitle>
-              <CardBody>
-                <ButtonDropdown
-                  isOpen={this.state.btnDropright}
-                  toggle={() => this.setState({ btnDropright: !this.state.btnDropright })}
-                >
-                  <DropdownToggle outline caret>
+              >
+                <CardTitle>Symbol lookup</CardTitle>
+                <CardBody>
+                  <ButtonDropdown
+                    isOpen={this.state.btnDropright}
+                    toggle={() => this.setState({ btnDropright: !this.state.btnDropright })}
+                  >
+                    <DropdownToggle outline caret>
                       Search by
                   </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem>Company name</DropdownItem>
-                    <DropdownItem>Symbol</DropdownItem>
-                  </DropdownMenu>
-                </ButtonDropdown>
-                <Input placeholder="" style={{ marginTop: '1rem', marginBottom: '1rem' }} />
-                <Label style={{ textAlign: 'center' }}>Arpico(Pvt)Ltd</Label>
-              </CardBody>
-            </Card>
-          </Row>
+                    <DropdownMenu>
+                      <DropdownItem>Company name</DropdownItem>
+                      <DropdownItem>Symbol</DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
+                  <Input placeholder="" style={{ marginTop: '1rem', marginBottom: '1rem' }} />
+                  <Label style={{ textAlign: 'center' }}>Arpico(Pvt)Ltd</Label>
+                </CardBody>
+              </Card>
+            </Row>
+          </Container>
         </Col>
         <Col xs="6">
           <DashboardHeaderData user={user} playerStocks={playerStocks} roomStocks={roomStocks} />
           <Row>
-            <h2>Currently in Market {'>>>'}</h2>
-          </Row>
-          <Row>
-            <ButtonGroup>
-              <Button outline color="info">Sort by sector</Button>
-              <Button outline color="info">Sort by price</Button>
-            </ButtonGroup>
-          </Row>
-          <Row>
+          <Card>
             {Object.keys(user).length !== 0 &&
-            <StockList
-              sectors={sectors}
-              sectorStocks={sectorStocks}
-              stocks={stocks}
-              stockInfo={stockInfo}
-              roomStocks={roomStocks}
-              toggleModal={stock => this.toggleModal(stock)}
-            />
-              }
+              <StockList
+                sectors={sectors}
+                sectorStocks={sectorStocks}
+                stocks={stocks}
+                stockInfo={stockInfo}
+                roomStocks={roomStocks}
+                toggleModal={stock => this.toggleModal(stock)}
+              />
+            }
+          </Card>
           </Row>
         </Col>
         <Col xs="3">
+        <Container>
           <Row>
             <Col sm="6">
               <Row>
@@ -264,6 +262,7 @@ class Dashboard extends Component {
             <LiveFeed liveFeed={liveFeed} />
           </Row>
           <CurrentEvets events={events} />
+          </Container>
         </Col>
       </Row>
     );
