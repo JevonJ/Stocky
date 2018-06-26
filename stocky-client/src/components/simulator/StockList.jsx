@@ -11,11 +11,11 @@ class StockList extends Component {
     const lastPrice = pricesArr[pricesArr.length - 2] === undefined ? '--' : (pricesArr[pricesArr.length - 2].toFixed(2));
     const currentPrice = (pricesArr[pricesArr.length - 1]).toFixed(2);
 
-    let color = 'grey';
+    let color = '#455A64';
     let type = 'minus';
 
     if (pricesArr[pricesArr.length - 2] !== undefined && lastPrice < currentPrice) {
-      color = 'green';
+      color = '#76FF03';
       type = 'arrow-up';
     }
 
