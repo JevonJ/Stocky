@@ -54,7 +54,7 @@ To see the **Server** description and technologies used please follow this [link
 
 ```
 # cd into stocky-server
-cd stocky-client
+cd stocky-server
 
 # install dependencies
 npm install
@@ -66,7 +66,26 @@ npm start
 # Alternatively if you are using yarn
 yarn start
 ```
+### running tests
 
+```
+# cd into stocky-server
+cd stocky-server
+
+# start the test server
+npm test
+# Alternatively if you are using yarn
+yarn test
+
+
+# cd into stocky-client
+cd stocky-client
+
+# start the test server
+npm test
+# Alternatively if you are using yarn
+yarn test
+```
 ## Authors
 
 See also the list of [contributors](https://github.com/JevonJ/Stocky/graphs/contributors) who participated in this project.
