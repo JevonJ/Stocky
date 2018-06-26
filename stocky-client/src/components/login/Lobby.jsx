@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'mdbreact';
+import { Button, Card, CardBody } from 'mdbreact';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
@@ -29,7 +29,7 @@ class Lobby extends Component {
 
   onStart(e) {
     const { user, players } = this.props;
-    if (players.length < 2) {
+    if (players.length < 3) {
       Lobby.notify('error', 'Minimum Players to play is 3');
       return;
     }
@@ -65,12 +65,12 @@ class Lobby extends Component {
         <h1 className="cover-heading">Lobby : {user && user.room}</h1>
         <p className="lead">Connected Players</p>
         <div className="row">
-          <div className="col col-sm-12 ml-auto">
+          <div className="col col-sm-12 ml-auto" style={{ paddingLeft: '30rem', paddingRight: '30rem' }}>
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Username</th>
+                  <th><strong>#</strong></th>
+                  <th><strong>Username</strong></th>
                 </tr>
               </thead>
               <tbody>
@@ -92,6 +92,15 @@ class Lobby extends Component {
               Add Computer Player
             </Button>
           }
+        </div>
+        <div className="row">
+          <div className="col col-sm-12 ml-auto" style={{ paddingLeft: '35rem', paddingRight: '35rem' }}>
+            <Card color="red lighten-1" text="white" className="text-center">
+              <CardBody>
+                Can Add Computer Player, But it does not buy and sell stock (Still to be implimented).
+              </CardBody>
+            </Card>
+          </div>
         </div>
         <div className="row">
           <div className="col col-sm-12 ml-auto">
