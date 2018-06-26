@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, ButtonGroup, Button, Card, CardTitle, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Label, CardBody } from 'reactstrap';
+import { Row, Col, ButtonGroup, Button } from 'reactstrap';
 import CountDown from 'react-countdown-clock';
 import ReactLoading from 'react-loading';
 
@@ -13,6 +13,7 @@ import SoldStockList from './SoldStockList';
 import PurchasedStockList from './PurchasedStockList';
 import RoundNumber from './RoundNumber';
 import CurrentEvets from './CurrentEvents';
+import SymbolLookup from './SymbolLookup';
 
 import { setTime } from '../../actions';
 
@@ -92,7 +93,7 @@ class Dashboard extends Component {
    
   
 
-    if (roomInfo[user.room].currentRound + 1 ==  roomInfo[user.room].rounds){
+    if (roomInfo[user.room].currentRound + 1 ===  parseInt(roomInfo[user.room].rounds)){
       this.props.socket.emit('go_to_game_summary', user.room);
       return;
     }
@@ -182,31 +183,9 @@ class Dashboard extends Component {
             sellModalState={this.state.sellModal}
           />
           <Row>
-            <Card
-              body
-              inverse
-              style={{
-                  backgroundColor: '#333', borderColor: '#333', padding: '0.5rem', alignItems: 'center',
-                }}
-            >
-              <CardTitle>Symbol lookup</CardTitle>
-              <CardBody>
-                <ButtonDropdown
-                  isOpen={this.state.btnDropright}
-                  toggle={() => this.setState({ btnDropright: !this.state.btnDropright })}
-                >
-                  <DropdownToggle outline caret>
-                      Search by
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem>Company name</DropdownItem>
-                    <DropdownItem>Symbol</DropdownItem>
-                  </DropdownMenu>
-                </ButtonDropdown>
-                <Input placeholder="" style={{ marginTop: '1rem', marginBottom: '1rem' }} />
-                <Label style={{ textAlign: 'center' }}>Arpico(Pvt)Ltd</Label>
-              </CardBody>
-            </Card>
+          <SymbolLookup
+            stockInfo={stockInfo}
+          />
           </Row>
         </Col>
         <Col xs="6">
