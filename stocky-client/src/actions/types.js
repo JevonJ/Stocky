@@ -5,6 +5,7 @@ export const SELL_STOCK = 'SELL_STOCK';
 
 //  user types
 export const SET_USER = 'SET_USER';
+export const UPDATE_USER = 'UPDATE_USER';
 
 // room types
 export const SET_ROOMS = 'SET_ROOM';

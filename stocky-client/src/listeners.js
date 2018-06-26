@@ -70,4 +70,8 @@ export default (socket, actions) => {
       },
     );
   });
+
+  socket.on('change_host', (data) => {
+    actions.updateUser({ data, socket });
+  });
 };
