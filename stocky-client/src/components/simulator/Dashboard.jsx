@@ -88,7 +88,7 @@ class Dashboard extends Component {
       sellModal: false,
       modal: false,
     });
-    
+
     this.props.setTime({ round_time: 0 });
    
   
@@ -161,58 +161,56 @@ class Dashboard extends Component {
         />
 
         <Col xs="3">
+          <Container>
+            <Row>
+              <Button className="align-middle" size="sm" outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
+            </Row>
+            <SoldStockList
+              className="align-middle"
+              isOpen={this.state.collapse}
+              playerStocks={playerStocks}
+              user={user}
+            />
+            <Row>
+              <Button className="align-middle" size="sm" outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
+            </Row>
+            <PurchasedStockList
+              className="align-middle"
+              isOpen={this.state.collapse1}
+              socket={socket}
+              playerStocks={playerStocks}
+              roomStocks={roomStocks}
+              user={user}
+              roomInfo={roomInfo}
+              toggleSellModal={() => this.toggleSellModal()}
+              sellModalState={this.state.sellModal}
+            />
           <Row>
-            <Button outline color="primary" onClick={() => this.toggle('collapse')} style={{ marginBottom: '1rem' }}><h4>Sold Stocks </h4></Button>
+            <SymbolLookup
+              stockInfo={stockInfo}
+            />
           </Row>
-          <SoldStockList
-            isOpen={this.state.collapse}
-            playerStocks={playerStocks}
-            user={user}
-          />
-          <Row>
-            <Button outline color="primary" onClick={() => this.toggle('collapse1')} style={{ marginBottom: '1rem' }}><h4>Purchased </h4></Button>
-          </Row>
-          <PurchasedStockList
-            isOpen={this.state.collapse1}
-            socket={socket}
-            playerStocks={playerStocks}
-            roomStocks={roomStocks}
-            user={user}
-            roomInfo={roomInfo}
-            toggleSellModal={() => this.toggleSellModal()}
-            sellModalState={this.state.sellModal}
-          />
-          <Row>
-          <SymbolLookup
-            stockInfo={stockInfo}
-          />
-          </Row>
+          </Container>
         </Col>
         <Col xs="6">
           <DashboardHeaderData user={user} playerStocks={playerStocks} roomStocks={roomStocks} />
           <Row>
-            <h2>Currently in Market {'>>>'}</h2>
-          </Row>
-          <Row>
-            <ButtonGroup>
-              <Button outline color="info">Sort by sector</Button>
-              <Button outline color="info">Sort by price</Button>
-            </ButtonGroup>
-          </Row>
-          <Row>
+          <Card>
             {Object.keys(user).length !== 0 &&
-            <StockList
-              sectors={sectors}
-              sectorStocks={sectorStocks}
-              stocks={stocks}
-              stockInfo={stockInfo}
-              roomStocks={roomStocks}
-              toggleModal={stock => this.toggleModal(stock)}
-            />
-              }
+              <StockList
+                sectors={sectors}
+                sectorStocks={sectorStocks}
+                stocks={stocks}
+                stockInfo={stockInfo}
+                roomStocks={roomStocks}
+                toggleModal={stock => this.toggleModal(stock)}
+              />
+            }
+          </Card>
           </Row>
         </Col>
         <Col xs="3">
+        <Container>
           <Row>
             <Col sm="6">
               <Row>
@@ -243,6 +241,7 @@ class Dashboard extends Component {
             <LiveFeed liveFeed={liveFeed} />
           </Row>
           <CurrentEvets events={events} />
+          </Container>
         </Col>
       </Row>
     );

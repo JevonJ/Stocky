@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'mdbreact';
+import { Button, Card, CardBody, CardTitle, Row, ButtonGroup } from 'mdbreact';
 import FontAwesome from 'react-fontawesome';
 
 class StockList extends Component {
@@ -42,25 +42,39 @@ class StockList extends Component {
   render() {
     const { stocks, stockInfo } = this.props;
     return (
-      <table class="table table-striped table-responsive-xs">
-        <thead>
-          <tr>
-            <th>Company name</th>
-            <th>Symbol</th>
-            <th>Sector</th>
-            <th>Last</th>
-            <th>Current</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {
-            stocks &&
-            (Object.keys(stockInfo).length !== 0) &&
-            stocks.map(stock => this.renderStocks(stock))
-          }
-        </tbody>
-      </table>
+      <Card style={{ minWidth: '47rem', margintop: '1rem' }}>
+        <CardBody>
+          <CardTitle>Currently in Market{'>>>'}</CardTitle>
+          <Row>
+            <ButtonGroup>
+              <Button outline color="info">Sort by sector</Button>
+              <Button outline color="info">Sort by price</Button>
+            </ButtonGroup>
+          </Row>
+          <div className="table-responsive">
+            <table className="table-striped" style={{ minWidth: '46rem', margintop: '1rem' }}>
+              <thead>
+                <tr>
+                  <th>Company name</th>
+                  <th>Symbol</th>
+                  <th>Sector</th>
+                  <th>Last</th>
+                  <th>Current</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  stocks &&
+                  (Object.keys(stockInfo).length !== 0) &&
+                  stocks.map(stock => this.renderStocks(stock))
+                }
+              </tbody>
+            </table>
+          </div>
+        </CardBody>
+      </Card>
+
     );
   }
 }

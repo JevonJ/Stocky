@@ -2,6 +2,14 @@
 
 Stocky is a Stock Market Simulation Game created by "Team Titans", A group of students from [University College Dublin](http://www.ucd.ie/). This project was created as a final year project for our Degree in Computer Science.
 
+## Game Demo Links
+
+**Client Link** - https://jevonj.github.io/Stocky/#/login
+
+**Server Link** - https://stocky.eequate.com/
+
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.

@@ -7,9 +7,10 @@ class PurchasedStockList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sellModal: false,
+      selectedSellStock: null,
     };
   }
+
   toggleSellModal(sellStockData) {
     const { toggleSellModal } = this.props;
     toggleSellModal();
@@ -28,27 +29,28 @@ class PurchasedStockList extends Component {
     if (remainingStocks > 0) {
       return (
         <tr key={purchasedStocks.stockSymbol}>
-        <td>{index + 1}</td>
-        <td>{purchasedStocks.stockSymbol}</td>
-        <td>{remainingStocks}</td>
-        <td>{(purchasedStocks.unitPrice).toFixed(2)}</td>
-        <td>{stockPrice.toFixed(2)}</td>
+          <td className="align-middle">{index + 1}</td>
+          <td className="align-middle">{purchasedStocks.stockSymbol}</td>
+          <td className="align-middle">{remainingStocks}</td>
+          <td className="align-middle">{(purchasedStocks.unitPrice).toFixed(2)}</td>
+          <td className="align-middle">{stockPrice.toFixed(2)}</td>
 
-        <td>
-          <Button
-            size="sm"
-            color="danger"
-            onClick={() => this.toggleSellModal({
-            symbol: purchasedStocks.stockSymbol,
-            oldPrice: purchasedStocks.unitPrice,
-            curPrice: stockPrice,
-            avlqty: purchasedStocks.initStockQty,
-            })}
-          >
-            Sell
-          </Button>
-        </td>
-      </tr>
+          <td>
+            <Button
+              className="align-middle"
+              size="sm"
+              color="danger"
+              onClick={() => this.toggleSellModal({
+                symbol: purchasedStocks.stockSymbol,
+                oldPrice: purchasedStocks.unitPrice,
+                curPrice: stockPrice,
+                avlqty: purchasedStocks.initStockQty,
+              })}
+            >
+              Sell
+            </Button>
+          </td>
+        </tr>
       );
     }
   }
@@ -84,7 +86,7 @@ class PurchasedStockList extends Component {
               {
                 playerStocks[user.name] &&
                 playerStocks[user.name].purchased
-                .map((purchasedStocks, index) => this.renderPurchasedStocks(purchasedStocks, index))
+                  .map((purchasedStocks, index) => this.renderPurchasedStocks(purchasedStocks, index))
               }
             </tbody>
           </Table>

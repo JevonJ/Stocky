@@ -96,8 +96,8 @@ class SellSharesModal extends Component {
           </ListGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={() => this.sellStock()}>Sell</Button>
-          <Button color="danger " onClick={() => this.closeModal()}>Not interested</Button>
+          <Button color="danger" onClick={() => this.sellStock()}>Sell</Button>
+          <Button color="blue-grey" onClick={() => this.closeModal()}>Not interested</Button>
         </ModalFooter>
       </Modal>
     );
