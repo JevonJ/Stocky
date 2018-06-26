@@ -7,7 +7,7 @@ class PurchaseSummary extends Component {
       <tr key={purchasedStock.stockSymbol}>
         <th>{purchasedStock.stockSymbol}</th>
         <td>{purchasedStock.round}</td>
-        <td>LKR {purchasedStock.unitPrice}</td>
+        <td>LKR {(purchasedStock.unitPrice).toFixed(2)}</td>
         <td>{purchasedStock.initStockQty}</td>
       </tr>
     );

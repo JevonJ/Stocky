@@ -5,8 +5,7 @@ class LiveFeed extends Component {
   static renderELemets({
     username, symbol, unitPrice, qauntity, type,
   }) {
-
-    return (<CardText>{`${username} ${type} ${qauntity} from ${symbol} at ${unitPrice}`}</CardText>);
+    return (<CardText>{`${username} ${type} ${qauntity} from ${symbol} at ${unitPrice.toFixed(2)}`}</CardText>);
   }
 
   render() {
