@@ -21,11 +21,11 @@ class StockList extends Component {
 
     return (
       <tr key={info.stockName}>
-        <td className="align-middle">{info.stockName}</td>
-        <td className="align-middle">{info.stockSymbol}</td>
-        <td className="align-middle">{info.stockSector}</td>
-        <td className="align-middle">{lastPrice}</td>
-        <td className="align-middle">
+        <td style={{'width':'35%'}}>{info.stockName}</td>
+        <td style={{'width':'12%'}}>{info.stockSymbol}</td>
+        <td style={{'width':'15%'}}>{info.stockSector}</td>
+        <td style={{'width':'12%'}}>{lastPrice}</td>
+        <td style={{'width':'12%'}}>
           {`${currentPrice} `}
           <FontAwesome
             className="super-crazy-colors"
@@ -34,7 +34,7 @@ class StockList extends Component {
             style={{ color }}
           />
         </td>
-        <td className="align-middle"><Button size="sm" color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
+        <td  style={{'width':'12%'}}><Button color="success" onClick={() => toggleModal(stock)}>Buy</Button></td>
       </tr>
     );
   }
@@ -42,18 +42,18 @@ class StockList extends Component {
   render() {
     const { stocks, stockInfo } = this.props;
     return (
-      <table class="table table-striped table-responsive-xs">
-        <thead>
+  <table class="table table-striped table-responsive-xs">
+        <thead style={{ 'display': 'block'}}>
           <tr>
-            <th>Company name</th>
-            <th>Symbol</th>
-            <th>Sector</th>
-            <th>Last</th>
-            <th>Current</th>
-            <th />
+            <th style={{'width':'35%'}}>Company name</th>
+            <th style={{'width':'12%'}}>Symbol</th>
+            <th style={{'width':'15%'}}>Sector</th>
+            <th style={{'width':'12%'}}>Last</th>
+            <th style={{'width':'12%'}}>Current</th>
+            <th style={{'width':'12%'}}></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody style={{'height': '600px', 'overflow-x': 'hidden','overflow-y':'scroll', 'display': 'block'}}>
           {
             stocks &&
             (Object.keys(stockInfo).length !== 0) &&
