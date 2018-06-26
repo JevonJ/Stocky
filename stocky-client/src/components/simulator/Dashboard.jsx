@@ -100,7 +100,7 @@ class Dashboard extends Component {
     if (user.host) {
       setTimeout(() => {
         socket.emit('calculate_stocks', user.room);
-      }, 3000);
+      }, 8000);
     }
   }
 

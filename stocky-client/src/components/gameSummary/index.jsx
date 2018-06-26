@@ -49,8 +49,8 @@ class GameSummary extends Component {
         </Row>
         <Row>
           <Col>
-            <Button outline color="success" size="lg">New Game</Button>
-            <Button outline color="danger" size="lg">Quit</Button>
+            <Button href="/" outline color="success" size="lg">New Game</Button>
+            <Button href="/" outline color="danger" size="lg">Quit</Button>
           </Col>
         </Row>
       </Container>
