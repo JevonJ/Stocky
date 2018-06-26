@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import { Button, Fade, Form, FormGroup, Input, Label, InputGroup, InputGroupAddon, FormFeedback, Class } from 'reactstrap';
+import { Button, Fade, Form, FormGroup, Input, Label, FormFeedback } from 'reactstrap';
 
 class GameList extends Component {
   static renderGameList(room) {
@@ -56,7 +56,7 @@ class GameList extends Component {
 
   joinGame(e) {
     const {
-      selectedRoom, username, password, usernameError, passwordError, roomError,
+      selectedRoom, username, password, usernameError,
     } = this.state;
 
     if (username.length === 0) {
@@ -105,24 +105,23 @@ class GameList extends Component {
 
     const { selectedRoom, usernameError, username } = this.state;
 
-    if (!selectedRoom[0])
-      return null;
+    if (!selectedRoom[0]) return null;
     return (
-      <FormGroup row>
-        <Label for="username">Username</Label>
-        <Input
-          type="text"
-          invalid={usernameError !== ''}
-          valid={username.length > 0 ? !usernameError : false}
-          name="username"
-          id="username"
-          value={this.state.username}
-          onChange={e => this.onInputChange(e)}
-        />
-        <FormFeedback valid>Sweet! that name is available</FormFeedback>
-        <FormFeedback>{usernameError}</FormFeedback>
-      </FormGroup>
-      );
+    <FormGroup row>
+      <Label for="username">Username</Label>
+      <Input
+        type="text"
+        invalid={usernameError !== ''}
+        valid={username.length > 0 ? !usernameError : false}
+        name="username"
+        id="username"
+        value={this.state.username}
+        onChange={e => this.onInputChange(e)}
+      />
+      <FormFeedback valid>Sweet! that name is available</FormFeedback>
+      <FormFeedback>{usernameError}</FormFeedback>
+    </FormGroup>
+    );
   }
 
   renderPasswordField() {
@@ -170,7 +169,7 @@ class GameList extends Component {
 
   render() {
     const {
-      selectedRoom, username, usernameError, roomError, password,
+      selectedRoom, roomError,
     } = this.state;
 
     const { rooms, history } = this.props;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Footer, Button } from 'mdbreact';
+import { Container, Footer } from 'mdbreact';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ToastContainer } from 'react-toastify';
@@ -78,7 +78,7 @@ class Main extends Component {
             this.props.isLoading ?
               <Loading />
               :
-              <div style={{ overflow: 'auto','overflow-x': 'hidden', }}>
+              <div>
                 <Route exact path="/login" component={Welcome} />
                 <Route
                   exact

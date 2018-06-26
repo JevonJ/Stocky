@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, CardTitle, Row, ButtonGroup } from 'mdbreact';
+import { Button, Card, CardBody, CardTitle } from 'mdbreact';
 import FontAwesome from 'react-fontawesome';
 
 class StockList extends Component {
@@ -30,11 +30,10 @@ class StockList extends Component {
           <FontAwesome
             className="super-crazy-colors"
             name={type}
-            size="1x"
             style={{ color }}
           />
         </td>
-        <td className="align-middle"><Button size="sm" color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
+        <td className="align-middle"><Button size="sm" color="success" onClick={() => toggleModal(stock)}>Buy</Button></td>
       </tr>
     );
   }
@@ -42,17 +41,17 @@ class StockList extends Component {
   render() {
     const { stocks, stockInfo } = this.props;
     return (
-      <Card style={{ minWidth: '47rem', margintop: '1rem' }}>
+      <Card style={{ minWidth: '45rem', margintop: '1rem', maxHeight: '80vh' }}>
         <CardBody>
           <CardTitle>Currently in Market{'>>>'}</CardTitle>
-          <Row>
+          {/* <Row>
             <ButtonGroup>
               <Button outline color="info">Sort by sector</Button>
               <Button outline color="info">Sort by price</Button>
             </ButtonGroup>
-          </Row>
-          <div className="table-responsive">
-            <table className="table-striped" style={{ minWidth: '46rem', margintop: '1rem' }}>
+          </Row> */}
+          <div className="table-responsive" style={{ maxHeight: '73vh' }}>
+            <table className="table-striped" style={{ minWidth: '42rem', margintop: '1rem' }}>
               <thead>
                 <tr>
                   <th>Company name</th>
@@ -74,7 +73,6 @@ class StockList extends Component {
           </div>
         </CardBody>
       </Card>
-
     );
   }
 }

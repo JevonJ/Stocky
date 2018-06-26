@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Collapse, Row } from 'reactstrap';
+import { Card, CardBody, CardTitle } from 'mdbreact';
 
 class SoldStockList extends Component {
   static renderSoldStocks(soldStocks, index) {
@@ -17,32 +17,34 @@ class SoldStockList extends Component {
 
 
   render() {
-    const { playerStocks, user, isOpen } = this.props;
+    const { playerStocks, user } = this.props;
 
     return (
-
-      <Row>
-        <Collapse isOpen={isOpen}>
-          <Table striped responsive size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Round</th>
-                <th>Symbol</th>
-                <th>Qty</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                 playerStocks[user.name] &&
-                 playerStocks[user.name].sold
-                 .map((soldStocks, index) => SoldStockList.renderSoldStocks(soldStocks, index))
-              }
-            </tbody>
-          </Table>
-        </Collapse>
-      </Row>
+      <Card style={{ minWidth: '27rem', maxWidth: '27rem' }}>
+        <CardBody>
+          <CardTitle>Stocks Sold</CardTitle>
+          <div className="table-responsive" style={{ maxHeight: '27vh', overflow: 'scroll' }}>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Round</th>
+                  <th>Symbol</th>
+                  <th>Qty</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  playerStocks[user.name] &&
+                  playerStocks[user.name].sold
+                    .map((soldStocks, index) => SoldStockList.renderSoldStocks(soldStocks, index))
+                }
+              </tbody>
+            </table>
+          </div>
+        </CardBody>
+      </Card>
     );
   }
 }

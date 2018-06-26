@@ -35,6 +35,7 @@ class StockChart extends Component {
           xtitle="Round Number"
           ytitle="Price"
           legend="right"
+          height="500px"
         />
       </div>
     );

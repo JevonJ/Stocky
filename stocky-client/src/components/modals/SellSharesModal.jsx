@@ -40,13 +40,13 @@ class SellSharesModal extends Component {
     
     const { room, name, cash } = user;
     const data = {
-      room: user.room,
-      username: user.name,
+      room,
+      username: name,
       currentCashInHand: cash,
       stockSymbol: sellStockData.symbol,
       stockQty: parseInt(this.state.quantity, 10),
       unitPrice: sellStockData.curPrice,
-      round: roomInfo[user.room].currentRound + 1,
+      round: roomInfo[room].currentRound + 1,
     };
 
     socket.emit('sell_stocks', data);

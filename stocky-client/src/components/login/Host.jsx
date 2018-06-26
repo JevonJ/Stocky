@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Fade, Form, FormGroup, Label, Input, FormFeedback, InputGroup, InputGroupAddon, CustomInput } from 'reactstrap';
+import { Button, Fade, Form, FormGroup, Label, Input, FormFeedback, CustomInput } from 'reactstrap';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
@@ -81,19 +81,19 @@ class Host extends Component {
       return;
     }
 
-    if (hostForm.rounds < 15) {
-      this.setState({
-        roundsError: 'Rounds should be higher than 15',
-      });
-      return;
-    }
+    // if (hostForm.rounds < 15) {
+    //   this.setState({
+    //     roundsError: 'Rounds should be higher than 15',
+    //   });
+    //   return;
+    // }
 
-    if (hostForm.duration < 30) {
-      this.setState({
-        roundDurationError: 'Round duration should be higher than 30 seconds',
-      });
-      return;
-    }
+    // if (hostForm.duration < 30) {
+    //   this.setState({
+    //     roundDurationError: 'Round duration should be higher than 30 seconds',
+    //   });
+    //   return;
+    // }
 
     if (hostForm.isPrivate && hostForm.password.length === 0) {
       this.setState({
