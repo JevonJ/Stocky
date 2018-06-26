@@ -2,6 +2,6 @@
 
 ## Technologies used
 
-* [RectJs](https://reactjs.org/)
+* [ReactJs](https://reactjs.org/)
 * [SocketIO](https://socket.io/)
 * [Redux](https://redux.js.org/)
