@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { Card, CardBody, CardTitle, Table } from 'reactstrap';
 
 class PlayerList extends Component {
-  static calculatePurchased(stocks) {
+  calculatePurchased(stocks) {
+    const { roomStocks } = this.props;
+
     const sum = stocks.reduce((total, stock) => {
       if (stock.initStockQty === 0) {
         return total;
       }
       const remainingStocks = (stock.initStockQty - stock.soldStockQty.reduce((a, b) => a + b, 0));
+      const stockPriceArr = roomStocks[stock.stockSymbol];
+      const stockPrice = stockPriceArr[stockPriceArr.length - 1];
 
-      return total + (stock.unitPrice * remainingStocks);
+      return total + (stockPrice * remainingStocks);
     }, 0);
 
     return sum;
@@ -33,7 +37,7 @@ class PlayerList extends Component {
       <tr key={player.name}>
         <td>{index + 1}</td>
         <td>{player.name}</td>
-        <td>LKR {player.totalAssets}</td>
+        <td>LKR {(player.totalAssets).toFixed(2)}</td>
       </tr>
     );
   }
@@ -43,7 +47,7 @@ class PlayerList extends Component {
 
     const newPlayersObj = players.map((player) => {
       const stocks = playerStocks[player.name].purchased;
-      const totalAssets = (PlayerList.calculatePurchased(stocks) + player.cash);
+      const totalAssets = (this.calculatePurchased(stocks) + player.cash);
       return { totalAssets, ...player };
     });
 

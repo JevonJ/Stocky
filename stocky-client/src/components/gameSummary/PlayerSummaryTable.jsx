@@ -23,7 +23,7 @@ class PlayerSummaryTable extends Component {
   }
 
   calculatePurchased(player) {
-    const { playerStocks } = this.props;
+    const { playerStocks, roomStocks } = this.props;
 
     if (Object.keys(playerStocks).length === 0) return 0;
 
@@ -34,7 +34,9 @@ class PlayerSummaryTable extends Component {
       }
       const remainingStocks = (stock.initStockQty - stock.soldStockQty.reduce((a, b) => a + b, 0));
 
-      return total + (stock.unitPrice * remainingStocks);
+      const stockPriceArr = roomStocks[stock.stockSymbol];
+      const stockPrice = stockPriceArr[stockPriceArr.length - 1];
+      return total + (stockPrice * remainingStocks);
     }, 0);
 
     return sum;
@@ -47,7 +49,7 @@ class PlayerSummaryTable extends Component {
       <tr key={player.name}>
         <th scope="row">{index + 1}</th>
         <td>{player.name}</td>
-        <td>LKR {player.cash + purchasedVal} </td>
+        <td>LKR {(player.cash + purchasedVal).toFixed(2)} </td>
         <td>
           <Button outline color="info" onClick={() => this.toggle(player.name)}>More</Button>
         </td>

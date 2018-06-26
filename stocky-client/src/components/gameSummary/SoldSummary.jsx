@@ -9,7 +9,7 @@ class SoldSummary extends Component {
       <tr key={soldStock.stockSymbol}>
         <th>{soldStock.stockSymbol}</th>
         <td>{soldStock.round}</td>
-        <td>LKR {soldStock.unitPrice}</td>
+        <td>LKR {(soldStock.unitPrice).toFixed(2)}</td>
         <td>{totalQty}</td>
       </tr>
     );

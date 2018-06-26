@@ -5,8 +5,12 @@ class LiveFeed extends Component {
   static renderELemets({
     username, symbol, unitPrice, qauntity, type,
   }) {
+<<<<<<< Updated upstream
 
     return (<CardText>{`${username} ${type} ${qauntity} from ${symbol} at ${unitPrice}`}</CardText>);
+=======
+    return (<CardText>{`${username} bought ${qauntity} from ${symbol} at ${unitPrice.toFixed(2)}`}</CardText>);
+>>>>>>> Stashed changes
   }
 
   render() {

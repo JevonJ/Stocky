@@ -27,13 +27,14 @@ class GameSummary extends Component {
           <StockChart roomStocks={roomStocks} roomInfo={roomInfo} stocks={stocks} user={user} />
         }
         <Row>
-          <PlayerSummaryTable
-            toggle={() => this.toggle()}
-            players={players}
-            playerStocks={playerStocks}
-            user={user}
-            roomInfo={roomInfo}
-          />
+         <PlayerSummaryTable
+          toggle={() => this.toggle()}
+          players={players}
+          playerStocks={playerStocks}
+          user={user}
+          roomInfo={roomInfo}
+          roomStocks={roomStocks}
+        />
         </Row>
         <Row>
           <Col>

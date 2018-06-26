@@ -31,8 +31,8 @@ class PurchasedStockList extends Component {
         <td>{index + 1}</td>
         <td>{purchasedStocks.stockSymbol}</td>
         <td>{remainingStocks}</td>
-        <td>{purchasedStocks.unitPrice}</td>
-        <td>{stockPrice}</td>
+        <td>{(purchasedStocks.unitPrice).toFixed(2)}</td>
+        <td>{stockPrice.toFixed(2)}</td>
 
         <td>
           <Button

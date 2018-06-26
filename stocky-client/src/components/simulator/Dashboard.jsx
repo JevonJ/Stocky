@@ -258,7 +258,7 @@ class Dashboard extends Component {
             </Col>
           </Row>
           <Row>
-            <PlayerList players={players} playerStocks={playerStocks} />
+            <PlayerList players={players} playerStocks={playerStocks} roomStocks={roomStocks} />
           </Row>
           <Row>
             <LiveFeed liveFeed={liveFeed} />
