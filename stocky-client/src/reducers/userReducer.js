@@ -11,7 +11,7 @@ function setUser(state, payload) {
 function updateUser(state, { data: { data, name }, socket }) {
   if (state.name === name) {
     let newState = { ...state };
-    socket.emit('i_am_new_host', data);
+    socket.emit('i_am_new_host');
 
     newState = Object.assign(newState, data);
     return newState;

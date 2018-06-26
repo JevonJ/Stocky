@@ -128,6 +128,7 @@ export default function (io, { dispatch, getState }) {
         const sectorEvents = eventTrends.sectorEvents[currentRound];
         const stockEvents = eventTrends.stockEvents[currentRound];
         const { roundDuration } = State.roomInfo[data];
+
         io.to(data).emit('set_room_info', State.roomInfo);
         io.to(data).emit('set_room_stocks', State.roomStocks[data]);
         io.to(data).emit('update_current_events', { sectorEvents, stockEvents });
@@ -139,7 +140,7 @@ export default function (io, { dispatch, getState }) {
       io.to(data).emit('go_to_game_summary');
     });
 
-    socket.on('i_am_new_host', (data) => {
+    socket.on('i_am_new_host', () => {
       socket.gameHost = true;
 
       socket.emit('notification', {

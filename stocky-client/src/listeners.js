@@ -26,15 +26,15 @@ export default (socket, actions) => {
   });
 
   socket.on('go_to_lobby', () => {
-    actions.history.push('/login/lobby');
+    actions.history.replace('/login/lobby');
   });
 
   socket.on('go_to_login', () => {
-    actions.history.push('/login');
+    actions.history.replace('/login');
   });
 
   socket.on('go_to_simulator', () => {
-    actions.history.push('/simulator');
+    actions.history.replace('/simulator');
   });
 
   socket.on('set_timer', (data) => {

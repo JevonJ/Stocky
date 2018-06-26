@@ -25,6 +25,7 @@ class DashboardHeaderData extends Component {
   render() {
     const {
       user,
+      roomInfo,
     } = this.props;
     const stockValue = this.calculatePurchased(user);
 
@@ -34,9 +35,9 @@ class DashboardHeaderData extends Component {
           <ListGroup>
             <ListGroupItem
               className="justify-content-between"
-              color="danger"
+              color="info"
             >
-              <h4>Cash Remaining</h4><h5><Badge pill>LKR {user.cash.toFixed(2)}</Badge></h5>
+              <h4>Cash Remaining</h4><h5><Badge pill>LKR {user.cash && user.cash.toFixed(2)}</Badge></h5>
             </ListGroupItem>
           </ListGroup>
         </Col>
@@ -44,7 +45,7 @@ class DashboardHeaderData extends Component {
           <ListGroup>
             <ListGroupItem
               className="justify-content-between"
-              color="warning"
+              color="info"
             >
               <h4>Stock Value</h4><h5><Badge pill>LKR {stockValue.toFixed(2)}</Badge></h5>
             </ListGroupItem>
@@ -57,6 +58,17 @@ class DashboardHeaderData extends Component {
               color="info"
             >
               <h4>Total Asset Value</h4><h5><Badge pill>LKR {(user.cash + stockValue).toFixed(2)}</Badge></h5>
+            </ListGroupItem>
+          </ListGroup>
+        </Col>
+        <Col>
+          <ListGroup>
+            <ListGroupItem
+              className="justify-content-between"
+              color="danger"
+            >
+              <h4>Round Number</h4>
+              <h5>{Object.keys(roomInfo).length !== 0 && `${roomInfo[user.room] && roomInfo[user.room].currentRound + 1} / ${roomInfo[user.room].rounds}`}</h5>
             </ListGroupItem>
           </ListGroup>
         </Col>

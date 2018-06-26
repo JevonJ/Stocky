@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Collapse, Button, Row } from 'reactstrap';
+import { Card, CardBody, Button, CardTitle } from 'mdbreact';
 
 import SellShareModal from '../modals/SellSharesModal';
 
@@ -53,15 +53,17 @@ class PurchasedStockList extends Component {
         </tr>
       );
     }
+
+    return null;
   }
 
   render() {
     const {
-      socket, playerStocks, user, isOpen, sellModalState, roomInfo,
+      socket, playerStocks, user, sellModalState, roomInfo,
     } = this.props;
 
     return (
-      <Row>
+      <Card style={{ minWidth: '27rem', maxWidth: '27rem', marginTop: '1rem' }}>
         <SellShareModal
           isOpen={sellModalState}
           toggle={() => this.toggleSellModal()}
@@ -71,27 +73,30 @@ class PurchasedStockList extends Component {
           playerStocks={playerStocks}
           roomInfo={roomInfo}
         />
-        <Collapse isOpen={isOpen}>
-          <Table striped responsive size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Symbol</th>
-                <th>Qty</th>
-                <th>Value</th>
-                <th>Current</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                playerStocks[user.name] &&
-                playerStocks[user.name].purchased
-                  .map((purchasedStocks, index) => this.renderPurchasedStocks(purchasedStocks, index))
-              }
-            </tbody>
-          </Table>
-        </Collapse>
-      </Row>
+        <CardBody>
+          <CardTitle>Stocks Purchased</CardTitle>
+          <div className="table-responsive" style={{ maxHeight: '27vh', overflow: 'scroll' }}>
+            <table className="table table-striped" >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Symbol</th>
+                  <th>Qty</th>
+                  <th>Value</th>
+                  <th>Current</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  playerStocks[user.name] &&
+                  playerStocks[user.name].purchased
+                    .map((purchasedStocks, index) => this.renderPurchasedStocks(purchasedStocks, index))
+                }
+              </tbody>
+            </table>
+          </div>
+        </CardBody>
+      </Card>
     );
   }
 }

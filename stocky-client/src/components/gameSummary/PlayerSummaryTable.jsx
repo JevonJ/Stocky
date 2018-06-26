@@ -58,7 +58,7 @@ class PlayerSummaryTable extends Component {
   }
 
   render() {
-    const { players, playerStocks, roomInfo, user } = this.props;
+    const { players, playerStocks, roomInfo } = this.props;
     const { playerName } = this.state;
 
     return (
@@ -75,19 +75,21 @@ class PlayerSummaryTable extends Component {
             <Button outline color="blue-grey" onClick={() => this.toggle('')}>Exit</Button>{' '}
           </ModalFooter>
         </Modal>
-        <table class="table table-striped table-dark table-responsive-xs">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Name</th>
-              <th>Assets</th>
-              <th>...</th>
-            </tr>
-          </thead>
-          <tbody>
-            {players.map((player, index) => this.renderUsers(player, index))}
-          </tbody>
-        </table>
+        <div className="table-responsive-xs">
+          <table className="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Assets</th>
+                <th>...</th>
+              </tr>
+            </thead>
+            <tbody>
+              {players.map((player, index) => this.renderUsers(player, index))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

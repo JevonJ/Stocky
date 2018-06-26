@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, Row, ListGroup, ListGroupItem } from 'reactstrap';
+import { Card, CardBody, CardTitle, ListGroup, ListGroupItem } from 'mdbreact';
 
 class CurrentEvents extends Component {
   static renderELemets({
@@ -15,19 +15,19 @@ class CurrentEvents extends Component {
   render() {
     const { events } = this.props;
     return (
-      <Row>
-        <Card body outline color="warning">
+      <Card style={{ minWidth: '20rem', marginTop: '1rem' }}>
+        <CardBody>
           <CardTitle>Current Events</CardTitle>
-          <ListGroup>
+          <ListGroup style={{ maxHeight: '17vh', overflow: 'scroll', overflowX: 'hidden' }}>
             {
               events.length > 0 ?
-              events.map((event, index) => CurrentEvents.renderELemets(event, index))
-              :
-              <ListGroupItem>No Events</ListGroupItem>
+                events.map((event, index) => CurrentEvents.renderELemets(event, index))
+                :
+                <ListGroupItem>No Events</ListGroupItem>
             }
           </ListGroup>
-        </Card>
-      </Row>
+        </CardBody>
+      </Card>
     );
   }
 }

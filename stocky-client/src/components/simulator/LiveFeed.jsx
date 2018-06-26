@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText } from 'reactstrap';
+import { Card, CardBody, CardTitle, ListGroup, ListGroupItem } from 'mdbreact';
 
 class LiveFeed extends Component {
   static renderELemets({
     username, symbol, unitPrice, qauntity, type,
   }) {
-    return (<CardText>{`${username} ${type} ${qauntity} from ${symbol} at ${unitPrice.toFixed(2)}`}</CardText>);
+    return (<ListGroupItem>{`${username} ${type} ${qauntity} from ${symbol} at ${unitPrice.toFixed(2)}`}</ListGroupItem>);
   }
 
   render() {
     const { liveFeed } = this.props;
     return (
-      <Card body outline color="primary">
-        <CardTitle>Live feed</CardTitle>
-        {
-          liveFeed.map(feedelement => LiveFeed.renderELemets(feedelement))
-        }
+      <Card style={{ minWidth: '20rem', marginTop: '1rem' }}>
+        <CardBody>
+          <CardTitle>Live feed</CardTitle>
+          <ListGroup style={{ maxHeight: '17vh', overflow: 'scroll', overflowX: 'hidden' }}>
+            {
+              liveFeed.map(feedelement => LiveFeed.renderELemets(feedelement))
+            }
+          </ListGroup>
+        </CardBody>
       </Card>
     );
   }
