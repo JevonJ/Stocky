@@ -139,6 +139,16 @@ export default function (io, { dispatch, getState }) {
       io.to(data).emit('go_to_game_summary');
     });
 
+    socket.on('i_am_new_host', (data) => {
+      socket.gameHost = true;
+
+      socket.emit('notification', {
+        type: 'success',
+        message: 'You are the new host',
+        position: 'BOTTOM_RIGHT',
+      });
+    });
+
     socket.on('disconnect', () => {
       if (socket.room) {
         const { players, roomInfo } = getState();
@@ -174,16 +184,19 @@ export default function (io, { dispatch, getState }) {
             });
           }
           if (gameHasStarted) {
-            dispatch(removePlayer({ username: socket.username, room: socket.room }));
+            dispatch(removePlayer({ username: socket.username, room: socket.room })).then(() => {
+              if (socket.gameHost) {
+                const newState = getState();
+                const nonComputerPLayers = newState.players[socket.room]
+                  .filter(player => player.isComputer !== true);
+                io.to(socket.room).emit('change_host', { data: { host: true }, name: nonComputerPLayers[0].name });
+              }
+            });
             io.to(socket.room).emit('notification', {
               type: 'info',
-              message: `${socket.username} has left the game`,
+              message: `${socket.username} ${socket.gameHost && '(Host)'} has left the game`,
               position: 'BOTTOM_RIGHT',
             });
-            // dispatch(removeRoom(socket.room)).then(() => {
-            //   const newState = getState();
-            //   io.emit('set_rooms', newState.rooms);
-            // });
           }
         }
       }

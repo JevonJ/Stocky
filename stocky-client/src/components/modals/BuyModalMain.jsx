@@ -48,7 +48,7 @@ class BuyModalMain extends Component {
       currentCashInHand: cash,
       stockSymbol: stock,
       initStockQty: parseInt(this.state.quantity, 10),
-      unitPrice: parseInt(stockDataArr[stockDataArr.length - 1], 10),
+      unitPrice: parseFloat(stockDataArr[stockDataArr.length - 1]),
       round: roomInfo[room].currentRound + 1,
     };
 
@@ -80,7 +80,7 @@ class BuyModalMain extends Component {
         <ModalBody style={{ color: 'black' }} className="mbody" >
           <ListGroup>
             <ListGroupItem>Company Symbol: {stock}</ListGroupItem>
-            <ListGroupItem>Unit Price: {stockDataArr && stockDataArr[stockDataArr.length - 1]}</ListGroupItem>
+            <ListGroupItem>Unit Price: {stockDataArr && (stockDataArr[stockDataArr.length - 1]).toFixed(2)}</ListGroupItem>
             <ListGroupItem>
               <FormGroup>
                 Number of Stocks
@@ -99,7 +99,7 @@ class BuyModalMain extends Component {
                 <p style={{ color: 'red' }}>Sorry! This is the maximum stocks which you can buy with your remaining cash.</p>
               }
             </ListGroupItem>
-            <ListGroupItem>Price: {stockDataArr && (totalPrice === '0' ? stockDataArr[stockDataArr.length - 1] : totalPrice)}</ListGroupItem>
+            <ListGroupItem>Price: {stockDataArr && (totalPrice === '0' ? (stockDataArr[stockDataArr.length - 1]).toFixed(2) : totalPrice)}</ListGroupItem>
           </ListGroup>
         </ModalBody>
         <ModalFooter>

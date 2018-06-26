@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { LineChart } from 'react-chartkick';
-import { Row, Col, Card, CardText, CardTitle, Table, Modal, ModalHeader, ModalBody, ModalFooter, Container } from 'reactstrap';
+import { Row, Col, Card, CardText, CardTitle, Container } from 'reactstrap';
 import { Button } from 'mdbreact';
-import PurchaseSummary from '../gameSummary/PurchaseSummary';
-import SoldSummary from '../gameSummary/SoldSummary';
+import StockChart from './StockChart';
 
-import 'chart.js';
+import PlayerSummaryTable from './PlayerSummaryTable';
 
 class GameSummary extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      modal: false,
-    };
-  }
-
   componentWillMount() {
     const { user, history } = this.props;
     if (user.constructor === Object && Object.keys(user).length === 0) {
@@ -24,98 +14,27 @@ class GameSummary extends Component {
     }
   }
 
-  toggle() {
-
-    this.setState({
-      modal: !this.state.modal,
-    });
-  }
-
   render() {
-    const chartData = [
-      {
-        name: 'LFIN',
-        data: {
-          R1: 122,
-          R2: 120,
-          R3: 119,
-          R4: 110,
-          R5: 122,
-          R6: 128,
-          R7: 100,
-          R8: 95,
-          R9: 75,
-          R10: 100,
-          R11: 120,
-          R12: 122,
-          R13: 122,
-          R14: 135,
-          R15: 120,
-        },
-      },
-    ];
-
-    const { playerStocks, user, roomInfo } = this.props;
+    const {
+      playerStocks, user, roomInfo, roomStocks, stocks, players,
+    } = this.props;
     return (
       <Container fluid>
-        <Modal isOpen={this.state.modal} toggle={() => this.toggle()}>
-          <ModalHeader toggle={() => this.toggle()}>Mark{"'"}s game history</ModalHeader>
-          <ModalBody >
-            <h4>Bought</h4>
-            <PurchaseSummary playerStocks={playerStocks} user={user} roomInfo={roomInfo} />
-            <h4>Sold</h4>
-           <SoldSummary  playerStocks={playerStocks} user={user} roomInfo={roomInfo}/>
-          </ModalBody>
-          <ModalFooter>
-            <Button outline color="blue-grey" onClick={() => this.toggle()}>Exit</Button>{' '}
-          </ModalFooter>
-        </Modal>
         <Row>
           <h1>XXX Won the Game!!!</h1>
         </Row>
+        {roomInfo &&
+          <StockChart roomStocks={roomStocks} roomInfo={roomInfo} stocks={stocks} user={user} />
+        }
         <Row>
-          <LineChart
-            data={chartData}
-            id="users-chart"
-            colors={['#666']}
-            xtitle="Round Number"
-            ytitle="Price"
-            legend="right"
-          />
-        </Row>
-        <Row>
-          <Table dark striped responsive>
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Assets</th>
-                <th>...</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>LKR.76,000</td>
-                <td>
-                  <Button outline color="info" onClick={() => this.toggle()}>More</Button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>LKR.36,000</td>
-                <td><Button outline color="info">More</Button></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>LKR.26,000</td>
-                <td><Button outline color="info">More</Button></td>
-              </tr>
-            </tbody>
-          </Table>
+         <PlayerSummaryTable
+          toggle={() => this.toggle()}
+          players={players}
+          playerStocks={playerStocks}
+          user={user}
+          roomInfo={roomInfo}
+          roomStocks={roomStocks}
+        />
         </Row>
         <Row>
           <Col>
@@ -139,9 +58,14 @@ class GameSummary extends Component {
   }
 }
 
-const mapStateToProps = ({ user, roomInfo, playerStocks }) => ({
+const mapStateToProps = ({
+  user, roomInfo, playerStocks, stocks, players, roomStocks,
+}) => ({
   user,
   roomInfo,
+  roomStocks,
   playerStocks,
+  players,
+  stocks,
 });
 export default connect(mapStateToProps)(GameSummary);

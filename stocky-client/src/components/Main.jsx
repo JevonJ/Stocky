@@ -5,7 +5,21 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import listeners from '../listeners';
-import { setRoom, setPlayer, initialize, setRoomInfo, setUser, setTime, setPlayerStocks, buyStock, sellStock, updateFeed, setRoomStocks, updateEvents } from '../actions';
+import {
+  setRoom,
+  setPlayer,
+  initialize,
+  setRoomInfo,
+  setUser,
+  setTime,
+  setPlayerStocks,
+  buyStock,
+  sellStock,
+  updateFeed,
+  setRoomStocks,
+  updateEvents,
+  updateUser,
+} from '../actions';
 
 import LoginMain from '../components/login/Main';
 import Simulator from './simulator/SimulatorMain';
@@ -28,10 +42,25 @@ class Main extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={() => <Redirect to="/login" />} />
-        <Route path="/login" component={props => <LoginMain socket={this.socket} {...props} />} />
-        <Route exact path="/simulator" component={props => <Simulator socket={this.socket} {...props} />} />
-        <Route exact path="/game-summary" component={GameSummary} />
+        <Route
+          exact
+          path="/"
+          component={() => <Redirect to="/login" />}
+        />
+        <Route
+          path="/login"
+          component={props => <LoginMain socket={this.socket} {...props} />}
+        />
+        <Route
+          exact
+          path="/simulator"
+          component={props => <Simulator socket={this.socket} {...props} />}
+        />
+        <Route
+          exact
+          path="/game-summary"
+          component={GameSummary}
+        />
       </Switch>
     );
   }
@@ -42,5 +71,17 @@ Main.propTypes = {
 };
 
 export default connect(null, {
-  setRoom, setPlayer, initialize, setRoomInfo, setUser, setTime, setPlayerStocks, buyStock, sellStock, updateFeed, setRoomStocks, updateEvents,
+  setRoom,
+  setPlayer,
+  initialize,
+  setRoomInfo,
+  setUser,
+  setTime,
+  setPlayerStocks,
+  buyStock,
+  sellStock,
+  updateFeed,
+  setRoomStocks,
+  updateEvents,
+  updateUser,
 })(Main);

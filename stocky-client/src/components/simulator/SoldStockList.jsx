@@ -10,7 +10,7 @@ class SoldStockList extends Component {
         <td style={{ textAlign: 'center' }}>{soldStocks.round}</td>
         <td>{soldStocks.stockSymbol}</td>
         <td>{totalQty}</td>
-        <td>{soldStocks.unitPrice}</td>
+        <td>{(soldStocks.unitPrice).toFixed(2)}</td>
       </tr>
     );
   }

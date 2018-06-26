@@ -24,32 +24,33 @@ class PurchasedStockList extends Component {
     const stockPrice = stockPriceArr[stockPriceArr.length - 1];
     const totalSoldQty = purchasedStocks.soldStockQty.reduce((a, b) => a + b, 0);
     const remainingStocks = purchasedStocks.initStockQty - totalSoldQty;
-    
-    if (remainingStocks > 0){
-    return (
-      <tr key={purchasedStocks.stockSymbol}>
+
+    if (remainingStocks > 0) {
+      return (
+        <tr key={purchasedStocks.stockSymbol}>
         <td>{index + 1}</td>
         <td>{purchasedStocks.stockSymbol}</td>
         <td>{remainingStocks}</td>
-        <td>{purchasedStocks.unitPrice}</td>
-        <td>{stockPrice}</td>
+        <td>{(purchasedStocks.unitPrice).toFixed(2)}</td>
+        <td>{stockPrice.toFixed(2)}</td>
 
         <td>
           <Button
+            size="sm"
             color="danger"
             onClick={() => this.toggleSellModal({
-              symbol: purchasedStocks.stockSymbol,
-              oldPrice: purchasedStocks.unitPrice,
-              curPrice: stockPrice,
-              avlqty: purchasedStocks.initStockQty,
+            symbol: purchasedStocks.stockSymbol,
+            oldPrice: purchasedStocks.unitPrice,
+            curPrice: stockPrice,
+            avlqty: purchasedStocks.initStockQty,
             })}
           >
             Sell
           </Button>
         </td>
       </tr>
-    );
-  }
+      );
+    }
   }
 
   render() {

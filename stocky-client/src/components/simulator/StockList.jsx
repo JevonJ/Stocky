@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Table } from 'reactstrap';
+import { Button } from 'mdbreact';
+import FontAwesome from 'react-fontawesome';
 
 class StockList extends Component {
   renderStocks(stock) {
@@ -7,14 +8,33 @@ class StockList extends Component {
     const info = stockInfo[stock];
     const pricesArr = roomStocks[stock];
 
+    const lastPrice = pricesArr[pricesArr.length - 2] === undefined ? '--' : (pricesArr[pricesArr.length - 2].toFixed(2));
+    const currentPrice = (pricesArr[pricesArr.length - 1]).toFixed(2);
+
+    let color = '#455A64';
+    let type = 'minus';
+
+    if (pricesArr[pricesArr.length - 2] !== undefined && lastPrice < currentPrice) {
+      color = '#76FF03';
+      type = 'arrow-up';
+    }
+
     return (
       <tr key={info.stockName}>
-        <td>{info.stockName}</td>
-        <td>{info.stockSymbol}</td>
-        <td>{info.stockSector}</td>
-        <td>{pricesArr[pricesArr.length - 2] === undefined ? '--' : (pricesArr[pricesArr.length - 2].toFixed(2))}</td>
-        <td>{(pricesArr[pricesArr.length - 1]).toFixed(2)}</td>
-        <td><Button color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
+        <td className="align-middle">{info.stockName}</td>
+        <td className="align-middle">{info.stockSymbol}</td>
+        <td className="align-middle">{info.stockSector}</td>
+        <td className="align-middle">{lastPrice}</td>
+        <td className="align-middle">
+          {`${currentPrice} `}
+          <FontAwesome
+            className="super-crazy-colors"
+            name={type}
+            size="1x"
+            style={{ color }}
+          />
+        </td>
+        <td className="align-middle"><Button size="sm" color="success" onClick={() => toggleModal(stock)}>Buy</Button>{' '}</td>
       </tr>
     );
   }
@@ -22,7 +42,7 @@ class StockList extends Component {
   render() {
     const { stocks, stockInfo } = this.props;
     return (
-      <Table striped responsive size="xs">
+      <table class="table table-striped table-responsive-xs">
         <thead>
           <tr>
             <th>Company name</th>
@@ -40,7 +60,7 @@ class StockList extends Component {
             stocks.map(stock => this.renderStocks(stock))
           }
         </tbody>
-      </Table>
+      </table>
     );
   }
 }

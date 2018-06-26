@@ -3,27 +3,42 @@ import Express from 'express';
 import Cluster from 'cluster';
 import SocketIO from 'socket.io';
 import StickySessions from 'sticky-session';
-import { createStore, compose, applyMiddleware } from 'redux';
 import cors from 'cors';
 import Compression from 'compression';
-import { config } from 'dotenv'
+import { config } from 'dotenv';
+import path from 'path';
 
 import store from './store';
-
 import SocketEvents from './socketEvents';
 
 config();
 
-const app = Express(),
-  //Our local port
-  port = 4001,
-  //our server instance
-  server = Http.createServer(app);
+const app = Express();
+
+// Our local port
+const port = 4001;
+
+// our server instance
+const server = Http.createServer(app);
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 // Set public folder
-app.use(Express.static('public'));
 app.use(cors());
 app.use(Compression());
+
+app.get('/', (req, res) => {
+  const {
+    rooms, roomInfo, roomStocks, players, playerStocks, trendModel,
+  } = store.getState();
+  res.render(
+    'index',
+    {
+      rooms, roomInfo, roomStocks, players, playerStocks, trendModel,
+    },
+  );
+});
 
 app.get('/api/check-status', (req, res) => res.status(200).json({ Connected: true }));
 app.get('/api/init-data', (req, res) => {
@@ -38,7 +53,7 @@ app.get('/api/sectortrends', (req, res) => {
   res.status(200).json(trendModel);
 });
 
-//this creates a socket using the server instance
+// this creates a socket using the server instance
 const io = SocketIO(server);
 
 // add socket listener events

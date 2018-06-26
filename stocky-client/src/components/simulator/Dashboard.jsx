@@ -90,17 +90,16 @@ class Dashboard extends Component {
     
     this.props.setTime({ round_time: 0 });
    
-    if (user.host) {
-      setTimeout(() => {
-        socket.emit('calculate_stocks', user.room);
-      }, 8000);
-    }
-
     if (roomInfo[user.room].currentRound + 1 ==  roomInfo[user.room].rounds){
       this.props.socket.emit('go_to_game_summary', user.room);
       return;
     }
 
+    if (user.host) {
+      setTimeout(() => {
+        socket.emit('calculate_stocks', user.room);
+      }, 3000);
+    }
   }
 
   render() {
@@ -210,7 +209,7 @@ class Dashboard extends Component {
           </Row>
         </Col>
         <Col xs="6">
-          <DashboardHeaderData user={user} playerStocks={playerStocks} />
+          <DashboardHeaderData user={user} playerStocks={playerStocks} roomStocks={roomStocks} />
           <Row>
             <h2>Currently in Market {'>>>'}</h2>
           </Row>
@@ -258,7 +257,7 @@ class Dashboard extends Component {
             </Col>
           </Row>
           <Row>
-            <PlayerList players={players} playerStocks={playerStocks} />
+            <PlayerList players={players} playerStocks={playerStocks} roomStocks={roomStocks} />
           </Row>
           <Row>
             <LiveFeed liveFeed={liveFeed} />

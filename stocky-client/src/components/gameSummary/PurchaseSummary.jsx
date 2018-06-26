@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, CardText, CardTitle, Table, Modal, ModalHeader, ModalBody, ModalFooter, Container } from 'reactstrap';
-import { Button } from 'mdbreact';
+import { Table } from 'reactstrap';
 
 class PurchaseSummary extends Component {
   renderPurchasedStocks(purchasedStock) {
@@ -8,7 +7,7 @@ class PurchaseSummary extends Component {
       <tr key={purchasedStock.stockSymbol}>
         <th>{purchasedStock.stockSymbol}</th>
         <td>{purchasedStock.round}</td>
-        <td>LKR {purchasedStock.unitPrice}</td>
+        <td>LKR {(purchasedStock.unitPrice).toFixed(2)}</td>
         <td>{purchasedStock.initStockQty}</td>
       </tr>
     );
