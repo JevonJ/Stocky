@@ -96,7 +96,7 @@ class GameSummary extends Component {
           </Col>
         </Row>
         <Row style={{ paddingLeft: '44%' }}>
-          <Button href="/" outline color="success" size="lg">New Game</Button>
+          <Button href="https://jevonj.github.io/Stocky/" outline color="success" size="lg">New Game</Button>
         </Row>
         <Footer color="special-color-dark" className="mt-auto page-footer lighten-5 pt-0">
           <div className="footer-copyright text-center">
