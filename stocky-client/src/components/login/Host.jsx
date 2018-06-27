@@ -16,8 +16,8 @@ class Host extends Component {
         username: '',
         isPrivate: false,
         password: '',
-        rounds: 15,
-        duration: 30,
+        rounds: 10,
+        duration: 20,
       },
       visibility: false,
       roomNameError: '',
@@ -81,16 +81,16 @@ class Host extends Component {
       return;
     }
 
-    if (hostForm.rounds < 15) {
+    if (hostForm.rounds < 10) {
       this.setState({
-        roundsError: 'Rounds should be higher than 15',
+        roundsError: 'Rounds should be higher than 10',
       });
       return;
     }
 
-    if (hostForm.duration < 30) {
+    if (hostForm.duration < 20) {
       this.setState({
-        roundDurationError: 'Round duration should be higher than 30 seconds',
+        roundDurationError: 'Round duration should be higher than 20 seconds',
       });
       return;
     }
