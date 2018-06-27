@@ -86,6 +86,11 @@ npm test
 # Alternatively if you are using yarn
 yarn test
 ```
+## To-Do
+
+* AI - Computer player which can buy and sell stocks
+* Analyst - Analyst can see future stock price changes and recommend trades
+
 ## Authors
 
 See also the list of [contributors](https://github.com/JevonJ/Stocky/graphs/contributors) who participated in this project.
